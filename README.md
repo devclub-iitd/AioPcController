@@ -1,4 +1,4 @@
-# aio_pc_controller
+# AIO pc Controller
 
 A new Flutter project.
 
@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Execution
+Execute driver.py on your pc
+``` python driver.py ```
+And enter the port 4444
+
+Now run the app on your mobile or emulator. Make sure the ip address in socket matches the ip of your pc.
+Without the above steps the app won't execute.
