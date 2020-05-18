@@ -2,37 +2,75 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+Socket sock;
 void main() async {
   // modify with your true address/port
-  Socket sock = await Socket.connect('192.168.43.239', 4444);
-  runApp(MyApp(sock));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  Socket socket;
-
-  MyApp(Socket s) {
-    this.socket = s;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final title = 'AIO pc Controller';
+    final title = 'AIO PC Controller';
     return MaterialApp(
-      title: title,
-      home: MyHomePage(
-        title: title,
-        channel: socket,
+      initialRoute: '/',
+      routes:{
+        '/': (context) => HomeScreen(),
+        '/layout_select': (context) => MyHomePage( title: title,),
+      },
+    );
+  }
+}
+
+
+class HomeScreen extends StatelessWidget{
+  final TextEditingController ipController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("AIO PC Controller"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFormField(
+                controller: ipController,
+                decoration: InputDecoration(labelText: 'Enter the IP address of your PC'),
+              ),
+              RaisedButton(
+                onPressed: (){
+                  _connectIP(context);
+
+                  
+                },
+                child: Text('Connect'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  void _connectIP(context) async{
+    if(ipController.text.isNotEmpty){
+      String address = '${ipController.text}';
+      sock = await Socket.connect(address, 4444);
+      Navigator.pushNamed(context, '/layout_select');
+    }
   }
 }
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  final Socket channel;
 
-  MyHomePage({Key key, @required this.title, @required this.channel})
+  MyHomePage({Key key, @required this.title})
       : super(key: key);
 
   @override
@@ -61,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             StreamBuilder(
-              stream: widget.channel,
+              stream: sock,
               builder: (context, snapshot) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
@@ -70,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       : ''),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
@@ -85,15 +123,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       stopwatch.start();
-      widget.channel.write(_controller.text);
+      sock.write(_controller.text);
     }
   }
 
   @override
   void dispose() {
-    widget.channel.close();
+    sock.close();
     super.dispose();
     stopwatch.stop();
+    print('Disposed');
   }
 }
-
