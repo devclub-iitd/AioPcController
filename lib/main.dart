@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 void main() async {
   // modify with your true address/port
-  Socket sock = await Socket.connect('192.168.43.3', 4444);
+  Socket sock = await Socket.connect('192.168.43.239', 4444);
   runApp(MyApp(sock));
 }
 
@@ -41,7 +41,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _controller = TextEditingController();
-
+  Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
 
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: Text(snapshot.hasData
-                      ? '${String.fromCharCodes(snapshot.data)}'
+                      ? '${String.fromCharCodes(snapshot.data)}'+'\n'+'Latency is '+'${stopwatch.elapsedMilliseconds}'+' ms'
                       : ''),
                 );
               },
@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
+      stopwatch.start();
       widget.channel.write(_controller.text);
     }
   }
@@ -92,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() {
     widget.channel.close();
     super.dispose();
+    stopwatch.stop();
   }
 }
 
