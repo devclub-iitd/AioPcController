@@ -20,7 +20,7 @@ def main():
 
 	while True: 
 		c, addr = s.accept()
-		#print ('Got connection from', addr)
+		print ('Got connection from', addr)
 
 		message=c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
 
