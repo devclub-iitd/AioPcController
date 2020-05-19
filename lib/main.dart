@@ -9,26 +9,25 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    final title = 'AIO PC Controller';
     return MaterialApp(
       initialRoute: '/',
-      routes:{
+      routes: {
         '/': (context) => HomeScreen(),
-        '/layout_select': (context) => MyHomePage( title: title,),
+        '/layout_select': (context) => LayoutSelect(),
+        '/ping_test': (context) => PingTest(),
+        '/wasd_layout': (context) => WasdLayout(),
       },
     );
   }
 }
 
-
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("AIO PC Controller"),
@@ -41,13 +40,12 @@ class HomeScreen extends StatelessWidget{
             children: <Widget>[
               TextFormField(
                 controller: ipController,
-                decoration: InputDecoration(labelText: 'Enter the IP address of your PC'),
+                decoration: InputDecoration(
+                    labelText: 'Enter the IP address of your PC'),
               ),
               RaisedButton(
-                onPressed: (){
+                onPressed: () {
                   _connectIP(context);
-
-                  
                 },
                 child: Text('Connect'),
               ),
@@ -58,8 +56,8 @@ class HomeScreen extends StatelessWidget{
     );
   }
 
-  void _connectIP(context) async{
-    if(ipController.text.isNotEmpty){
+  void _connectIP(context) async {
+    if (ipController.text.isNotEmpty) {
       String address = '${ipController.text}';
       sock = await Socket.connect(address, 4444);
       Navigator.pushNamed(context, '/layout_select');
@@ -67,25 +65,66 @@ class HomeScreen extends StatelessWidget{
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  MyHomePage({Key key, @required this.title})
-      : super(key: key);
+class LayoutSelect extends StatelessWidget {
+  final TextEditingController ipController = TextEditingController();
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Select Layout"),
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: <Widget>[
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/ping_test');
+                      },
+                      child: Text('Ping Test'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/wasd_layout');
+                      },
+                      child: Text('WASD Layout'),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class PingTest extends StatefulWidget {
+  @override
+  _PingTestState createState() => _PingTestState();
+}
+
+class _PingTestState extends State<PingTest> {
   TextEditingController _controller = TextEditingController();
   Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Ping Test"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -104,7 +143,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: Text(snapshot.hasData
-                      ? '${String.fromCharCodes(snapshot.data)}'+'\n'+'Latency is '+'${stopwatch.elapsedMilliseconds}'+' ms'
+                      ? '${String.fromCharCodes(snapshot.data)}' +
+                          '\n' +
+                          'Latency is ' +
+                          '${stopwatch.elapsedMilliseconds}' +
+                          ' ms'
                       : ''),
                 );
               },
@@ -113,9 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           _sendMessage();
-
         },
         tooltip: 'Send message',
         child: Icon(Icons.send),
@@ -130,6 +172,109 @@ class _MyHomePageState extends State<MyHomePage> {
       stopwatch.start();
       sock.write(_controller.text);
     }
+  }
+
+  @override
+  void dispose() {
+    print("A");
+    super.dispose();
+    print("Disposed");
+  }
+}
+
+class WasdLayout extends StatefulWidget {
+  @override
+  _WasdLayoutState createState() => _WasdLayoutState();
+}
+
+class _WasdLayoutState extends State<WasdLayout> {
+  TextEditingController _controller = TextEditingController();
+  Stopwatch stopwatch = new Stopwatch();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("WASD"),
+      ),
+      body: GridView.count(
+          crossAxisCount: 3,
+          children: <Widget>[
+            Center(
+              
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        _send('w');
+                      },
+                      child: Text('W'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Center(
+              
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        _send('a');
+                      },
+                      child: Text('A'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        _send('s');
+                      },
+                      child: Text('S'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        _send('d');
+                      },
+                      child: Text('D'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        )
+    );
+  }
+
+  void _send(char) {
+    print("Sending " + char);
+    stopwatch.reset();
+    stopwatch.start();
+    sock.write(char);
   }
 
   @override
