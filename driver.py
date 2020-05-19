@@ -1,5 +1,6 @@
 import socket
 import pyautogui
+import time
 
 pyautogui.PAUSE = 0.01
 
@@ -38,18 +39,20 @@ def main():
 		while True:
 			message=c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
 
-			message=message.split("\0") #i use \0 to differtiate commands
+			message=message.split("&") #i use & to differtiate commands
 
 			print("DEBUG: ",message)
-
-			wasd(message[0])
+			if(message[0] == 'wasd'):
+				wasd(message[1])
 			
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
 
 def wasd(message):
-	pyautogui.press(message)
+	pyautogui.keyDown(message)
+	time.sleep(0.5)
+	pyautogui.keyUp(message)
 	
 
 if __name__=="__main__":

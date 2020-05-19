@@ -274,7 +274,7 @@ class _WasdLayoutState extends State<WasdLayout> {
     print("Sending " + char);
     stopwatch.reset();
     stopwatch.start();
-    sock.write(char);
+    sock.write('wasd'+'&'+char);
   }
 
   @override
