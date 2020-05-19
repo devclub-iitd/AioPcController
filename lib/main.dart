@@ -113,7 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
+        onPressed: (){
+          _sendMessage();
+
+        },
         tooltip: 'Send message',
         child: Icon(Icons.send),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -122,6 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
+      print("Sending message");
+      stopwatch.reset();
       stopwatch.start();
       sock.write(_controller.text);
     }
@@ -129,9 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    sock.close();
+    print("A");
     super.dispose();
-    stopwatch.stop();
-    print('Disposed');
+    print("Disposed");
   }
 }
