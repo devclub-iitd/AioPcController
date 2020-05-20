@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:sensors/sensors.dart';
+import 'package:timer_builder/timer_builder.dart';
 Socket sock;
 void main() async {
   // modify with your true address/port
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         '/layout_select': (context) => LayoutSelect(),
         '/ping_test': (context) => PingTest(),
         '/wasd_layout': (context) => WasdLayout(),
+        '/gyro':(context) => Gyro(),
       },
     );
   }
@@ -70,10 +72,36 @@ class HomeScreen extends StatelessWidget {
     }
   }
 }
-
+AccelerometerEvent event;
+void tilt(){
+  accelerometerEvents.listen((AccelerometerEvent event) {
+    if(event.y>=0.1){
+      sock.write("tilt&+%");
+    }else if(event.y<=-0.1){
+      sock.write("tilt&-%");
+    }else{
+      sock.write("tilt&0%");
+    }
+  });
+}
+class Gyro extends StatelessWidget {
+  Stopwatch time = new Stopwatch();
+  @override
+  Widget build(BuildContext context){
+    return TimerBuilder.periodic(Duration(milliseconds:1000),
+      builder: (context) {
+        tilt();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Tilt to Control"),
+          ),
+        );
+      }
+    );
+  }
+}
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +109,7 @@ class LayoutSelect extends StatelessWidget {
           title: Text("Select Layout"),
         ),
         body: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           children: <Widget>[
             Center(
               child: Column(
@@ -100,6 +128,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             Center(
               child: Column(
+
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
@@ -108,6 +137,22 @@ class LayoutSelect extends StatelessWidget {
                         Navigator.pushNamed(context, '/wasd_layout');
                       },
                       child: Text('WASD Layout'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/gyro');
+                      },
+                      child: Text('Gyroscopic Control'),
                     ),
                   )
                 ],
@@ -230,7 +275,6 @@ class _WasdLayoutState extends State<WasdLayout> {
               ),
             ),
             Center(
-              
             ),
             Center(
               child:GestureDetector(

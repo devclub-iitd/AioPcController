@@ -31,32 +31,43 @@ def main():
 	s.listen()      
 	print ("socket is listening...")           
 	while True: 
-		
 		c, addr = s.accept()
-		
 		print ('Got connection from', addr)
-
 		while True:
 			message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
-
 			message = message.split("%") #use & to split tokens, and % to split messages.
-			
 			for msg in message:
 				msg = msg.split("&")
-				print("DEBUG: ",msg)
-				if(msg[0] == 'wasd'):
-					wasd(msg[1], msg[2])
-				
+				#print("DEBUG: ",msg)
+				if(msg[0]=='wasd'):
+					wasd(msg[1])
+				elif(msg[0]=='tilt'):
+					if(len(msg)==1):
+						continue
+					elif msg[1]=='+':
+						tilt(True)
+					else:
+						tilt(False)
 			c.send(bytes('Thank you for connecting', "utf-8"))
-			
 		c.close()
 
-def wasd(type, msg):
-	if(type == 'down'):
-		pyautogui.keyDown(msg)
-	else:
-		pyautogui.keyUp(msg)
+def wasd(message):
+	print(message)
+	pyautogui.keyDown(message)
+	time.sleep(0.5)
+	pyautogui.keyUp(message)
 	
-
+def tilt(message):
+	if message:
+		print('a')
+		pyautogui.keyDown('a')
+		time.sleep(0.01)
+		pyautogui.keyUp('a')
+	else:
+		print('d')
+		pyautogui.keyDown('d')
+		time.sleep(0.01)
+		pyautogui.keyUp('d')
+		
 if __name__=="__main__":
 	main()
