@@ -45,16 +45,17 @@ def main():
 				msg = msg.split("&")
 				print("DEBUG: ",msg)
 				if(msg[0] == 'wasd'):
-					wasd(msg[1])
+					wasd(msg[1], msg[2])
 				
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
 
-def wasd(message):
-	pyautogui.keyDown(message)
-	time.sleep(0.5)
-	pyautogui.keyUp(message)
+def wasd(type, msg):
+	if(type == 'down'):
+		pyautogui.keyDown(msg)
+	else:
+		pyautogui.keyUp(msg)
 	
 
 if __name__=="__main__":

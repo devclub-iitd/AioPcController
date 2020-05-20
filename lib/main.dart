@@ -202,73 +202,91 @@ class _WasdLayoutState extends State<WasdLayout> {
       appBar: AppBar(
         title: Text("WASD"),
       ),
-      body: GridView.count(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: GridView.count(
           crossAxisCount: 3,
           children: <Widget>[
             Center(
               
             ),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        _send('w');
-                      },
-                      child: Text('W'),
-                    ),
-                  )
-                ],
+              child:GestureDetector(
+                onTapDown: (_) {
+                   _send('down&w');
+                },
+                onTapUp: (_) {
+                   _send('up&w');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(30.0),
+                  child: Icon(
+                    Icons.arrow_upward,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
               ),
             ),
             Center(
               
             ),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        _send('a');
-                      },
-                      child: Text('A'),
-                    ),
-                  )
-                ],
+              child:GestureDetector(
+                onTapDown: (_) {
+                   _send('down&a');
+                },
+                onTapUp: (_) {
+                   _send('up&a');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(30.0),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
               ),
             ),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        _send('s');
-                      },
-                      child: Text('S'),
-                    ),
-                  )
-                ],
+              child:GestureDetector(
+                onTapDown: (_) {
+                   _send('down&s');
+                },
+                onTapUp: (_) {
+                   _send('up&s');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(30.0),
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
               ),
             ),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        _send('d');
-                      },
-                      child: Text('D'),
-                    ),
-                  )
-                ],
+              child:GestureDetector(
+                onTapDown: (_) {
+                   _send('down&d');
+                }, 
+                onTapUp: (_) {
+                   _send('up&d');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(30.0),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
               ),
             ),
             StreamBuilder(
@@ -285,7 +303,8 @@ class _WasdLayoutState extends State<WasdLayout> {
               },
             ),
           ],
-        )
+        ),
+      ),
     );
   }
 
