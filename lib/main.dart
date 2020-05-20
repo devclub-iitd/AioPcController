@@ -59,8 +59,14 @@ class HomeScreen extends StatelessWidget {
   void _connectIP(context) async {
     if (ipController.text.isNotEmpty) {
       String address = '${ipController.text}';
-      sock = await Socket.connect(address, 4444);
-      Navigator.pushNamed(context, '/layout_select');
+      try {
+        sock = await Socket.connect(address, 4444);
+        Navigator.pushNamed(context, '/layout_select');
+      }
+      on Exception catch(e){
+        print(e);
+        Navigator.pushNamed(context, '/');
+      }
     }
   }
 }
@@ -170,7 +176,7 @@ class _PingTestState extends State<PingTest> {
       print("Sending message");
       stopwatch.reset();
       stopwatch.start();
-      sock.write(_controller.text);
+      sock.write("ping&"+_controller.text+"%");
     }
   }
 
@@ -265,6 +271,19 @@ class _WasdLayoutState extends State<WasdLayout> {
                 ],
               ),
             ),
+            StreamBuilder(
+              stream: sock,
+              builder: (context, snapshot) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Text(snapshot.hasData
+                      ?   'Latency is ' +
+                          '${stopwatch.elapsedMilliseconds}' +
+                          ' ms'
+                      : ''),
+                );
+              },
+            ),
           ],
         )
     );
@@ -274,7 +293,7 @@ class _WasdLayoutState extends State<WasdLayout> {
     print("Sending " + char);
     stopwatch.reset();
     stopwatch.start();
-    sock.write('wasd'+'&'+char);
+    sock.write('wasd'+'&'+char+'%');
   }
 
   @override

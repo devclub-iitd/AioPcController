@@ -37,14 +37,16 @@ def main():
 		print ('Got connection from', addr)
 
 		while True:
-			message=c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
+			message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
 
-			message=message.split("&") #i use & to differtiate commands
-
-			print("DEBUG: ",message)
-			if(message[0] == 'wasd'):
-				wasd(message[1])
+			message = message.split("%") #use & to split tokens, and % to split messages.
 			
+			for msg in message:
+				msg = msg.split("&")
+				print("DEBUG: ",msg)
+				if(msg[0] == 'wasd'):
+					wasd(msg[1])
+				
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
