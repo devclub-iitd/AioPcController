@@ -83,31 +83,32 @@ void tsend(){
     sock.write("tilt&+%");
   }else if(gcurr<=-1){
     sock.write("tilt&-%");
-  }else{
-    sock.write("tilt&0%");
   }
 }
-class Gyro extends StatelessWidget {
+class Gyro extends StatefulWidget{
+  @override
+  _GyroState createState() => _GyroState();
+}
+class _GyroState extends State<Gyro> {
   @override
   Widget build(BuildContext context){
     tilt();
-    Timer.periodic(Duration(milliseconds:100),(Timer t){
-      tsend();
-      if(!tiltcontrol){
-        t.cancel();
+    Timer.periodic(Duration(seconds:1),(Timer t){
+      if(tiltcontrol){
+        tsend();
       }
     });
     return Scaffold(
       appBar: AppBar(
         title: Text("Tilt to Control"),
       ),
-      body: Center(
-        child: Checkbox(
-        value : tiltcontrol,
-        onChanged:(bool value){
-          setState(){
+      body: Center( 
+        child : Checkbox(
+        value: tiltcontrol,
+        onChanged: (bool value) {
+          setState(() {
             tiltcontrol=value;
-          }
+          });
         },
         )
       )
