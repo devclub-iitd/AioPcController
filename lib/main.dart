@@ -118,6 +118,7 @@ class LayoutSelect extends StatelessWidget {
   }
 }
 
+
 class PingTest extends StatefulWidget {
   @override
   _PingTestState createState() => _PingTestState();
@@ -182,7 +183,6 @@ class _PingTestState extends State<PingTest> {
 
   @override
   void dispose() {
-    print("A");
     super.dispose();
     print("Disposed");
   }
