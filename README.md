@@ -1,6 +1,6 @@
 # AIO pc Controller
 
-A new Flutter project.
+An app to play games on your pc using your mobile as controller.
 
 ## Getting Started
 
