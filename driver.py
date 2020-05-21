@@ -38,7 +38,7 @@ def main():
 			message = message.split("%") #use & to split tokens, and % to split messages.
 			for msg in message:
 				msg = msg.split("&")
-				#print("DEBUG: ",msg)
+				print("DEBUG: ",msg)
 				if(msg[0]=='wasd'):
 					wasd(msg[1])
 				elif(msg[0]=='tilt'):
@@ -46,7 +46,7 @@ def main():
 						continue
 					elif msg[1]=='+':
 						tilt(True)
-					else:
+					elif msg[1]=='-':
 						tilt(False)
 			c.send(bytes('Thank you for connecting', "utf-8"))
 		c.close()
@@ -61,12 +61,12 @@ def tilt(message):
 	if message:
 		print('a')
 		pyautogui.keyDown('a')
-		time.sleep(0.01)
+		time.sleep(0.05)
 		pyautogui.keyUp('a')
 	else:
 		print('d')
 		pyautogui.keyDown('d')
-		time.sleep(0.01)
+		time.sleep(0.05)
 		pyautogui.keyUp('d')
 		
 if __name__=="__main__":

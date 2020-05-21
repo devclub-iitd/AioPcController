@@ -1,14 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
-import 'package:timer_builder/timer_builder.dart';
+import 'dart:async';
 Socket sock;
+double gcurr = 0;
+bool tiltcontrol = false;
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -72,31 +72,45 @@ class HomeScreen extends StatelessWidget {
     }
   }
 }
-AccelerometerEvent event;
 void tilt(){
-  accelerometerEvents.listen((AccelerometerEvent event) {
-    if(event.y>=0.1){
-      sock.write("tilt&+%");
-    }else if(event.y<=-0.1){
-      sock.write("tilt&-%");
-    }else{
-      sock.write("tilt&0%");
-    }
+  final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
+    gcurr = event.y;
+    print(gcurr);
   });
 }
+void tsend(){
+  if(gcurr>=1){
+    sock.write("tilt&+%");
+  }else if(gcurr<=-1){
+    sock.write("tilt&-%");
+  }else{
+    sock.write("tilt&0%");
+  }
+}
 class Gyro extends StatelessWidget {
-  Stopwatch time = new Stopwatch();
   @override
   Widget build(BuildContext context){
-    return TimerBuilder.periodic(Duration(milliseconds:1000),
-      builder: (context) {
-        tilt();
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Tilt to Control"),
-          ),
-        );
+    tilt();
+    Timer.periodic(Duration(milliseconds:100),(Timer t){
+      tsend();
+      if(!tiltcontrol){
+        t.cancel();
       }
+    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tilt to Control"),
+      ),
+      body: Center(
+        child: Checkbox(
+        value : tiltcontrol,
+        onChanged:(bool value){
+          setState(){
+            tiltcontrol=value;
+          }
+        },
+        )
+      )
     );
   }
 }
