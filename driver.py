@@ -1,8 +1,13 @@
 import socket
-import pyautogui
+# import pyautogui
 import time
+from pynput.keyboard import Key, Controller
+from qrcode import QRCode
 
-pyautogui.PAUSE = 0.01
+# pyautogui.PAUSE = 0.01
+keyboard = Controller()
+
+serverIP = ''
 
 def main():
 	s = socket.socket()      
@@ -28,8 +33,15 @@ def main():
 		except:
 			print ("unexpected error while connecting to port")
      
-	s.listen()      
-	print ("socket is listening...")           
+	s.listen()
+	serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+	print("Connect at IP = "+serverIP)
+	print('Or scan this:')
+	qr = QRCode()
+	qr.add_data(serverIP)
+	qr.print_ascii()
+	print ("socket is listening...")
+
 	while True: 
 		
 		c, addr = s.accept()
@@ -42,20 +54,23 @@ def main():
 			message = message.split("%") #use & to split tokens, and % to split messages.
 			
 			for msg in message:
-				msg = msg.split("&")
-				print("DEBUG: ",msg)
-				if(msg[0] == 'wasd'):
-					wasd(msg[1], msg[2])
-				
+				if msg != "":
+					msg = msg.split("&")
+					print("DEBUG: ",msg)
+					if(msg[0] == 'wasd'):
+						wasd(msg[1], msg[2])
+					
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
 
 def wasd(type, msg):
 	if(type == 'down'):
-		pyautogui.keyDown(msg)
+		# pyautogui.keyDown(msg)
+		keyboard.press(msg)
 	else:
-		pyautogui.keyUp(msg)
+		# pyautogui.keyUp(msg)
+		keyboard.release(msg)
 	
 
 if __name__=="__main__":
