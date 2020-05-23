@@ -7,7 +7,6 @@ class WasdLayout extends StatefulWidget {
 }
 
 class _WasdLayoutState extends State<WasdLayout> {
-  TextEditingController _controller = TextEditingController();
   Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
