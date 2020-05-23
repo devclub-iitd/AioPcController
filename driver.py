@@ -28,7 +28,7 @@ def main():
 			break
 		except OSError:
 			print("Port " + str(port) + " is already in use. Please use the following command:")
-			print("lsof -n -i4TCP:4444 | grep LISTEN")
+			print("lsof -n -i4TCP:" + str(port) +" | grep LISTEN")
 			exit()
 		except:
 			print ("unexpected error while connecting to port")
