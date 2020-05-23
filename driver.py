@@ -15,7 +15,7 @@ def main():
 
 	while True:
 		try:
-			print("enter port (leave blank for 4444): ",end="")
+			print("Enter port (leave blank for 4444): ",end="")
 			inp = input()
 			
 			if inp == '': 
@@ -24,14 +24,14 @@ def main():
 				port = int(inp)
 			
 			s.bind(('', port))
-			print ("socket binded to %s" %(port))
+			print ("Socket binded to %s" %(port))
 			break
 		except OSError:
 			print("Port " + str(port) + " is already in use. Please use the following command:")
 			print("lsof -n -i4TCP:" + str(port) +" | grep LISTEN")
 			exit()
 		except:
-			print ("unexpected error while connecting to port")
+			print ("Unexpected error while connecting to port")
      
 	s.listen()
 	serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
@@ -40,7 +40,7 @@ def main():
 	qr = QRCode()
 	qr.add_data(serverIP)
 	qr.print_ascii()
-	print ("socket is listening...")
+	print ("Socket is listening...")
 
 	while True: 
 		
