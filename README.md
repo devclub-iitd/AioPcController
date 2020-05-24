@@ -1,6 +1,16 @@
 # AIO pc Controller
 
-An app to play games on your pc using your mobile as controller.
+An app to play games on your pc using your mobile as controller. To know more about the product visit the [website](https://pavasgdb.github.io/aio_pc_controller/).
+
+## Table of contents
+
+- [Documentation](#documentation)
+- [Execurion](#execution)
+
+
+## Documentation
+The documentation of the project could be found [here](https://docs.google.com/document/d/1wJwipxq7_pzpq92amRT0c6gjVb41Iz3w94n5-p0nl9o/edit#). 
+
 
 ## Getting Started
 
