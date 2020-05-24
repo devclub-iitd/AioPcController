@@ -27,6 +27,9 @@ class _WasdLayoutState extends State<WasdLayout> {
                 onTapDown: (_) {
                    _send('down&w');
                 },
+                onTapCancel: () { 
+                  _send('up&w'); 
+                },
                 onTapUp: (_) {
                    _send('up&w');
                 },
@@ -49,6 +52,9 @@ class _WasdLayoutState extends State<WasdLayout> {
                 onTapDown: (_) {
                    _send('down&a');
                 },
+                onTapCancel: () { 
+                  _send('up&a'); 
+                },
                 onTapUp: (_) {
                    _send('up&a');
                 },
@@ -68,6 +74,9 @@ class _WasdLayoutState extends State<WasdLayout> {
                 onTapDown: (_) {
                    _send('down&s');
                 },
+                onTapCancel: () { 
+                  _send('up&s'); 
+                },
                 onTapUp: (_) {
                    _send('up&s');
                 },
@@ -86,7 +95,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               child:GestureDetector(
                 onTapDown: (_) {
                    _send('down&d');
-                }, 
+                },
+                onTapCancel: () { 
+                  _send('up&d'); 
+                },
                 onTapUp: (_) {
                    _send('up&d');
                 },
