@@ -13,36 +13,41 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("AIO PC Controller"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                controller: ipController,
-                decoration: InputDecoration(
-                    labelText: 'Enter the IP address of your PC'),
-              ),
-               TextFormField(
-                controller: portController,
-                decoration: InputDecoration(
-                    labelText: 'Enter Port'
-                    ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-              ),
-              Center(
-                child: RaisedButton(
-                    onPressed: () {
-                      _connectIP(context);
-                    },
-                    child: Text('Connect'),
+      body: SingleChildScrollView(
+        child:Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  controller: ipController,
+                  decoration: InputDecoration(
+                      labelText: 'Enter the IP address of your PC'),
                 ),
-              ),
-            ],
+                TextFormField(
+                  controller: portController,
+                  decoration: InputDecoration(
+                      labelText: 'Enter Port'
+                      ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        _connectIP(context);
+                      },
+                      child: Text('Connect'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
