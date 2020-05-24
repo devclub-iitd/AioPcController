@@ -5,7 +5,7 @@ An app to play games on your pc using your mobile as controller. To know more ab
 ## Table of contents
 
 - [Documentation](#documentation)
-- [Execurion](#execution)
+- [Execution](#execution)
 
 
 ## Documentation
