@@ -2,6 +2,7 @@ import socket
 # import pyautogui
 import time
 from pynput.keyboard import Key, Controller
+import subprocess
 from qrcode import QRCode
 
 # pyautogui.PAUSE = 0.01
@@ -34,7 +35,12 @@ def main():
 			print ("Unexpected error while connecting to port")
      
 	s.listen()
-	serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+	try:
+		serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+	except socket.gaierror: 
+		output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
+		serverIP = output+":"+str(port)
+	
 	print("Connect at IP = "+serverIP)
 	print('Or scan this:')
 	qr = QRCode()
