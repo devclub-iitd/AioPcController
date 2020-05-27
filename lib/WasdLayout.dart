@@ -74,32 +74,6 @@ class _WasdLayoutState extends State<WasdLayout> {
               top: 165.0,
               child: GestureDetector(
                 onTapDown: (_) {
-                   _send('down&shift');
-                },
-                onTapCancel: () { 
-                  _send('up&shift');
-                },
-                onTapUp: (_) {
-                   _send('up&shift');
-                },
-                child: Container(
-                  color: Colors.blue,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'Sh',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 175.0,
-              top: 70.0,
-              child: GestureDetector(
-                onTapDown: (_) {
                    _send('down&space');
                 },
                 onTapCancel: () { 
@@ -111,12 +85,34 @@ class _WasdLayoutState extends State<WasdLayout> {
                 child: Container(
                   color: Colors.blue,
                   padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'Sp',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      ),
+                  child: Icon(
+                    Icons.space_bar,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 175.0,
+              top: 70.0,
+              child: GestureDetector(
+                onTapDown: (_) {
+                   _send('down&shift');
+                },
+                onTapCancel: () { 
+                  _send('up&shift');
+                },
+                onTapUp: (_) {
+                   _send('up&shift');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(20.0),
+                  child: Icon(
+                    Icons.keyboard_capslock,
+                    color: Colors.white,
+                    size: 24.0,
                   ),
                 ),
               ),
