@@ -70,6 +70,58 @@ class _WasdLayoutState extends State<WasdLayout> {
               ),
             ),
             Positioned(
+              right: 200.0,
+              top: 165.0,
+              child: GestureDetector(
+                onTapDown: (_) {
+                   _send('down&shift');
+                },
+                onTapCancel: () { 
+                  _send('up&shift');
+                },
+                onTapUp: (_) {
+                   _send('up&shift');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Sh',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 175.0,
+              top: 70.0,
+              child: GestureDetector(
+                onTapDown: (_) {
+                   _send('down&space');
+                },
+                onTapCancel: () { 
+                  _send('up&space');
+                },
+                onTapUp: (_) {
+                   _send('up&space');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Sp',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
               left: 250.0,
               top: 165.0,
               child: GestureDetector(
