@@ -22,15 +22,14 @@ class myThread (threading.Thread):
 	def run(self):
 		global sub
 		while(True):
-			if(button != '$'):
-				sub = button
-				if(duty_ratio != 0):
-					keyboard.press(sub)
-					#pyautogui.keyDown(sub)
-					time.sleep(0.005*duty_ratio)
-					keyboard.release(sub)
-					#pyautogui.keyUp(button)
-					time.sleep((0.005)*(1-duty_ratio))
+			if(button == '$'):
+				time.sleep(0.05)
+				continue
+			sub = button
+			keyboard.press(sub)
+			time.sleep(0.05*duty_ratio)
+			keyboard.release(sub)
+			time.sleep((0.05)*(1-duty_ratio))
 
 
 thread1 = myThread(1, "Thread-1", 1)
