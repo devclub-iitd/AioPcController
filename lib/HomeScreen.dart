@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
                   controller: ipController,
                   decoration: InputDecoration(
                       labelText: 'Enter the IP address of your PC'),
+                  keyboardType: TextInputType.number,
                 ),
                 TextFormField(
                   controller: portController,
