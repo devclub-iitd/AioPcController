@@ -6,6 +6,7 @@ import 'HomeScreen.dart';
 import 'WasdLayout.dart';
 import 'PingTest.dart';
 import 'tilt.dart';
+import 'Custom.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/ping_test': (context) => PingTest(),
         '/wasd_layout': (context) => WasdLayout(),
         '/gyro':(context) => Gyro(),
+        '/custom':(context) => Custom(),
       },
     );
   }
