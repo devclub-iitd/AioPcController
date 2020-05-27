@@ -3,15 +3,40 @@ import socket
 import time
 from pynput.keyboard import Key, Controller
 import subprocess
+import threading
 from qrcode import QRCode
-
 # pyautogui.PAUSE = 0.01
 keyboard = Controller()
-
+button = '$'
+duty_ratio = 0
+sub = '$'
 serverIP = ''
 
+class myThread (threading.Thread):
+	def __init__(self, threadID, name, counter):
+		threading.Thread.__init__(self)
+		self.threadID = threadID
+		self.name = name
+		self.counter = counter
+
+	def run(self):
+		global sub
+		while(True):
+			if(button != '$'):
+				sub = button
+				if(duty_ratio != 0):
+					keyboard.press(sub)
+					#pyautogui.keyDown(sub)
+					time.sleep(0.005*duty_ratio)
+					keyboard.release(sub)
+					#pyautogui.keyUp(button)
+					time.sleep((0.005)*(1-duty_ratio))
+
+
+thread1 = myThread(1, "Thread-1", 1)
 def main():
 	s = socket.socket()      
+	thread1.start()
 	print ("Socket successfully created.")
 
 	while True:
@@ -60,12 +85,23 @@ def main():
 			message = message.split("%") #use & to split tokens, and % to split messages.
 			
 			for msg in message:
-				if msg != "":
-					msg = msg.split("&")
-					print("DEBUG: ",msg)
-					if(msg[0] == 'wasd'):
-						wasd(msg[1], msg[2])
-					
+				msg = msg.split("&")
+				print("DEBUG: ", msg)
+				if(msg[0] == 'wasd'):
+    					wasd(msg[1], msg[2])
+				elif(msg[0] == 'tilt'):
+					if(len(msg) == 2):
+						if(msg[1] == '0'):
+							global button
+							button = '$'
+					if(len(msg) < 3):
+						continue
+					elif(msg[2] == ''):
+						continue
+					elif msg[1] == '+':
+						tilt(True, float(msg[2]))
+					elif msg[1] == '-':
+						tilt(False, float(msg[2]))
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
@@ -77,7 +113,24 @@ def wasd(type, msg):
 	else:
 		# pyautogui.keyUp(msg)
 		keyboard.release(msg)
-	
+
+def press(duty_ratio,button):
+	j = 15
+	for i in range (j-6):
+		pyautogui.keyDown(button)
+		time.sleep((0.15/(j))*duty_ratio)
+		pyautogui.keyUp(button)
+
+
+def tilt(message,value):
+	global button
+	global duty_ratio
+	if message:
+		button = 'a'
+		duty_ratio = value
+	else:
+		button = 'd'
+		duty_ratio = value	
 
 if __name__=="__main__":
 	main()
