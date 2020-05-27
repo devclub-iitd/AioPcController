@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'config.dart';
 
 class WasdLayout extends StatefulWidget {
@@ -10,20 +11,20 @@ class _WasdLayoutState extends State<WasdLayout> {
   Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     return Scaffold(
       appBar: AppBar(
         title: Text("WASD"),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 3,
+      body: Stack(
           children: <Widget>[
-            Center(
-              
-            ),
-            Center(
-              child:GestureDetector(
+            Positioned(
+              right: 100.0,
+              top: 110.0,
+              child: GestureDetector(
                 onTapDown: (_) {
                    _send('down&w');
                 },
@@ -35,7 +36,7 @@ class _WasdLayoutState extends State<WasdLayout> {
                 },
                 child: Container(
                   color: Colors.blue,
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Icon(
                     Icons.arrow_upward,
                     color: Colors.white,
@@ -44,45 +45,22 @@ class _WasdLayoutState extends State<WasdLayout> {
                 ),
               ),
             ),
-            Center(
-              
-            ),
-            Center(
-              child:GestureDetector(
-                onTapDown: (_) {
-                   _send('down&a');
-                },
-                onTapCancel: () { 
-                  _send('up&a'); 
-                },
-                onTapUp: (_) {
-                   _send('up&a');
-                },
-                child: Container(
-                  color: Colors.blue,
-                  padding: const EdgeInsets.all(30.0),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child:GestureDetector(
+            Positioned(
+              right: 100.0,
+              top: 220.0,
+              child: GestureDetector(
                 onTapDown: (_) {
                    _send('down&s');
                 },
                 onTapCancel: () { 
-                  _send('up&s'); 
+                  _send('up&s');
                 },
                 onTapUp: (_) {
                    _send('up&s');
                 },
                 child: Container(
                   color: Colors.blue,
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Icon(
                     Icons.arrow_downward,
                     color: Colors.white,
@@ -91,20 +69,22 @@ class _WasdLayoutState extends State<WasdLayout> {
                 ),
               ),
             ),
-            Center(
-              child:GestureDetector(
+            Positioned(
+              left: 250.0,
+              top: 165.0,
+              child: GestureDetector(
                 onTapDown: (_) {
                    _send('down&d');
                 },
                 onTapCancel: () { 
-                  _send('up&d'); 
+                  _send('up&d');
                 },
                 onTapUp: (_) {
                    _send('up&d');
                 },
                 child: Container(
                   color: Colors.blue,
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
@@ -113,23 +93,33 @@ class _WasdLayoutState extends State<WasdLayout> {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream: sock,
-              builder: (context, snapshot) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: Text(snapshot.hasData
-                      ?   'Latency is ' +
-                          '${stopwatch.elapsedMilliseconds}' +
-                          ' ms'
-                      : ''),
-                );
-              },
+            Positioned(
+              left: 100.0,
+              top: 165.0,
+              child: GestureDetector(
+                onTapDown: (_) {
+                   _send('down&a');
+                },
+                onTapCancel: () { 
+                  _send('up&a');
+                },
+                onTapUp: (_) {
+                   _send('up&a');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(20.0),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   void _send(char) {
@@ -141,8 +131,15 @@ class _WasdLayoutState extends State<WasdLayout> {
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     print("A");
     super.dispose();
     print("Disposed");
+
   }
 }
