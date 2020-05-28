@@ -69,60 +69,62 @@ class _GyroState extends State<Gyro> {
         title: Text("Tilt to Control"),
       ),
       body:Padding(padding: EdgeInsets.all(2.0),
-        child: GridView.count(crossAxisCount: 3,
-        children: <Widget>[
-        Center(
-          child:GestureDetector(
-            onTapDown: (_) {
-              _send('down&w');
-            },
-            onTapUp: (_) {
-               _send('up&w');
-            },
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(80.0),
-              child: Icon(
-                Icons.arrow_upward,
-                color: Colors.white,
-                size: 45.0,
+        child: Row(
+          children: <Widget>[
+            Center(
+              child:GestureDetector(
+                onPanStart: (details) {
+                  _send('down&s');
+                  print('start');
+                },
+                onPanEnd: (details) {
+                  _send('up&s');
+                  print('end');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(80.0),
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: Colors.white,
+                    size: 45.0,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-          Center( 
-            child : Checkbox(
-            value: tiltcontrol,
-            onChanged: (bool value) {
-              if(!value){
-                sock.write("tilt&0%");
-              }
-              setState((){
-                tiltcontrol=value;
-              });
-            },
-          )
-        ),
-        Center(
-          child:GestureDetector(
-            onTapDown: (_) {
-              _send('down&s');
-            },
-            onTapUp: (_) {
-               _send('up&s');
-            },
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(80.0),
-              child: Icon(
-                Icons.arrow_downward,
-                color: Colors.white,
-                size: 45.0,
+              Center( 
+                child : Checkbox(
+                value: tiltcontrol,
+                onChanged: (bool value) {
+                  if(!value){
+                    sock.write("tilt&0%");
+                  }
+                  setState((){
+                    tiltcontrol=value;
+                  });
+                },
+              )
+            ),
+            Center(
+              child:GestureDetector(
+                onPanStart: (_) {
+                  _send('down&w');
+                },
+                onPanEnd: (_) {
+                  _send('up&w');
+                },
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(80.0),
+                  child: Icon(
+                    Icons.arrow_upward,
+                    color: Colors.white,
+                    size: 45.0,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ]
+        ]
     )
     )
     );

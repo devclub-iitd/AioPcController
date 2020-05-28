@@ -25,13 +25,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               right: 100.0,
               top: 110.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&w');
                 },
-                onTapCancel: () { 
-                  _send('up&w'); 
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&w');
                 },
                 child: Container(
@@ -49,13 +46,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               right: 100.0,
               top: 220.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&s');
                 },
-                onTapCancel: () { 
-                  _send('up&s');
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&s');
                 },
                 child: Container(
@@ -73,13 +67,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               right: 200.0,
               top: 165.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&space');
                 },
-                onTapCancel: () { 
-                  _send('up&space');
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&space');
                 },
                 child: Container(
@@ -97,13 +88,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               left: 175.0,
               top: 70.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&shift');
                 },
-                onTapCancel: () { 
-                  _send('up&shift');
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&shift');
                 },
                 child: Container(
@@ -121,13 +109,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               left: 250.0,
               top: 165.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&d');
                 },
-                onTapCancel: () { 
-                  _send('up&d');
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&d');
                 },
                 child: Container(
@@ -145,13 +130,10 @@ class _WasdLayoutState extends State<WasdLayout> {
               left: 100.0,
               top: 165.0,
               child: GestureDetector(
-                onTapDown: (_) {
+                onPanStart: (_) {
                    _send('down&a');
                 },
-                onTapCancel: () { 
-                  _send('up&a');
-                },
-                onTapUp: (_) {
+                onPanEnd: (_) {
                    _send('up&a');
                 },
                 child: Container(
