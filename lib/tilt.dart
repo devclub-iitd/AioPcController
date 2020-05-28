@@ -39,8 +39,9 @@ class _GyroState extends State<Gyro> {
   @override
   void initState(){
     super.initState();
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
   }
   @override
