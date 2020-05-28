@@ -24,6 +24,14 @@ class CustomState extends State<Custom> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Custom Layout"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: (){
+                
+              },
+            )
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
