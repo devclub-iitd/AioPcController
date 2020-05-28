@@ -18,17 +18,24 @@ class CustomState extends State<Custom> {
       maxy = 300.0,
       minsz = 10.0,
       maxsz = 90.0;
-
+  
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Custom Layout"),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save),
               onPressed: (){
-                
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return LayoutSave(this);
+                    },
+                );
               },
             )
           ],
