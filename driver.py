@@ -23,13 +23,13 @@ class myThread (threading.Thread):
 		global sub
 		while(True):
 			if button == '$'or duty_ratio==0 :
-				time.sleep(0.005)
+				time.sleep(0.01)
 				continue
 			sub = button
 			keyboard.press(sub)
-			time.sleep(0.005*duty_ratio)
+			time.sleep(0.01*duty_ratio)
 			keyboard.release(sub)
-			time.sleep((0.005)*(1-duty_ratio))
+			time.sleep((0.01)*(1-duty_ratio))
 
 
 thread1 = myThread(1, "Thread-1", 1)
