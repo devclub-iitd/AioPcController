@@ -21,11 +21,11 @@ void _send(char) {
   sock.write('wasd'+'&'+char+'%');
 }
 void tsend(){
-  if(gcurr>0.4){
-    String s = min(gcurr/10,1).toString();
+  if(gcurr>0.6){
+    String s = (min(gcurr/7,1)*min(gcurr/7,1)).toString();
     sock.write("tilt&+&"+s+'%');
-  }else if(gcurr<-0.4){
-    String s =  min((-1*gcurr)/10,1).toString();
+  }else if(gcurr<-0.6){
+    String s =  (min((-1*gcurr)/7,1)*min((-1*gcurr)/7,1)).toString();
     sock.write("tilt&-&"+s+'%');
   }else{
     sock.write("tilt&+&"+'0'+'%');
