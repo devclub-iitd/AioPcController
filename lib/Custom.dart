@@ -18,6 +18,9 @@ class CustomState extends State<Custom> {
       maxy = 300.0,
       minsz = 10.0,
       maxsz = 90.0;
+  void delete_btn(){
+    print("check");
+  }
 
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
@@ -35,8 +38,7 @@ class CustomState extends State<Custom> {
                     content: Text('Changes saved to "$layoutName"'),
                     duration: Duration(seconds: 2),
                   ));
-                }
-                else{
+                } else {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -136,6 +138,14 @@ class CustomButtonState extends State<CustomButton> {
             this.widget.parent.setState(() {
               this.widget.parent.selected = this.widget.id;
             });
+          },
+          onLongPress: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ButtonDelete(this);
+              },
+            );
           },
           onPanUpdate: (tapInfo) {
             setState(() {

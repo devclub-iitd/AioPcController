@@ -166,24 +166,33 @@ class LayoutSaveState extends State<LayoutSave> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: RaisedButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         var check = await createTable(layoutName.text);
-                        if(check){
+                        if (check) {
                           this.widget.parent.layoutName = layoutName.text;
-                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text(
-                                'Created and saved layout "${layoutName.text}"'),
-                            duration: Duration(seconds: 2),
-                          ));
+                          this
+                              .widget
+                              .parent
+                              .scaffoldKey
+                              .currentState
+                              .showSnackBar(SnackBar(
+                                content: Text(
+                                    'Created and saved layout "${layoutName.text}"'),
+                                duration: Duration(seconds: 2),
+                              ));
                           Navigator.pop(context);
-                        }
-                        else{
-                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text(
-                                'There already exists a layout with name "${layoutName.text}"'),
-                            duration: Duration(seconds: 2),
-                          ));
+                        } else {
+                          this
+                              .widget
+                              .parent
+                              .scaffoldKey
+                              .currentState
+                              .showSnackBar(SnackBar(
+                                content: Text(
+                                    'There already exists a layout with name "${layoutName.text}"'),
+                                duration: Duration(seconds: 2),
+                              ));
                         }
                       }
                     },
@@ -199,4 +208,69 @@ class LayoutSaveState extends State<LayoutSave> {
   }
 }
 
+class ButtonDelete extends StatefulWidget {
+  final CustomButtonState parent;
+  ButtonDeleteState state;
+  ButtonDelete(this.parent);
 
+  @override
+  ButtonDeleteState createState() {
+    this.state = new ButtonDeleteState();
+    return this.state;
+  }
+}
+
+class ButtonDeleteState extends State<ButtonDelete> {
+  TextEditingController layoutName = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Container(
+        width: 300.0,
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Are you sure you want to delete this button?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      this.widget.parent.widget.parent.delete_btn();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Delete'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
