@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'Dialogs.dart';
@@ -11,6 +13,7 @@ class Custom extends StatefulWidget {
 class CustomState extends State<Custom> {
   var layoutName = 'untitled';
   List<CustomButton> buttonList = [];
+
   var selected = 0;
   var minx = 1.0,
       maxx = 300.0,
@@ -18,8 +21,11 @@ class CustomState extends State<Custom> {
       maxy = 300.0,
       minsz = 10.0,
       maxsz = 90.0;
-  void delete_btn(){
-    print("check");
+  void deleteButton(int id){
+    buttonList[id].state.setState((){
+      buttonList[id].x = -100;
+      buttonList[id].y = -100;
+    });
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -76,9 +82,9 @@ class CustomState extends State<Custom> {
                 onChanged: (double newValue) {
                   try {
                     buttonList[selected].state.setState(() {
-                      buttonList[selected].state.sz = newValue;
+                      buttonList[selected].sz = newValue;
                     });
-                    setState(() {});
+                    setState((){});
                   } on Exception {}
                 },
               ))
@@ -90,7 +96,7 @@ class CustomState extends State<Custom> {
       return minsz;
     }
     try {
-      final sz = buttonList[selected].state.sz;
+      final sz = buttonList[selected].sz;
       return min(max(sz, minsz), maxsz);
     } on NoSuchMethodError {
       return minsz;
@@ -102,8 +108,11 @@ class CustomState extends State<Custom> {
 
 class CustomButton extends StatefulWidget {
   final CustomState parent;
-  final int id;
+  int id;
   final String type;
+  double x = 10.0;
+  double y = 10.0;
+  double sz = 50.0;
   CustomButton(this.parent, this.id, this.type);
   CustomButtonState state;
 
@@ -112,27 +121,26 @@ class CustomButton extends StatefulWidget {
     this.state = new CustomButtonState();
     return this.state;
   }
+
 }
 
 class CustomButtonState extends State<CustomButton> {
-  double x = 10.0;
-  double y = 10.0;
-  double sz = 50.0;
+  
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: (x),
-      top: (y),
+      left: (widget.x),
+      top: (widget.y),
       child: GestureDetector(
           child: Container(
-            height: (sz),
-            width: (sz),
+            height: (widget.sz),
+            width: (widget.sz),
             decoration: BoxDecoration(
                 gradient: RadialGradient(
-                    focalRadius: sz * 3, colors: [Colors.orange, Colors.red])),
-            padding: EdgeInsets.all(sz / 3),
-            child: ButtonIcon(this.widget.type, sz),
+                    focalRadius: widget.sz * 3, colors: [Colors.orange, Colors.red])),
+            padding: EdgeInsets.all(widget.sz / 3),
+            child: ButtonIcon(this.widget.type, widget.sz),
           ),
           onTapDown: (_) {
             this.widget.parent.setState(() {
@@ -149,8 +157,8 @@ class CustomButtonState extends State<CustomButton> {
           },
           onPanUpdate: (tapInfo) {
             setState(() {
-              x += tapInfo.delta.dx;
-              y += tapInfo.delta.dy;
+              widget.x += tapInfo.delta.dx;
+              widget.y += tapInfo.delta.dy;
             });
           }),
     );

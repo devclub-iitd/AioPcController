@@ -23,7 +23,8 @@ class LoadCustomState extends State<LoadCustom> {
                   icon: Icon(Icons.delete),
                   onPressed: (){
                     deleteTable(tableList[i]);
-                    loadCustomBuilder(context);
+                    rows.removeAt(i);
+                    setState((){});
                   }
                 ),
               )

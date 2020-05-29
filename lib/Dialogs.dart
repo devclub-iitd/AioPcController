@@ -251,7 +251,7 @@ class ButtonDeleteState extends State<ButtonDelete> {
                   padding: const EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
-                      this.widget.parent.widget.parent.delete_btn();
+                      this.widget.parent.widget.parent.deleteButton(this.widget.parent.widget.id);
                       Navigator.pop(context);
                     },
                     child: Text('Delete'),
