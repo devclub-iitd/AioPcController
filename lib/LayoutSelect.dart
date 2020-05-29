@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'LoadCustom.dart';
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
 
@@ -69,6 +69,21 @@ class LayoutSelect extends StatelessWidget {
                         Navigator.pushNamed(context, '/custom');
                       },
                       child: Text('Create Custom Layout'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        loadCustomBuilder(context);
+                      },
+                      child: Text('Load Custom Layout'),
                     ),
                   )
                 ],

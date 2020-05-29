@@ -7,6 +7,7 @@ import 'WasdLayout.dart';
 import 'PingTest.dart';
 import 'tilt.dart';
 import 'Custom.dart';
+import 'LoadCustom.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/wasd_layout': (context) => WasdLayout(),
         '/gyro':(context) => Gyro(),
         '/custom':(context) => Custom(),
+        '/loadcustom':(context) => LoadCustom(),
       },
     );
   }

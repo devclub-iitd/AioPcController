@@ -25,3 +25,32 @@ class DatabaseHelper {
     });
   }
 }
+
+Future<bool> createTable(tableName) async {
+  var db = await openDatabase('customLayouts.db');
+  try{
+    List<Map<String, dynamic>> records = await db.query(tableName);
+    print(records);
+    db.close();
+    return false;
+  }
+  on DatabaseException{
+    print('table not found');
+    await db.execute(
+      'CREATE TABLE $tableName (id INTEGER PRIMARY KEY, type TEXT, x REAL, y REAL, z REAL)');
+    db.close();
+    return true;
+  }
+}
+
+Future<List<String> > getTables() async{
+  var db = await openDatabase('customLayouts.db');
+  var tables = await db.rawQuery(
+  'SELECT name FROM sqlite_master WHERE type="table" ORDER BY name');
+  List<String> tableList = [];
+  for(var obj in tables){
+    tableList.add(obj['name']);
+  }
+  return tableList;
+
+}

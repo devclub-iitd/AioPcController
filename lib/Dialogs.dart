@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'Custom.dart';
+import 'DatabaseHelper.dart';
 
 class ButtonChoice extends StatefulWidget {
   final CustomState parent;
@@ -146,8 +148,7 @@ class LayoutSaveState extends State<LayoutSave> {
                   // value = value.trim();
                   if (value.isEmpty) {
                     return 'Please enter some text';
-                  }
-                  else{
+                  } else {
                     String name = '$value';
                     for (int i = 0; i < name.length; i++) {
                       var ch = name.codeUnitAt(i);
@@ -155,7 +156,7 @@ class LayoutSaveState extends State<LayoutSave> {
                           !(ch >= 48 && ch <= 57) &&
                           !(ch >= 65 && ch <= 90) &&
                           !(ch >= 97 && ch <= 122))
-                          return 'Layout name must only consist of digits, alphabets and spaces';
+                        return 'Layout name must only consist of digits, alphabets and spaces';
                     }
                   }
                   return null;
@@ -165,16 +166,25 @@ class LayoutSaveState extends State<LayoutSave> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       if (_formKey.currentState.validate()) {
-                        print(layoutName.text);
-                        this.widget.parent.scaffoldKey.currentState.showSnackBar(
-                          SnackBar(
-                            content: Text('Layout saved'),
+                        var check = await createTable(layoutName.text);
+                        if(check){
+                          this.widget.parent.layoutName = layoutName.text;
+                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text(
+                                'Created and saved layout "${layoutName.text}"'),
                             duration: Duration(seconds: 2),
-                          )
-                        );
-                        Navigator.pop(context);
+                          ));
+                          Navigator.pop(context);
+                        }
+                        else{
+                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text(
+                                'There already exists a layout with name "${layoutName.text}"'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
                       }
                     },
                     child: Text('Save'),
@@ -188,3 +198,5 @@ class LayoutSaveState extends State<LayoutSave> {
     );
   }
 }
+
+
