@@ -11,30 +11,34 @@ class LoadCustomState extends State<LoadCustom> {
 
   @override
   Widget build(BuildContext context) {
-
+    
     List<Widget> rows = new List<Widget>();
+
     for(var i = 0; i < tableList.length; i++){
-        rows.add(new Card(
-          child: ListTile(
-              title: Text(tableList[i]),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: (){
-                  
-                }
-              ),
+        rows.add(new Container(
+          child: Card(
+            child: ListTile(
+                title: Text(tableList[i]),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: (){
+                    deleteTable(tableList[i]);
+                    loadCustomBuilder(context);
+                  }
+                ),
+              )
             )
-          )
-        );
+        )
+      );
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Load Custom Layout"),
-        ),
-        body: ListView(
-          children: rows,
-        )
+      appBar: AppBar(
+        title: Text("Load Custom Layout"),
+      ),
+      body: ListView(
+        children: rows,
+      )
     );
   }
 }

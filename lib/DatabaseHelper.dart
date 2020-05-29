@@ -35,9 +35,8 @@ Future<bool> createTable(tableName) async {
     return false;
   }
   on DatabaseException{
-    print('table not found');
     await db.execute(
-      'CREATE TABLE $tableName (id INTEGER PRIMARY KEY, type TEXT, x REAL, y REAL, z REAL)');
+      'CREATE TABLE [$tableName] (id INTEGER PRIMARY KEY, type TEXT, x REAL, y REAL, z REAL)');
     db.close();
     return true;
   }
@@ -49,8 +48,17 @@ Future<List<String> > getTables() async{
   'SELECT name FROM sqlite_master WHERE type="table" ORDER BY name');
   List<String> tableList = [];
   for(var obj in tables){
-    tableList.add(obj['name']);
+    if(obj['name'] != 'android_metadata')
+      tableList.add(obj['name']);
   }
+  db.close();
   return tableList;
+}
 
+void deleteTable(String tableName) async{
+  var db = await openDatabase('customLayouts.db');
+  await db.execute(
+    'DROP TABLE IF EXISTS [$tableName]'
+  );
+  db.close();
 }
