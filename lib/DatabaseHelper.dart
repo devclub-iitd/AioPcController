@@ -36,7 +36,7 @@ Future<bool> createTable(tableName) async {
   }
   on DatabaseException{
     await db.execute(
-      'CREATE TABLE [$tableName] (id INTEGER PRIMARY KEY, type TEXT, x REAL, y REAL, z REAL)');
+      'CREATE TABLE [$tableName] (id INTEGER PRIMARY KEY, type TEXT, x REAL, y REAL, sz REAL)');
     db.close();
     return true;
   }
@@ -60,5 +60,22 @@ void deleteTable(String tableName) async{
   await db.execute(
     'DROP TABLE IF EXISTS [$tableName]'
   );
+  db.close();
+}
+
+void saveButtons(List<Map<String,dynamic>> buttonList, String layoutName) async{
+  var db = await openDatabase('customLayouts.db');
+  
+  await db.execute(
+    'DELETE FROM [$layoutName]'
+  );
+  await db.transaction((txn) async {
+    for(int i=0;i<buttonList.length;i++){
+      if(buttonList[i]['x']>=-50){
+        await txn.rawInsert(
+          'INSERT INTO [$layoutName](type, x, y, sz) VALUES("${buttonList[i]['type']}", ${buttonList[i]['x']}, ${buttonList[i]['y']}, ${buttonList[i]['sz']})');
+        }
+    } 
+  });
   db.close();
 }

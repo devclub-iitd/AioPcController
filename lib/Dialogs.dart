@@ -170,6 +170,11 @@ class LayoutSaveState extends State<LayoutSave> {
                       if (_formKey.currentState.validate()) {
                         var check = await createTable(layoutName.text);
                         if (check) {
+                          List<Map<String,dynamic>> buttonONList = [];
+                          for(int i=0;i<this.widget.parent.buttonList.length;i++){
+                            buttonONList.add(this.widget.parent.buttonList[i].toMap());
+                          }
+                          saveButtons(buttonONList,layoutName.text);
                           this.widget.parent.layoutName = layoutName.text;
                           this
                               .widget

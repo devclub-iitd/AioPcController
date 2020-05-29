@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'Dialogs.dart';
 import 'ButtonIcons.dart';
+import 'DatabaseHelper.dart';
 
 class Custom extends StatefulWidget {
   @override
@@ -15,12 +16,7 @@ class CustomState extends State<Custom> {
   List<CustomButton> buttonList = [];
 
   var selected = 0;
-  var minx = 1.0,
-      maxx = 300.0,
-      miny = 1.0,
-      maxy = 300.0,
-      minsz = 10.0,
-      maxsz = 90.0;
+  var minsz = 10.0, maxsz = 90.0;
   void deleteButton(int id){
     buttonList[id].state.setState((){
       buttonList[id].x = -100;
@@ -40,6 +36,11 @@ class CustomState extends State<Custom> {
               icon: Icon(Icons.save),
               onPressed: () {
                 if (layoutName != 'untitled') {
+                  List<Map<String,dynamic>> buttonONList = [];
+                  for(int i=0;i<buttonList.length;i++){
+                    buttonONList.add(buttonList[i].toMap());
+                  }
+                  saveButtons(buttonONList,layoutName);
                   scaffoldKey.currentState.showSnackBar(SnackBar(
                     content: Text('Changes saved to "$layoutName"'),
                     duration: Duration(seconds: 2),
@@ -115,6 +116,10 @@ class CustomButton extends StatefulWidget {
   double sz = 50.0;
   CustomButton(this.parent, this.id, this.type);
   CustomButtonState state;
+
+  Map<String, dynamic> toMap() {
+    return {'type': type, 'x': x, 'y':y, 'sz':sz};
+  }
 
   @override
   CustomButtonState createState() {

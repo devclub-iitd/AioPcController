@@ -23,8 +23,7 @@ class LoadCustomState extends State<LoadCustom> {
                   icon: Icon(Icons.delete),
                   onPressed: (){
                     deleteTable(tableList[i]);
-                    rows.removeAt(i);
-                    setState((){});
+                    refresh(context);
                   }
                 ),
               )
@@ -47,4 +46,8 @@ class LoadCustomState extends State<LoadCustom> {
 void loadCustomBuilder(context) async{
   tableList = await getTables();
   Navigator.pushNamed(context, '/loadcustom');
+}
+void refresh(context) async{
+  Navigator.pop(context);
+  loadCustomBuilder(context);
 }
