@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'Custom.dart';
 import 'DatabaseHelper.dart';
+import 'LoadCustom.dart';
 
 class ButtonChoice extends StatefulWidget {
   final CustomState parent;
@@ -231,8 +232,6 @@ class ButtonDelete extends StatefulWidget {
 }
 
 class ButtonDeleteState extends State<ButtonDelete> {
-  TextEditingController layoutName = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -264,7 +263,78 @@ class ButtonDeleteState extends State<ButtonDelete> {
                       this.widget.parent.widget.parent.deleteButton(this.widget.parent.widget.id);
                       Navigator.pop(context);
                     },
-                    child: Text('Delete'),
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    child: Text('Yes, Delete'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LayoutDelete extends StatefulWidget {
+  final LoadCustomState parent;
+  final String layoutName;
+  LayoutDeleteState state;
+  LayoutDelete(this.parent, this.layoutName);
+
+  @override
+  LayoutDeleteState createState() {
+    this.state = new LayoutDeleteState();
+    return this.state;
+  }
+}
+
+class LayoutDeleteState extends State<LayoutDelete> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Container(
+        width: 300.0,
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Are you sure you want to delete this button?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      deleteTable(this.widget.layoutName);
+                      Navigator.pop(context);
+                      refresh(this.widget.parent.context);
+                    },
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    child: Text('Yes, Delete'),
                   ),
                 ),
                 Padding(
