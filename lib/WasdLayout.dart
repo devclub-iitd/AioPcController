@@ -155,4 +155,18 @@ class _WasdLayoutState extends State<WasdLayout> {
     print("Sending " + char);
     sock.write('wasd'+'&'+char+'%');
   }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    print("A");
+    super.dispose();
+    print("Disposed");
+
+  }
 }
