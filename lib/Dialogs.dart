@@ -180,6 +180,7 @@ class LayoutSaveState extends State<LayoutSave> {
                           }
                           saveButtons(buttonONList,layoutName.text);
                           this.widget.parent.layoutName = layoutName.text;
+                          this.widget.parent.setState((){});
                           this
                               .widget
                               .parent
