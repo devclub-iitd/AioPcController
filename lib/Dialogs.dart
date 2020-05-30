@@ -160,7 +160,7 @@ class LayoutSaveState extends State<LayoutSave> {
                 decoration:
                     InputDecoration(labelText: 'Enter the name of the layout'),
                 validator: (value) {
-                  // value = value.trim();
+                  value = value.trim();
                   if (value.isEmpty) {
                     return 'Please enter some text';
                   } else {

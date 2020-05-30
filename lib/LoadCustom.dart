@@ -50,6 +50,16 @@ class LoadCustomState extends State<LoadCustom> {
               }),
         ],
       ));
+
+      rows.add(new Opacity(
+        opacity: 0.3,
+        child: Divider(
+        height: 2,
+        thickness: 1,
+        color: Colors.grey,
+      )
+      )
+      );
     }
 
     return Scaffold(
@@ -68,6 +78,12 @@ void loadCustomBuilder(context) async {
 }
 
 void refresh(context) async {
-  Navigator.pop(context);
-  loadCustomBuilder(context);
+  tableList = await getTables();
+  Navigator.pushReplacement(
+      context, 
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => LoadCustom(),
+        transitionDuration: Duration(seconds: 0),
+    ),
+  );
 }
