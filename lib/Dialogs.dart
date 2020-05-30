@@ -220,7 +220,7 @@ class LayoutSaveState extends State<LayoutSave> {
                         } else {
                           setState(() {
                             error =
-                                ' The name "${layoutName.text}" is already taken.';
+                                'A layout with name "${layoutName.text}" already exists.';
                           });
                         }
                       }
