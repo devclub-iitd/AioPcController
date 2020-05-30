@@ -307,14 +307,14 @@ class LayoutDeleteState extends State<LayoutDelete> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        width: 300.0,
+        width: 500.0,
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Are you sure you want to delete this button?',
+              'Are you sure you want to delete this layout?',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.blue[800],
@@ -324,7 +324,8 @@ class LayoutDeleteState extends State<LayoutDelete> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Padding(
+                Expanded(
+                child:Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
@@ -334,16 +335,19 @@ class LayoutDeleteState extends State<LayoutDelete> {
                     },
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: Text('Yes, Delete'),
+                    child: Text('Yes'),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Cancel'),
+                ),
+                Expanded(
+                  child:Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel'),
+                    ),
                   ),
                 ),
               ],
