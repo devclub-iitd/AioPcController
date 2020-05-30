@@ -47,6 +47,7 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    tiltcontrol = false;
     super.dispose();
   }
   @override
@@ -63,9 +64,23 @@ class _GyroState extends State<Gyro> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tilt to Control"),
+        actions: <Widget>[
+          IconButton(
+            onPressed: (){
+              setState((){
+                tiltcontrol = !tiltcontrol;
+              });
+              if(!tiltcontrol)
+                    sock.write("tilt&0%");
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text('Tilting mode has been turned ' + (tiltcontrol?'ON':'OFF'))));
+            },
+            icon: Icon(Icons.rotate_left, color:tiltcontrol?Colors.green:Colors.red),
+          )
+        ],
       ),
       body:Padding(padding: EdgeInsets.all(2.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Center(
               child:GestureDetector(
@@ -87,19 +102,6 @@ class _GyroState extends State<Gyro> {
                   ),
                 ),
               ),
-            ),
-              Center( 
-                child : Checkbox(
-                value: tiltcontrol,
-                onChanged: (bool value) {
-                  if(!value){
-                    sock.write("tilt&0%");
-                  }
-                  setState((){
-                    tiltcontrol=value;
-                  });
-                },
-              )
             ),
             Center(
               child:GestureDetector(

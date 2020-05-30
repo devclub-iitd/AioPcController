@@ -24,6 +24,10 @@ class _CustomLayoutState extends State<CustomLayout> {
     return Scaffold(
       appBar: AppBar(
         title: Text(globalLayoutName),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.rotate_right, color:Colors.red),
+          onPressed: (){},)
+        ],
       ),
       body: Stack(
         children: layoutButtonList,
