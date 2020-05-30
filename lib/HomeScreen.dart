@@ -61,11 +61,11 @@ class HomeScreen extends StatelessWidget {
       int port = int.parse(portController.text);
       try {
         sock = await Socket.connect(address, port);
-        Navigator.pushNamed(context, '/layout_select');
+        Navigator.pushReplacementNamed(context, '/layout_select');
       }
       on Exception catch(e){
         print(e);
-        Navigator.pushNamed(context, '/');
+        Navigator.pushReplacementNamed(context, '/');
       }
     }
   }
