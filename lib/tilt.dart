@@ -4,18 +4,13 @@ import 'package:flutter/material.dart';
 import 'config.dart';
 import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 void tilt(){
   final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
     gcurr = event.y;
   });
 }
-double min(double a,double b){
-  if(a>b){
-    return b;
-  }else{
-    return a;
-  }
-}
+
 void _send(char) {
   print("Sending " + char);
   sock.write('wasd'+'&'+char+'%');
