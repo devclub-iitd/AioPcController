@@ -2,6 +2,7 @@ import 'package:aio_pc_controller/Custom.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'Dialogs.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 List<String> tableList;
 
@@ -16,26 +17,43 @@ class LoadCustomState extends State<LoadCustom> {
     List<Widget> rows = new List<Widget>();
 
     for (var i = 0; i < tableList.length; i++) {
-      rows.add(new Container(
-          child: Card(
-              child: ListTile(
-        title: Text(tableList[i]),
-        trailing: IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              customLoader(context, tableList[i]);
-            }),
-        leading: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return LayoutDelete(this, tableList[i]);
-                },
-              );
-            }),
-      ))));
+      rows.add(new Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        actionExtentRatio: 0.25,
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          color: Colors.white,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.indigoAccent,
+              child: Text(tableList[i][0].toUpperCase()),
+              foregroundColor: Colors.white,
+            ),
+            title: Text('${tableList[i][0].toUpperCase()}${tableList[i].substring(1)}'),
+          ),
+        ),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+              caption: 'Edit',
+              color: Colors.blue,
+              icon: Icons.create,
+              onTap: () {
+                customLoader(context, tableList[i]);
+              }),
+          IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return LayoutDelete(this, tableList[i]);
+                  },
+                );
+              }),
+        ],
+      ));
     }
 
     return Scaffold(
