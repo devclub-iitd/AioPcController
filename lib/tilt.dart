@@ -1,5 +1,4 @@
 import 'globals.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'config.dart';
 import 'package:sensors/sensors.dart';

@@ -26,7 +26,7 @@ class CustomState extends State<Custom> {
   List<CustomButton> buttonList = [];
   
   var selected = 0;
-  var minsz = 10.0, maxsz = 90.0;
+  var minsz = 10.0, maxsz = 200.0;
   void deleteButton(int id){
     buttonList[id].state.setState((){
       buttonList[id].x = -100;
