@@ -138,6 +138,7 @@ class LayoutSave extends StatefulWidget {
 
 class LayoutSaveState extends State<LayoutSave> {
   TextEditingController layoutName = TextEditingController();
+  String error = '';
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -177,11 +178,21 @@ class LayoutSaveState extends State<LayoutSave> {
                   return null;
                 },
               ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text("$error",
+                          style: TextStyle(fontSize: 9, color: Colors.red)))
+                ],
+              ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: RaisedButton(
                     onPressed: () async {
+                      setState((){ error = ''; });
+                      
                       if (_formKey.currentState.validate()) {
                         var check = await createTable(layoutName.text);
                         if (check) {
@@ -195,18 +206,22 @@ class LayoutSaveState extends State<LayoutSave> {
                           saveButtons(buttonONList, layoutName.text);
                           this.widget.parent.layoutName = layoutName.text;
                           this.widget.parent.setState(() {});
-                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
+                          this
+                              .widget
+                              .parent
+                              .scaffoldKey
+                              .currentState
+                              .showSnackBar(SnackBar(
                                 content: Text(
                                     'Created and saved layout "${layoutName.text}"'),
                                 duration: Duration(seconds: 2),
                               ));
                           Navigator.pop(context);
                         } else {
-                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text(
-                                    'There already exists a layout with name "${layoutName.text}"'),
-                                duration: Duration(seconds: 2),
-                              ));
+                          setState(() {
+                            error =
+                                ' The name "${layoutName.text}" is already taken.';
+                          });
                         }
                       }
                     },
