@@ -24,20 +24,22 @@ class ButtonChoiceState extends State<ButtonChoice> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        height: 300.0,
+        padding: const EdgeInsets.only(top: 30.0, bottom: 30.0, left: 10.0, right: 10.0),
         width: 300.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'Select Button Type:',
-                style: TextStyle(color: Colors.red),
-              ),
+            Text(
+              'Select button type',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 50),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
               child: Column(
                 children: <Widget>[
                   RaisedButton(
@@ -134,12 +136,13 @@ class LayoutSaveState extends State<LayoutSave> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        height: 400.0,
         width: 300.0,
+        padding: const EdgeInsets.only(top: 15.0, bottom: 15.0, left: 10.0, right: 10.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextFormField(
                 controller: layoutName,
@@ -165,7 +168,7 @@ class LayoutSaveState extends State<LayoutSave> {
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: RaisedButton(
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {

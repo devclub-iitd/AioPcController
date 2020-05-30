@@ -5,6 +5,7 @@ import 'dart:math';
 import 'Dialogs.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
+import 'package:flutter/services.dart';
 
 String globalLayoutName = 'untitled';
 List globalButtonONList = [];
@@ -162,13 +163,13 @@ class CustomButtonState extends State<CustomButton> {
             padding: EdgeInsets.all(widget.sz / 3),
             child: ButtonIcon(this.widget.type, widget.sz),
           ),
-          onTapDown: (_) {
+          onTap: () {
             this.widget.parent.setState(() {
               this.widget.parent.selected = this.widget.id;
-              print(this.widget.id);
             });
           },
           onLongPress: () {
+            HapticFeedback.vibrate();
             showDialog(
               context: context,
               builder: (BuildContext context) {
