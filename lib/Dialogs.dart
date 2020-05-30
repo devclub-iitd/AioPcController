@@ -25,7 +25,8 @@ class ButtonChoiceState extends State<ButtonChoice> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        padding: const EdgeInsets.only(top: 30.0, bottom: 30.0, left: 10.0, right: 10.0),
+        padding: const EdgeInsets.only(
+            top: 30.0, bottom: 30.0, left: 10.0, right: 10.0),
         width: 300.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +52,9 @@ class ButtonChoiceState extends State<ButtonChoice> {
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
                             alphabet,
-                            10.0,10.0,50.0));
+                            10.0,
+                            10.0,
+                            50.0));
                       });
                       Navigator.of(context).pop();
                     },
@@ -80,7 +83,10 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         this.widget.parent.buttonList.add(CustomButton(
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
-                            'space',10.0,10.0,50.0));
+                            'space',
+                            10.0,
+                            10.0,
+                            50.0));
                       });
                       Navigator.of(context).pop();
                     },
@@ -96,7 +102,10 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         this.widget.parent.buttonList.add(CustomButton(
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
-                            'shift',10.0,10.0,50.0));
+                            'shift',
+                            10.0,
+                            10.0,
+                            50.0));
                       });
                       Navigator.of(context).pop();
                     },
@@ -138,7 +147,8 @@ class LayoutSaveState extends State<LayoutSave> {
       ),
       child: Container(
         width: 300.0,
-        padding: const EdgeInsets.only(top: 15.0, bottom: 15.0, left: 10.0, right: 10.0),
+        padding: const EdgeInsets.only(
+            top: 15.0, bottom: 15.0, left: 10.0, right: 10.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -175,31 +185,24 @@ class LayoutSaveState extends State<LayoutSave> {
                       if (_formKey.currentState.validate()) {
                         var check = await createTable(layoutName.text);
                         if (check) {
-                          List<Map<String,dynamic>> buttonONList = [];
-                          for(int i=0;i<this.widget.parent.buttonList.length;i++){
-                            buttonONList.add(this.widget.parent.buttonList[i].toMap());
+                          List<Map<String, dynamic>> buttonONList = [];
+                          for (int i = 0;
+                              i < this.widget.parent.buttonList.length;
+                              i++) {
+                            buttonONList
+                                .add(this.widget.parent.buttonList[i].toMap());
                           }
-                          saveButtons(buttonONList,layoutName.text);
+                          saveButtons(buttonONList, layoutName.text);
                           this.widget.parent.layoutName = layoutName.text;
-                          this.widget.parent.setState((){});
-                          this
-                              .widget
-                              .parent
-                              .scaffoldKey
-                              .currentState
-                              .showSnackBar(SnackBar(
+                          this.widget.parent.setState(() {});
+                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
                                 content: Text(
                                     'Created and saved layout "${layoutName.text}"'),
                                 duration: Duration(seconds: 2),
                               ));
                           Navigator.pop(context);
                         } else {
-                          this
-                              .widget
-                              .parent
-                              .scaffoldKey
-                              .currentState
-                              .showSnackBar(SnackBar(
+                          this.widget.parent.scaffoldKey.currentState.showSnackBar(SnackBar(
                                 content: Text(
                                     'There already exists a layout with name "${layoutName.text}"'),
                                 duration: Duration(seconds: 2),
@@ -256,25 +259,34 @@ class ButtonDeleteState extends State<ButtonDelete> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      this.widget.parent.widget.parent.deleteButton(this.widget.parent.widget.id);
-                      Navigator.pop(context);
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    child: Text('Yes, Delete'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        this
+                            .widget
+                            .parent
+                            .widget
+                            .parent
+                            .deleteButton(this.widget.parent.widget.id);
+                        Navigator.pop(context);
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: Text('Yes, Delete'),
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Cancel'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel'),
+                    ),
                   ),
                 ),
               ],
@@ -325,22 +337,22 @@ class LayoutDeleteState extends State<LayoutDelete> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
-                child:Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      deleteTable(this.widget.layoutName);
-                      Navigator.pop(context);
-                      refresh(this.widget.parent.context);
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    child: Text('Yes'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        deleteTable(this.widget.layoutName);
+                        Navigator.pop(context);
+                        refresh(this.widget.parent.context);
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: Text('Yes'),
+                    ),
                   ),
                 ),
-                ),
                 Expanded(
-                  child:Padding(
+                  child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: RaisedButton(
                       onPressed: () {
