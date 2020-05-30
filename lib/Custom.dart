@@ -41,7 +41,6 @@ class CustomState extends State<Custom> {
       buttonList.add(new CustomButton(this,i,buttonONList[i]['type'],buttonONList[i]['x'],buttonONList[i]['y'],buttonONList[i]['sz']));
     }
     buttonONList = [];
-
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(

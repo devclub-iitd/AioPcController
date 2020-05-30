@@ -8,7 +8,6 @@ class WasdLayout extends StatefulWidget {
 }
 
 class _WasdLayoutState extends State<WasdLayout> {
-  Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -154,22 +153,6 @@ class _WasdLayoutState extends State<WasdLayout> {
 
   void _send(char) {
     print("Sending " + char);
-    stopwatch.reset();
-    stopwatch.start();
     sock.write('wasd'+'&'+char+'%');
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    print("A");
-    super.dispose();
-    print("Disposed");
-
   }
 }

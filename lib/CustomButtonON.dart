@@ -8,6 +8,4 @@ class CustomButtonON{
   Map<String, dynamic> toMap() {
     return {'id': id, 'layoutId': layoutId, 'type': type, 'x': x, 'y':y, 'sz':sz};
   }
-
-
 }

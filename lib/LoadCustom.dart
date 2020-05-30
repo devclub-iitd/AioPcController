@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'Dialogs.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'CustomLayout.dart';
 
 List<String> tableList;
 
@@ -17,39 +18,45 @@ class LoadCustomState extends State<LoadCustom> {
     List<Widget> rows = new List<Widget>();
 
     for (var i = 0; i < tableList.length; i++) {
-      rows.add(new Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        actionExtentRatio: 0.25,
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          color: Colors.white,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.indigoAccent,
-              child: Text(tableList[i][0].toUpperCase()),
-              foregroundColor: Colors.white,
+      rows.add(new GestureDetector(
+          child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            color: Colors.white,
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.indigoAccent,
+                child: Text(tableList[i][0].toUpperCase()),
+                foregroundColor: Colors.white,
+              ),
+              title: Text(tableList[i]),
             ),
-            title: Text(tableList[i]),
           ),
-        ),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-              caption: 'Edit',
-              color: Colors.blue,
-              icon: Icons.create,
-              onTap: () {
-                customLoader(context, tableList[i]);
-              }),
-          IconSlideAction(
-              caption: 'Delete',
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: () {
-                deleteTable(tableList[i]);
-                refresh(context);
-              }),
-        ],
-      ));
+          secondaryActions: <Widget>[
+            IconSlideAction(
+                caption: 'Edit',
+                color: Colors.blue,
+                icon: Icons.create,
+                onTap: () {
+                  customLoader(context, tableList[i]);
+                }),
+            IconSlideAction(
+                caption: 'Delete',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () {
+                  deleteTable(tableList[i]);
+                  refresh(context);
+                }),
+            ],
+          ),
+          onTap: (){
+            customLayoutLoader(context, tableList[i]);
+          },
+        )
+      );
 
       rows.add(new Opacity(
           opacity: 0.3,
