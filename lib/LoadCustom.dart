@@ -29,7 +29,7 @@ class LoadCustomState extends State<LoadCustom> {
               child: Text(tableList[i][0].toUpperCase()),
               foregroundColor: Colors.white,
             ),
-            title: Text('${tableList[i][0].toUpperCase()}${tableList[i].substring(1)}'),
+            title: Text(tableList[i]),
           ),
         ),
         secondaryActions: <Widget>[
@@ -45,12 +45,8 @@ class LoadCustomState extends State<LoadCustom> {
               color: Colors.red,
               icon: Icons.delete,
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return LayoutDelete(this, tableList[i]);
-                  },
-                );
+                deleteTable(tableList[i]);
+                refresh(context);
               }),
         ],
       ));
