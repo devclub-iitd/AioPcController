@@ -67,7 +67,7 @@ class LayoutSelect extends StatelessWidget {
                   Center(
                     child: RaisedButton(
                       onPressed: () {
-                        customLoader(context, 'untitled');
+                        customLoader(context, '_untitled');
                       },
                       child: Text('Create Custom Layout'),
                     ),

@@ -7,7 +7,7 @@ import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter/services.dart';
 
-String globalLayoutName = 'untitled';
+String globalLayoutName = '_untitled';
 List globalButtonONList = [];
 class Custom extends StatefulWidget {
   Custom();
@@ -19,7 +19,7 @@ class Custom extends StatefulWidget {
 
 class CustomState extends State<Custom> {
 
-  var layoutName = 'untitled';
+  var layoutName = '_untitled';
   var buttonONList;
   CustomState(this.layoutName,this.buttonONList);
 
@@ -45,12 +45,12 @@ class CustomState extends State<Custom> {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: layoutName == 'untitled'? Text("Custom Layout"): Text(layoutName),
+          title: layoutName == '_untitled'? Text("Custom Layout"): Text(layoutName),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save),
               onPressed: () {
-                if (layoutName != 'untitled') {
+                if (layoutName != '_untitled') {
                   List<Map<String,dynamic>> buttonONList = [];
                   for(int i=0;i<buttonList.length;i++){
                     buttonONList.add(buttonList[i].toMap());
@@ -188,7 +188,7 @@ class CustomButtonState extends State<CustomButton> {
 }
 
 void customLoader(context, layoutName) async{
-  if(layoutName != 'untitled'){
+  if(layoutName != '_untitled'){
     var buttonONList = await getLayoutData(layoutName);
     globalLayoutName = layoutName;
     globalButtonONList = buttonONList;
