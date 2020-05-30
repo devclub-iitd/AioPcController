@@ -3,12 +3,25 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'LoadCustom.dart';
-
+import 'tilt.dart';
+import 'dart:async';
+import 'package:sensors/sensors.dart';
+import 'package:flutter/services.dart';
+import 'globals.dart';
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    if(!ovisit){
+      tilt();
+      Timer.periodic(Duration(milliseconds: 50), (Timer t) {
+        if (tiltcontrol) {
+          tsend();
+        }
+      });
+      ovisit = true;
+    }
     return Scaffold(
         appBar: AppBar(
           title: Text("Select Layout"),

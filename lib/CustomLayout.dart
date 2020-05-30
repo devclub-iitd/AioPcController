@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'config.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
-
+import 'globals.dart';
 String globalLayoutName;
 List globalLayoutButtonList;
 
@@ -14,19 +14,33 @@ class CustomLayout extends StatefulWidget {
 
 class _CustomLayoutState extends State<CustomLayout> {
   List<LayoutButton> layoutButtonList = [];
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     for(int i=0;i<globalLayoutButtonList.length;i++){
       layoutButtonList.add(new LayoutButton(globalLayoutButtonList[i]['type'],globalLayoutButtonList[i]['x'],globalLayoutButtonList[i]['y'],globalLayoutButtonList[i]['sz']));
     }
     globalLayoutButtonList = [];
-
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(globalLayoutName),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.rotate_right, color:Colors.red),
-          onPressed: (){},)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  tiltcontrol = !tiltcontrol;
+                });
+                if (!tiltcontrol) sock.write("tilt&0%");
+                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    content: Text('Tilting mode has been turned ' +
+                        (tiltcontrol ? 'ON' : 'OFF')),
+                    duration: Duration(milliseconds: 400)));
+              },
+              icon: Icon(Icons.rotate_left,
+                  color: tiltcontrol ? Colors.green : Colors.red),
+            )
         ],
       ),
       body: Stack(
@@ -38,7 +52,10 @@ class _CustomLayoutState extends State<CustomLayout> {
   @override
   void dispose() {
     super.dispose();
-    print("Disposed");
+    if(tiltcontrol){
+      sock.write("tilt&0%");
+      tiltcontrol = false;
+    }
   }
 }
 
