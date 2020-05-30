@@ -47,7 +47,8 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         this.widget.parent.buttonList.add(CustomButton(
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
-                            alphabet));
+                            alphabet,
+                            10.0,10.0,50.0));
                       });
                       Navigator.of(context).pop();
                     },
@@ -76,7 +77,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         this.widget.parent.buttonList.add(CustomButton(
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
-                            'space'));
+                            'space',10.0,10.0,50.0));
                       });
                       Navigator.of(context).pop();
                     },
@@ -92,7 +93,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         this.widget.parent.buttonList.add(CustomButton(
                             this.widget.parent,
                             this.widget.parent.buttonList.length,
-                            'shift'));
+                            'shift',10.0,10.0,50.0));
                       });
                       Navigator.of(context).pop();
                     },

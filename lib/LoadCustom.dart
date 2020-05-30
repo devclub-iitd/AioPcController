@@ -1,3 +1,4 @@
+import 'package:aio_pc_controller/Custom.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 
@@ -20,6 +21,12 @@ class LoadCustomState extends State<LoadCustom> {
             child: ListTile(
                 title: Text(tableList[i]),
                 trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: (){
+                    customLoader(context, tableList[i]);
+                  }
+                ),
+                leading: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: (){
                     deleteTable(tableList[i]);

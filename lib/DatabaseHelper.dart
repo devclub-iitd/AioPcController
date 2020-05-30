@@ -79,3 +79,9 @@ void saveButtons(List<Map<String,dynamic>> buttonList, String layoutName) async{
   });
   db.close();
 }
+
+Future<List<Map<String,dynamic>>> getLayoutData(String layoutName) async{
+  var db = await openDatabase('customLayouts.db');
+  List<Map<String,dynamic>> buttonONList = await db.rawQuery('SELECT * FROM [$layoutName]');
+  return buttonONList;
+}

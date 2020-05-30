@@ -6,15 +6,24 @@ import 'Dialogs.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 
+String globalLayoutName = 'untitled';
+List globalButtonONList = [];
 class Custom extends StatefulWidget {
+  Custom();
   @override
-  CustomState createState() => new CustomState();
+  CustomState createState(){
+    return new CustomState(globalLayoutName,globalButtonONList);
+  } 
 }
 
 class CustomState extends State<Custom> {
-  var layoutName = 'untitled';
-  List<CustomButton> buttonList = [];
 
+  var layoutName = 'untitled';
+  var buttonONList;
+  CustomState(this.layoutName,this.buttonONList);
+
+  List<CustomButton> buttonList = [];
+  
   var selected = 0;
   var minsz = 10.0, maxsz = 90.0;
   void deleteButton(int id){
@@ -27,10 +36,15 @@ class CustomState extends State<Custom> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    for(int i=0;i<buttonONList.length;i++){
+      buttonList.add(new CustomButton(this,i,buttonONList[i]['type'],buttonONList[i]['x'],buttonONList[i]['y'],buttonONList[i]['sz']));
+    }
+    buttonONList = [];
+
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: Text("Custom Layout"),
+          title: layoutName == 'untitled'? Text("Custom Layout"): Text(layoutName),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save),
@@ -84,6 +98,7 @@ class CustomState extends State<Custom> {
                   try {
                     buttonList[selected].state.setState(() {
                       buttonList[selected].sz = newValue;
+                      
                     });
                     setState((){});
                   } on Exception {}
@@ -114,7 +129,7 @@ class CustomButton extends StatefulWidget {
   double x = 10.0;
   double y = 10.0;
   double sz = 50.0;
-  CustomButton(this.parent, this.id, this.type);
+  CustomButton(this.parent, this.id, this.type, this.x, this.y, this.sz);
   CustomButtonState state;
 
   Map<String, dynamic> toMap() {
@@ -150,6 +165,7 @@ class CustomButtonState extends State<CustomButton> {
           onTapDown: (_) {
             this.widget.parent.setState(() {
               this.widget.parent.selected = this.widget.id;
+              print(this.widget.id);
             });
           },
           onLongPress: () {
@@ -168,4 +184,17 @@ class CustomButtonState extends State<CustomButton> {
           }),
     );
   }
+}
+
+void customLoader(context, layoutName) async{
+  if(layoutName != 'untitled'){
+    var buttonONList = await getLayoutData(layoutName);
+    globalLayoutName = layoutName;
+    globalButtonONList = buttonONList;
+  }
+  else{
+    globalLayoutName = layoutName;
+    globalButtonONList = [];
+  }
+  Navigator.pushNamed(context, '/custom');
 }

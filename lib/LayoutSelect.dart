@@ -1,3 +1,4 @@
+import 'package:aio_pc_controller/Custom.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class LayoutSelect extends StatelessWidget {
                   Center(
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/custom');
+                        customLoader(context, 'untitled');
                       },
                       child: Text('Create Custom Layout'),
                     ),
