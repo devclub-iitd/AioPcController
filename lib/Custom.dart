@@ -31,6 +31,7 @@ class CustomState extends State<Custom> {
     buttonList[id].state.setState((){
       buttonList[id].x = -1000;
       buttonList[id].y = -1000;
+      buttonList[id].sz = 1.0;
     });
   }
 
