@@ -7,9 +7,7 @@ import 'dart:math';
 
 void tilt() {
   final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
-    gcurr = event.y;
-    if(event.x<0)
-      gcurr = -1 * gcurr;
+    gcurr = event.y * (event.x<0?-1:1);
   });
 }
 void _send(char) {
