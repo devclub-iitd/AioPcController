@@ -87,16 +87,28 @@ class HomeScreen extends StatelessWidget {
     String result=qrscan.rawContent;
     if(result != ''){
       var address=result.split(':');
-      int port = int.parse(address[1]);
-      try {
-        print('test');
-        sock = await Socket.connect(address[0], port);
-        print('test');
-        Navigator.pushReplacementNamed(context, '/layout_select');
+      if(address.length==2){
+        try{
+          int port = int.parse(address[1]);
+          try {
+            print('test');
+            sock = await Socket.connect(address[0], port);
+            print('test');
+            Navigator.pushReplacementNamed(context, '/layout_select');
+          }
+          on Exception catch(e){
+            print(e);
+            Navigator.pushReplacementNamed(context, '/');
+          }
+        }
+        on FormatException{
+          Navigator.pushReplacementNamed(context, '/');
+        }
       }
-      on Exception catch(e){
-        print(e);
+      else{
+        Navigator.pushReplacementNamed(context, '/');
       }
+      
     }
   }
 }
