@@ -59,28 +59,39 @@ class _CustomLayoutState extends State<CustomLayout> {
   }
 }
 
-class LayoutButton extends StatelessWidget {
+class LayoutButton extends StatefulWidget{
   final String type;
   final double x, y, sz;
   LayoutButton(this.type, this.x, this.y, this.sz);
   @override
+  LayoutButtonState createState() => new LayoutButtonState();
+}
+class LayoutButtonState extends State<LayoutButton> {
+  int darkness = 500;
+  @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: this.x,
-      top: this.y,
+      left: this.widget.x,
+      top: this.widget.y,
       child: GestureDetector(
         child: Container(
-          height: (this.sz),
-          width: (this.sz),
-          color: Colors.blue,
-          padding: EdgeInsets.all(this.sz / 3),
-          child: ButtonIcon(this.type, this.sz),
+          height: (this.widget.sz),
+          width: (this.widget.sz),
+          color: Colors.blue[darkness],
+          padding: EdgeInsets.all(this.widget.sz / 3),
+          child: ButtonIcon(this.widget.type, this.widget.sz),
         ),
         onPanStart: (_) {
-          _send('down&${this.type.toLowerCase()}');
+          setState((){
+            darkness = 800;
+          });
+          _send('down&${this.widget.type.toLowerCase()}');
         },
         onPanEnd: (_) {
-          _send('up&${this.type.toLowerCase()}');
+          setState((){
+            darkness = 500;
+          });
+          _send('up&${this.widget.type.toLowerCase()}');
         },
       )
     );
