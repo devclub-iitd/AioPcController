@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'dart:io';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
@@ -41,9 +42,20 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: RaisedButton(
                       onPressed: () {
-                        _connectIP(context);
+                        _connectIP_Form(context);
                       },
                       child: Text('Connect'),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        _connectIP_QRcode(context);
+                      },
+                      child: Text('Scan'),
                     ),
                   ),
                 ),
@@ -55,7 +67,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void _connectIP(context) async {
+  void _connectIP_Form(context) async {
     if (ipController.text.isNotEmpty && portController.text.isNotEmpty) {
       String address = '${ipController.text}';
       int port = int.parse(portController.text);
@@ -66,6 +78,24 @@ class HomeScreen extends StatelessWidget {
       on Exception catch(e){
         print(e);
         Navigator.pushReplacementNamed(context, '/');
+      }
+    }
+  }
+
+  void _connectIP_QRcode(context) async {
+    var qrscan = await BarcodeScanner.scan();
+    String result=qrscan.rawContent;
+    if(result != ''){
+      var address=result.split(':');
+      int port = int.parse(address[1]);
+      try {
+        print('test');
+        sock = await Socket.connect(address[0], port);
+        print('test');
+        Navigator.pushReplacementNamed(context, '/layout_select');
+      }
+      on Exception catch(e){
+        print(e);
       }
     }
   }
