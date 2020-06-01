@@ -70,7 +70,7 @@ def main():
 	print('Or scan this:')
 	qr = QRCode()
 	qr.add_data(serverIP)
-	qr.print_ascii()
+	qr.print_ascii(invert=True)
 
 	while True: 
 		print ("Socket is listening...")
