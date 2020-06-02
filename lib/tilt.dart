@@ -12,7 +12,7 @@ void tilt() {
 }
 void _send(char) {
   print("Sending " + char);
-  sock.write('wasd' + '&' + char + '%');
+  sock.write('button' + '&' + char + '%');
 }
 
 void tsend() {

@@ -89,8 +89,8 @@ def main():
 				if msg != '':
 					msg = msg.split("&")
 					print("DEBUG: ", msg)
-					if(msg[0] == 'wasd'):
-						wasd(msg[1], msg[2])
+					if(msg[0] == 'button'):
+						button(msg[1], msg[2])
 					elif(msg[0] == 'tilt'):
 						if(len(msg) == 2):
 							if(msg[1] == '0'):
@@ -109,7 +109,7 @@ def main():
 		c.close()
 		
 
-def wasd(type, msg):
+def button(type, msg):
 	if(type == 'down'):
 		pyautogui.keyDown(msg)
 		# keyboard.press(msg)

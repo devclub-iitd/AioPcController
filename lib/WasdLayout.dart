@@ -153,7 +153,7 @@ class _WasdLayoutState extends State<WasdLayout> {
 
   void _send(char) {
     print("Sending " + char);
-    sock.write('wasd'+'&'+char+'%');
+    sock.write('button'+'&'+char+'%');
   }
 
   @override
