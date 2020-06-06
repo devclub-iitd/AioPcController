@@ -84,13 +84,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("RT")),
           ),
           onPanStart: (_) {
-            _send('down&rt');
+            _send('down&TriggerR');
             setState(() {
               rtdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&rt');
+            _send('up&TriggerR');
             setState(() {
               rtdark = 400;
             });
@@ -112,13 +112,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("RB")),
           ),
           onPanStart: (_) {
-            _send('down&rb');
+            _send('down&BtnShoulderR');
             setState(() {
               rbdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&rb');
+            _send('up&BtnShoulderR');
             setState(() {
               rbdark = 400;
             });
@@ -140,13 +140,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("LT")),
           ),
           onPanStart: (_) {
-            _send('down&lt');
+            _send('down&TriggerL');
             setState(() {
               ltdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&lt');
+            _send('up&TriggerL');
             setState(() {
               ltdark = 400;
             });
@@ -168,13 +168,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("LB")),
           ),
           onPanStart: (_) {
-            _send('down&lb');
+            _send('down&BtnShoulderL');
             setState(() {
               lbdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&lb');
+            _send('up&BtnShoulderL');
             setState(() {
               lbdark = 400;
             });
@@ -197,13 +197,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("A")),
           ),
           onPanStart: (_) {
-            _send('down&a');
+            _send('down&BtnA');
             setState(() {
               adark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&a');
+            _send('up&BtnA');
             setState(() {
               adark = 400;
             });
@@ -226,13 +226,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("X")),
           ),
           onPanStart: (_) {
-            _send('down&x');
+            _send('down&BtnX');
             setState(() {
               xdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&x');
+            _send('up&BtnX');
             setState(() {
               xdark = 400;
             });
@@ -255,13 +255,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("Y")),
           ),
           onPanStart: (_) {
-            _send('down&y');
+            _send('down&BtnY');
             setState(() {
               ydark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&y');
+            _send('up&BtnY');
             setState(() {
               ydark = 400;
             });
@@ -284,13 +284,13 @@ class ControllerState extends State<Controller> {
             child: Center(child:Text("B")),
           ),
           onPanStart: (_) {
-            _send('down&b');
+            _send('down&BtnB');
             setState(() {
               bdark = 600;
             });
           },
           onPanEnd: (_) {
-            _send('up&b');
+            _send('up&BtnB');
             setState(() {
               bdark = 400;
             });

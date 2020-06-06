@@ -2,12 +2,14 @@ import socket
 import pyautogui
 import time
 from pynput.keyboard import Key, Controller
+import pyxinput
 import subprocess
 import threading
 from qrcode import QRCode
 import os
 pyautogui.PAUSE = 0.01
 keyboard = Controller()
+xcontroller = pyxinput.vController()
 button = '$'
 duty_ratio = 0
 sub = '$'
@@ -90,7 +92,7 @@ def main():
 					msg = msg.split("&")
 					print("DEBUG: ", msg)
 					if(msg[0] == 'button'):
-						button(msg[1], msg[2])
+						handleButton(msg[1], msg[2])
 					elif(msg[0] == 'tilt'):
 						if(len(msg) == 2):
 							if(msg[1] == '0'):
@@ -104,18 +106,21 @@ def main():
 							tilt(True, float(msg[2]))
 						elif msg[1] == '-':
 							tilt(False, float(msg[2]))
+					elif(msg[0] == 'cont'):
+						handleController(msg[1], msg[2:])
+
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
 		
 
-def button(type, msg):
+def handleButton(type, msg):
 	if(type == 'down'):
-		pyautogui.keyDown(msg)
-		# keyboard.press(msg)
+		# pyautogui.keyDown(msg)
+		keyboard.press(msg)
 	else:
-		pyautogui.keyUp(msg)
-		# keyboard.release(msg)
+		# pyautogui.keyUp(msg)
+		keyboard.release(msg)
 
 def tilt(message,value):
 	global button
@@ -125,7 +130,17 @@ def tilt(message,value):
 		duty_ratio = value
 	else:
 		button = 'd'
-		duty_ratio = value	
+		duty_ratio = value
+
+def handleController(type, msg):
+	if('Btn' in msg[0]):
+		typeInt = 1 if type == 'down' else 0
+		xcontroller.set_value(msg[0], typeInt)
+	elif('Trigger' in msg[0]):
+		typeInt = 127 if type == 'down' else 0
+		xcontroller.set_value(msg[0], typeInt)
+	else:
+		print('Not yet handled in driver')
 
 if __name__=="__main__":
 	main()
