@@ -29,96 +29,168 @@ class LayoutSelect extends StatelessWidget {
         body: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ping_test');
-                      },
-                      child: Text('Ping Test'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
+                    Text(
+                      'Ping Test',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/ping_test');
+                },
+              )
             ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/wasd_layout');
-                      },
-                      child: Text('WASD Layout'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.keyboard,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
+                    Text(
+                      'WASD',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/wasd_layout');
+                },
+              )
             ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/gyro');
-                      },
-                      child: Text('Gyroscopic Control'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.rotate_left,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
+                    Text(
+                      'Gyroscopic Control',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/gyro');
+                },
+              )
             ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        customLoader(context, '_untitled');
-                      },
-                      child: Text('Create Custom Layout'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.settings_remote,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
+                    Text(
+                      'X-Controller',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/controller');
+                },
+              )
             ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        loadCustomBuilder(context);
-                      },
-                      child: Text('Load Custom Layout'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.create,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
+                    Text(
+                      'Create Custom Layout',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  customLoader(context, '_untitled');
+                },
+              )
             ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/controller');
-                      },
-                      child: Text('Controller'),
+            Container(
+              color: Colors.blue,
+              margin: const EdgeInsets.all(2.0),
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.save_alt,
+                      color: Colors.white,
+                      size: 70.0,
                     ),
-                  )
-                ],
-              ),
-            )
+                    Text(
+                      'My Custom Layouts',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        ),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  loadCustomBuilder(context);
+                },
+              )
+            ),
           ],
         ));
   }
