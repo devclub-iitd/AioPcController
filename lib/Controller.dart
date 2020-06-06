@@ -33,6 +33,9 @@ class ControllerState extends State<Controller> {
   double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr;
   int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400, exitdark = 400;
 
+  double backx, backy, backh, backw, startx, starty, starth, startw;
+  int backdark = 400, startdark = 400;
+
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -67,6 +70,16 @@ class ControllerState extends State<Controller> {
     exity = h*0.9;
     exitr = h/30;
 
+    backh = h/10;
+    backw = w/10;
+    backx = w/2 - w/9 - backw/2;
+    backy = h/3 - backh/2;
+
+    starth = h/10;
+    startw = w/10;
+    startx = w/2 + w/9 - startw/2;
+    starty = h/3 - starth/2;
+
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -78,7 +91,7 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[rtdark], Colors.blue[rtdark + 300]]),
+                    colors: [Colors.blue[400], Colors.blue[rtdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
             child: Center(child:Text("RT")),
@@ -106,7 +119,7 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[rbdark], Colors.blue[rbdark + 300]]),
+                    colors: [Colors.blue[400], Colors.blue[rbdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
             child: Center(child:Text("RB")),
@@ -134,7 +147,7 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[ltdark + 300],Colors.blue[ltdark]]),
+                    colors: [Colors.blue[ltdark + 300],Colors.blue[400]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
             child: Center(child:Text("LT")),
@@ -162,7 +175,7 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[lbdark + 300],Colors.blue[lbdark]]),
+                    colors: [Colors.blue[lbdark + 300],Colors.blue[400]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
             child: Center(child:Text("LB")),
@@ -314,6 +327,74 @@ class ControllerState extends State<Controller> {
           ),
           onTap: (){
             Navigator.pop(context);
+          },
+        ),
+      ),
+      Positioned(
+        top: backy,
+        left: backx,
+        child: GestureDetector(
+          child: Container(
+            height: backh,
+            width: backw,
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.grey[backdark],Colors.grey]),
+                border: Border.all(color:Colors.black),
+                borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular( 16.0),
+                bottomLeft: Radius.circular(16.0),
+                bottomRight: Radius.circular( 16.0),
+            )
+            ),
+            child: Center(child:Icon(Icons.content_copy))
+          ),
+          onPanStart: (_) {
+            _send('down&BtnBack');
+            setState(() {
+              backdark = 600;
+            });
+          },
+          onPanEnd: (_) {
+            _send('up&BtnBack');
+            setState(() {
+              backdark = 400;
+            });
+          },
+        ),
+      ),
+      Positioned(
+        top: starty,
+        left: startx,
+        child: GestureDetector(
+          child: Container(
+            height: backh,
+            width: backw,
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.grey[startdark],Colors.grey]),
+                border: Border.all(color:Colors.black),
+                borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular( 16.0),
+                bottomLeft: Radius.circular(16.0),
+                bottomRight: Radius.circular( 16.0),
+            )
+            ),
+            child: Center(child:Icon(Icons.dehaze))
+          ),
+          onPanStart: (_) {
+            _send('down&BtnStart');
+            setState(() {
+              startdark = 600;
+            });
+          },
+          onPanEnd: (_) {
+            _send('up&BtnStart');
+            setState(() {
+              startdark = 400;
+            });
           },
         ),
       ),
