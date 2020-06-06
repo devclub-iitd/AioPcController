@@ -30,8 +30,8 @@ class ControllerState extends State<Controller> {
   }
 
   var w, h;
-  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by;
-  int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400;
+  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr;
+  int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400, exitdark = 400;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +63,9 @@ class ControllerState extends State<Controller> {
     yy = 3*h/9;
     bx = 7*w/9 + h/9;
     
+    exitx = w*0.95;
+    exity = h*0.9;
+    exitr = h/30;
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -291,6 +294,26 @@ class ControllerState extends State<Controller> {
             setState(() {
               bdark = 400;
             });
+          },
+        ),
+      ),
+      Positioned(
+        top: exity,
+        left: exitx,
+        child: GestureDetector(
+          child: Container(
+            height: 2*exitr,
+            width: 2*exitr,
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.red[bdark],Colors.black]),
+                border: Border.all(color:Colors.black),
+                shape: BoxShape.circle,
+            ),
+            child: Center(child:Icon(Icons.cancel))
+          ),
+          onTap: (){
+            Navigator.pop(context);
           },
         ),
       ),
