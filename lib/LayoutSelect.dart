@@ -103,6 +103,21 @@ class LayoutSelect extends StatelessWidget {
                   )
                 ],
               ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/controller');
+                      },
+                      child: Text('Controller'),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ));

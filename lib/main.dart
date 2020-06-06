@@ -8,6 +8,7 @@ import 'tilt.dart';
 import 'Custom.dart';
 import 'LoadCustom.dart';
 import 'CustomLayout.dart';
+import 'Controller.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/custom':(context) => Custom(),
         '/loadcustom':(context) => LoadCustom(),
         '/custom_layout':(context) => CustomLayout(),
+        '/controller':(context) => Controller(),
       },
     );
   }
