@@ -37,34 +37,28 @@ class ControllerState extends State<Controller> {
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
 
-  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0;
-  double joyR (double w,double h){
-    return h/12;
-  }
+  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR;
   double lsby (double w,double h){
-    return 5*h/9 - joyR(w,h);
+    return 5*h/9 - joyR;
   } 
   double lsbx (double w,double h){
-    return 2*w/9 - joyR(w,h);
+    return 2*w/9 - joyR;
   } 
   double rsby (double w,double h){
-    return 6.8*h/9 - joyR(w,h);
+    return 6.8*h/9 - joyR;
   } 
   double rsbx (double w,double h){
-    return 5.5*w/9 - joyR(w,h);
+    return 5.5*w/9 - joyR;
   } 
-  double joyRange (double w,double h){
-    return h/10;
-  }
   double joyx(double x,double dx,double y,double dy,double w,double h){
-    double jR = joyRange(w,h);
+    double jR = joyRange;
     if(dx*dx+dy*dy>=jR*jR){
       return x+jR*dx/(sqrt(dx*dx+dy*dy));
     }
     else return x+dx;
   }
   double joyy(double x,double dx,double y,double dy,double w,double h){
-    double jR = joyRange(w,h);
+    double jR = joyRange;
     if(dx*dx+dy*dy>=jR*jR){
       return y+jR*dy/(sqrt(dx*dx+dy*dy));
     }
@@ -114,7 +108,8 @@ class ControllerState extends State<Controller> {
     startx = w/2 + w/9 - startw/2;
     starty = h/3 - starth/2;
 
-    
+    joyRange = h/10;
+    joyR = h/12;
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -435,12 +430,12 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: lsby(w,h)+joyR(w,h)-joyRange(w,h),
-        left: lsbx(w,h)+joyR(w,h)-joyRange(w,h),
+        top: lsby(w,h)+joyR-joyRange,
+        left: lsbx(w,h)+joyR-joyRange,
         child: GestureDetector(
           child: Container(
-            height: 2*joyRange(w,h),
-            width: 2*joyRange(w,h),
+            height: 2*joyRange,
+            width: 2*joyRange,
             decoration: BoxDecoration(
                 border: Border.all(color:Colors.grey[400]),
                 shape: BoxShape.circle,
@@ -449,12 +444,12 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: rsby(w,h)+joyR(w,h)-joyRange(w,h),
-        left: rsbx(w,h)+joyR(w,h)-joyRange(w,h),
+        top: rsby(w,h)+joyR-joyRange,
+        left: rsbx(w,h)+joyR-joyRange,
         child: GestureDetector(
           child: Container(
-            height: 2*joyRange(w,h),
-            width: 2*joyRange(w,h),
+            height: 2*joyRange,
+            width: 2*joyRange,
             decoration: BoxDecoration(
                 border: Border.all(color:Colors.grey[400]),
                 shape: BoxShape.circle,
@@ -469,8 +464,8 @@ class ControllerState extends State<Controller> {
           child:Opacity(
             opacity: 0.8,
           child: Container(
-            height: 2*joyR(w,h),
-            width: 2*joyR(w,h),
+            height: 2*joyR,
+            width: 2*joyR,
             decoration: BoxDecoration(
                 gradient: RadialGradient(
                     colors: [Colors.grey[400],Colors.grey[500]]),
@@ -502,8 +497,8 @@ class ControllerState extends State<Controller> {
           child:Opacity(
             opacity: 0.8,
           child: Container(
-            height: 2*joyR(w,h),
-            width: 2*joyR(w,h),
+            height: 2*joyR,
+            width: 2*joyR,
             decoration: BoxDecoration(
                 gradient: RadialGradient(
                     colors: [Colors.grey[400],Colors.grey[500]]),
