@@ -8,12 +8,13 @@ import 'dart:async';
 import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';
 import 'globals.dart';
+
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    if(!ovisit){
+    if (!ovisit) {
       tilt();
       Timer.periodic(Duration(milliseconds: 50), (Timer t) {
         if (tiltcontrol) {
@@ -29,10 +30,10 @@ class LayoutSelect extends StatelessWidget {
         body: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child: Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -47,19 +48,19 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/ping_test');
-                },
-              )
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/ping_test');
+              },
             ),
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child: Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -74,19 +75,19 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/wasd_layout');
-                },
-              )
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/wasd_layout');
+              },
             ),
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child: Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -101,19 +102,19 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/gyro');
-                },
-              )
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/gyro');
+              },
             ),
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child: Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -128,19 +129,19 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/controller');
-                },
-              )
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/controller');
+              },
             ),
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child: Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -155,19 +156,19 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 18.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  customLoader(context, '_untitled');
-                },
-              )
+              ),
+              onTap: () {
+                customLoader(context, '_untitled');
+              },
             ),
-            Container(
-              color: Colors.blue,
-              margin: const EdgeInsets.all(2.0),
-              child: GestureDetector(
+            GestureDetector(
+              child :Container(
+                color: Colors.blue,
+                margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -182,14 +183,14 @@ class LayoutSelect extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20.0,
-                        ),
+                      ),
                     )
                   ],
                 ),
-                onTap: () {
-                  loadCustomBuilder(context);
-                },
-              )
+              ),
+              onTap: () {
+                loadCustomBuilder(context);
+              },
             ),
           ],
         ));
