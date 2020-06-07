@@ -26,6 +26,45 @@ class LayoutSelect extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Select Layout"),
+          bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child:Container(
+                    padding: const EdgeInsets.all(15.0),
+                    color: Colors.blue[700],
+                    child: Center(
+                      child:Text(
+                        'LAYOUTS',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
+                      ) ,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child:Container(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Center(
+                      child:Text(
+                        'MY LAYOUTS',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white54,
+                          fontSize: 18.0,
+                        ),
+                      ) ,
+                    ),
+                  ),
+                ),
+              ],
+            ), 
+            preferredSize: Size.fromHeight(48.0)
+          )
         ),
         body: GridView.count(
           crossAxisCount: 2,
