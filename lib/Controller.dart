@@ -39,19 +39,9 @@ class ControllerState extends State<Controller> {
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
 
-  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR, axislx=0, axisly=0, axisrx=0, axisry=0;
-  double lsby (double w,double h){
-    return 5*h/9 - joyR;
-  } 
-  double lsbx (double w,double h){
-    return 2*w/9 - joyR;
-  } 
-  double rsby (double w,double h){
-    return 6.8*h/9 - joyR;
-  } 
-  double rsbx (double w,double h){
-    return 5.5*w/9 - joyR;
-  } 
+  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR, axislx=0, axisly=0, axisrx=0, axisry=0, lsbx, lsby, rsbx, rsby;
+  
+
   double joyx(double x,double dx,double y,double dy,double w,double h){
     double jR = joyRange;
     if(dx*dx+dy*dy>=jR*jR){
@@ -112,6 +102,11 @@ class ControllerState extends State<Controller> {
 
     joyRange = h/10;
     joyR = h/12;
+
+    lsby = 5*h/9 - joyR;
+    lsbx = 2*w/9 - joyR;
+    rsby = 6.8*h/9 - joyR;
+    rsbx = 5.5*w/9 - joyR;
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -432,8 +427,8 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: lsby(w,h)+joyR-joyRange,
-        left: lsbx(w,h)+joyR-joyRange,
+        top: lsby+joyR-joyRange,
+        left: lsbx+joyR-joyRange,
         child: GestureDetector(
           child: Container(
             height: 2*joyRange,
@@ -446,8 +441,8 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: rsby(w,h)+joyR-joyRange,
-        left: rsbx(w,h)+joyR-joyRange,
+        top: rsby+joyR-joyRange,
+        left: rsbx+joyR-joyRange,
         child: GestureDetector(
           child: Container(
             height: 2*joyRange,
@@ -460,8 +455,8 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: joyy(lsbx(w,h),lsbdx,lsby(w,h),lsbdy,w,h),
-        left: joyx(lsbx(w,h),lsbdx,lsby(w,h),lsbdy,w,h),
+        top: joyy(lsbx,lsbdx,lsby,lsbdy,w,h),
+        left: joyx(lsbx,lsbdx,lsby,lsbdy,w,h),
         child: GestureDetector(
           child:Opacity(
             opacity: 0.8,
@@ -501,8 +496,8 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: joyy(rsbx(w,h),rsbdx,rsby(w,h),rsbdy,w,h),
-        left: joyx(rsbx(w,h),rsbdx,rsby(w,h),rsbdy,w,h),
+        top: joyy(rsbx,rsbdx,rsby,rsbdy,w,h),
+        left: joyx(rsbx,rsbdx,rsby,rsbdy,w,h),
         child: GestureDetector(
           child:Opacity(
             opacity: 0.8,
