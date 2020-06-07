@@ -2,6 +2,7 @@ import 'package:aio_pc_controller/Custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
+import 'dart:math';
 
 class Controller extends StatefulWidget {
   @override
@@ -36,6 +37,39 @@ class ControllerState extends State<Controller> {
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
 
+  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0;
+  double joyR (double w,double h){
+    return h/12;
+  }
+  double lsby (double w,double h){
+    return 5*h/9 - joyR(w,h);
+  } 
+  double lsbx (double w,double h){
+    return 2*w/9 - joyR(w,h);
+  } 
+  double rsby (double w,double h){
+    return 6.8*h/9 - joyR(w,h);
+  } 
+  double rsbx (double w,double h){
+    return 5.5*w/9 - joyR(w,h);
+  } 
+  double joyRange (double w,double h){
+    return h/10;
+  }
+  double joyx(double x,double dx,double y,double dy,double w,double h){
+    double jR = joyRange(w,h);
+    if(dx*dx+dy*dy>=jR*jR){
+      return x+jR*dx/(sqrt(dx*dx+dy*dy));
+    }
+    else return x+dx;
+  }
+  double joyy(double x,double dx,double y,double dy,double w,double h){
+    double jR = joyRange(w,h);
+    if(dx*dx+dy*dy>=jR*jR){
+      return y+jR*dy/(sqrt(dx*dx+dy*dy));
+    }
+    else return y+dy;
+  }
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -79,6 +113,8 @@ class ControllerState extends State<Controller> {
     startw = w/10;
     startx = w/2 + w/9 - startw/2;
     starty = h/3 - starth/2;
+
+    
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -398,7 +434,102 @@ class ControllerState extends State<Controller> {
           },
         ),
       ),
+      Positioned(
+        top: lsby(w,h)+joyR(w,h)-joyRange(w,h),
+        left: lsbx(w,h)+joyR(w,h)-joyRange(w,h),
+        child: GestureDetector(
+          child: Container(
+            height: 2*joyRange(w,h),
+            width: 2*joyRange(w,h),
+            decoration: BoxDecoration(
+                border: Border.all(color:Colors.grey[400]),
+                shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        top: rsby(w,h)+joyR(w,h)-joyRange(w,h),
+        left: rsbx(w,h)+joyR(w,h)-joyRange(w,h),
+        child: GestureDetector(
+          child: Container(
+            height: 2*joyRange(w,h),
+            width: 2*joyRange(w,h),
+            decoration: BoxDecoration(
+                border: Border.all(color:Colors.grey[400]),
+                shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        top: joyy(lsbx(w,h),lsbdx,lsby(w,h),lsbdy,w,h),
+        left: joyx(lsbx(w,h),lsbdx,lsby(w,h),lsbdy,w,h),
+        child: GestureDetector(
+          child:Opacity(
+            opacity: 0.8,
+          child: Container(
+            height: 2*joyR(w,h),
+            width: 2*joyR(w,h),
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.grey[400],Colors.grey[500]]),
+                border: Border.all(color:Colors.grey[400]),
+                shape: BoxShape.circle,
+                
+            ),
+            child: Center(child:Text("L")),
+          ),
+          ),
+
+          onPanUpdate: (tapInfo) {
+            setState(() {
+              lsbdx += tapInfo.delta.dx;
+              lsbdy += tapInfo.delta.dy;
+            });
+          },
+
+          onPanEnd: (_){
+            setState((){lsbdx = lsbdy = 0;});
+            
+          },
+        ),
+      ),
+      Positioned(
+        top: joyy(rsbx(w,h),rsbdx,rsby(w,h),rsbdy,w,h),
+        left: joyx(rsbx(w,h),rsbdx,rsby(w,h),rsbdy,w,h),
+        child: GestureDetector(
+          child:Opacity(
+            opacity: 0.8,
+          child: Container(
+            height: 2*joyR(w,h),
+            width: 2*joyR(w,h),
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.grey[400],Colors.grey[500]]),
+                border: Border.all(color:Colors.grey[400]),
+                shape: BoxShape.circle,
+                
+            ),
+            child: Center(child:Text("R")),
+          ),
+          ),
+
+          onPanUpdate: (tapInfo) {
+            setState(() {
+              rsbdx += tapInfo.delta.dx;
+              rsbdy += tapInfo.delta.dy;
+            });
+          },
+
+          onPanEnd: (_){
+            setState((){rsbdx = rsbdy = 0;});
+            
+          },
+        ),
+      ),
     ]));
+
   }
 
   void _send(char) {
