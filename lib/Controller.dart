@@ -126,10 +126,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[400], Colors.blue[rtdark + 300]]),
+                    colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
-            child: Center(child:Text("RT")),
+            child: Center(child:Text("RT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&TriggerR');
@@ -154,10 +154,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[400], Colors.blue[rbdark + 300]]),
+                    colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
-            child: Center(child:Text("RB")),
+            child: Center(child:Text("RB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderR');
@@ -182,10 +182,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[ltdark + 300],Colors.blue[400]]),
+                    colors: [Colors.indigo[ltdark + 300],Colors.indigo[400]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
-            child: Center(child:Text("LT")),
+            child: Center(child:Text("LT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&TriggerL');
@@ -210,10 +210,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[lbdark + 300],Colors.blue[400]]),
+                    colors: [Colors.indigo[lbdark + 300],Colors.indigo[400]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
-            child: Center(child:Text("LB")),
+            child: Center(child:Text("LB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderL');
