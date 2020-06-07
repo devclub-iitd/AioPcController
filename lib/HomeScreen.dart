@@ -71,6 +71,7 @@ class HomeScreen extends StatelessWidget {
     if (ipController.text.isNotEmpty && portController.text.isNotEmpty) {
       String address = '${ipController.text}';
       int port = int.parse(portController.text);
+      print('port: '+port.toString());
       try {
         sock = await Socket.connect(address, port);
         Navigator.pushReplacementNamed(context, '/layout_select');

@@ -139,6 +139,8 @@ def handleController(type, msg):
 	elif('Trigger' in msg[0]):
 		typeInt = 127 if type == 'down' else 0
 		xcontroller.set_value(msg[0], typeInt)
+	elif('Axis' in msg[0]):
+		xcontroller.set_value(msg[0], float(msg[1]))
 	else:
 		print('Not yet handled in driver')
 

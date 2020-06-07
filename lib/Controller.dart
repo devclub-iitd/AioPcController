@@ -37,7 +37,7 @@ class ControllerState extends State<Controller> {
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
 
-  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR;
+  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR, axislx=0, axisly=0, axisrx=0, axisry=0;
   double lsby (double w,double h){
     return 5*h/9 - joyR;
   } 
@@ -481,12 +481,20 @@ class ControllerState extends State<Controller> {
             setState(() {
               lsbdx += tapInfo.delta.dx;
               lsbdy += tapInfo.delta.dy;
+              axislx = (lsbdx>0) ? min(lsbdx/joyRange,1) : max(lsbdx/joyRange,-1);
+              axisly = (lsbdy>0) ? min(lsbdy/joyRange,1) : max(lsbdy/joyRange,-1);
             });
+            _send('down&AxisLx&'+axislx.toString());
+            _send('down&AxisLy&'+(-axisly).toString());
           },
 
           onPanEnd: (_){
-            setState((){lsbdx = lsbdy = 0;});
-            
+            setState(()
+            {
+              lsbdx = lsbdy = axislx = axisly = 0;
+            });
+            _send('down&AxisLx&0');
+            _send('down&AxisLy&0');
           },
         ),
       ),
@@ -514,12 +522,20 @@ class ControllerState extends State<Controller> {
             setState(() {
               rsbdx += tapInfo.delta.dx;
               rsbdy += tapInfo.delta.dy;
+              axisrx = (rsbdx>0) ? min(rsbdx/joyRange,1) : max(rsbdx/joyRange,-1);
+              axisry = (rsbdy>0) ? min(rsbdy/joyRange,1) : max(rsbdy/joyRange,-1);
             });
+            _send('down&AxisRx&'+axisrx.toString());
+            _send('down&AxisRy&'+(-axisry).toString());
           },
 
           onPanEnd: (_){
-            setState((){rsbdx = rsbdy = 0;});
-            
+            setState(()
+            {
+              rsbdx = rsbdy = axisrx = axisry = 0;
+            });
+            _send('down&AxisRx&0');
+            _send('down&AxisRy&0');
           },
         ),
       ),
