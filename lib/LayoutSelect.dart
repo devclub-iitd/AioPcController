@@ -32,13 +32,13 @@ class LayoutSelect extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Icon(
-                      Icons.settings,
+                      Icons.network_check,
                       color: Colors.white,
                       size: 70.0,
                     ),
@@ -59,7 +59,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,7 +86,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,7 +113,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,7 +140,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,7 +167,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child :Container(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
