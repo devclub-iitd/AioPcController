@@ -2,7 +2,6 @@ import socket
 import pyautogui
 import time
 from pynput.keyboard import Key, Controller
-import pyxinput
 import subprocess
 import threading
 from qrcode import QRCode
@@ -13,6 +12,7 @@ keyboard = Controller()
 xSupport = True if platform.system() == 'Windows' else False
 xcontroller = None
 if(xSupport):
+	import pyxinput
 	xcontroller = pyxinput.vController()
 button = '$'
 duty_ratio = 0
@@ -147,21 +147,25 @@ def tilt(message,value):
 		duty_ratio = value
 
 def handleController(msg):
-	if(not xSupport):
-		return
-	if('down' in msg[0] or 'up' in msg[0]):
-		if('Btn' in msg[1]):
-			typeInt = 1 if msg[0] == 'down' else 0
-			xcontroller.set_value(msg[1], typeInt)
-		elif('Trigger' in msg[1]):
-			typeInt = 127 if msg[0] == 'down' else 0
-			xcontroller.set_value(msg[1], typeInt)
-	elif('Axis' in msg[0]):
-		xcontroller.set_value(msg[0], float(msg[1]))
-	elif('Dpad' in msg[0]):
-		xcontroller.set_value(msg[0], int(msg[1]))
-	else:
-		print('Not yet handled in driver')
+	try:
+		if(not xSupport):
+			return
+		if('down' in msg[0] or 'up' in msg[0]):
+			if('Btn' in msg[1]):
+				typeInt = 1 if msg[0] == 'down' else 0
+				xcontroller.set_value(msg[1], typeInt)
+			elif('Trigger' in msg[1]):
+				typeInt = 127 if msg[0] == 'down' else 0
+				xcontroller.set_value(msg[1], typeInt)
+		elif('Axis' in msg[0]):
+			xcontroller.set_value(msg[0], float(msg[1]))
+		elif('Dpad' in msg[0]):
+			xcontroller.set_value(msg[0], int(msg[1]))
+		else:
+			print(msg)
+			print('^Not yet handled in driver^')
+	except:
+		print("Error: Incomplete message received")
 
 if __name__=="__main__":
 	main()
