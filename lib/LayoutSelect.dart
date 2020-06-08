@@ -206,61 +206,61 @@ class LayoutSelect extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, '/controller');
               },
-            ),
-            GestureDetector(
-              child: Container(
-                color: Colors.blue[800],
-                margin: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Icon(
-                      Icons.create,
-                      color: Colors.white,
-                      size: 70.0,
-                    ),
-                    Text(
-                      'Create Custom Layout',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              onTap: () {
-                customLoader(context, '_untitled');
-              },
-            ),
-            GestureDetector(
-              child :Container(
-                color: Colors.blue[800],
-                margin: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Icon(
-                      Icons.save_alt,
-                      color: Colors.white,
-                      size: 70.0,
-                    ),
-                    Text(
-                      'My Custom Layouts',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              onTap: () {
-                loadCustomBuilder(context);
-              },
-            ),
+             ),
+            // GestureDetector(
+            //   child: Container(
+            //     color: Colors.blue[800],
+            //     margin: const EdgeInsets.all(2.0),
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.create,
+            //           color: Colors.white,
+            //           size: 70.0,
+            //         ),
+            //         Text(
+            //           'Create Custom Layout',
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.w600,
+            //             color: Colors.white,
+            //             fontSize: 18.0,
+            //           ),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     customLoader(context, '_untitled');
+            //   },
+            // ),
+            // GestureDetector(
+            //   child :Container(
+            //     color: Colors.blue[800],
+            //     margin: const EdgeInsets.all(2.0),
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.save_alt,
+            //           color: Colors.white,
+            //           size: 70.0,
+            //         ),
+            //         Text(
+            //           'My Custom Layouts',
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.w600,
+            //             color: Colors.white,
+            //             fontSize: 20.0,
+            //           ),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     loadCustomBuilder(context);
+            //   },
+            // ),
           ],
         ));
   }
