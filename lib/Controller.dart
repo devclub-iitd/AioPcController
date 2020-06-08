@@ -502,8 +502,8 @@ class ControllerState extends State<Controller> {
               axislx = (lsbdx>0) ? min(lsbdx/joyRange,1) : max(lsbdx/joyRange,-1);
               axisly = (lsbdy>0) ? min(lsbdy/joyRange,1) : max(lsbdy/joyRange,-1);
             });
-            _send('down&AxisLx&'+axislx.toString());
-            _send('down&AxisLy'+(-axisly).toString());
+            _send('AxisLx&'+axislx.toString());
+            _send('AxisLy&'+(-axisly).toString());
           },
 
           onPanEnd: (_){
@@ -511,8 +511,8 @@ class ControllerState extends State<Controller> {
             {
               lsbdx = lsbdy = axislx = axisly = 0;
             });
-            _send('down&AxisLx&0');
-            _send('down&AxisLy&0');
+            _send('AxisLx&0');
+            _send('AxisLy&0');
           },
         ),
       ),
@@ -557,8 +557,8 @@ class ControllerState extends State<Controller> {
               axisrx = (rsbdx>0) ? min(rsbdx/joyRange,1) : max(rsbdx/joyRange,-1);
               axisry = (rsbdy>0) ? min(rsbdy/joyRange,1) : max(rsbdy/joyRange,-1);
             });
-            _send('down&AxisRx&'+axisrx.toString());
-            _send('down&AxisRy&'+(-axisry).toString());
+            _send('AxisRx&'+axisrx.toString());
+            _send('AxisRy&'+(-axisry).toString());
           },
 
           onPanEnd: (_){
@@ -566,8 +566,8 @@ class ControllerState extends State<Controller> {
             {
               rsbdx = rsbdy = axisrx = axisry = 0;
             });
-            _send('down&AxisRx&0');
-            _send('down&AxisRy&0');
+            _send('AxisRx&0');
+            _send('AxisRy&0');
           },
         ),
       ),
@@ -590,11 +590,13 @@ class ControllerState extends State<Controller> {
             setState(() {
               updark = 500;
             });
+            _send('Dpad&1');
           },
           onPanEnd: (_) {
             setState(() {
               updark = 400;
             });
+            _send('Dpad&0');
           },
         ),
       ),
@@ -617,11 +619,13 @@ class ControllerState extends State<Controller> {
             setState(() {
               downdark = 500;
             });
+            _send('Dpad&2');
           },
           onPanEnd: (_) {
             setState(() {
               downdark = 400;
             });
+            _send('Dpad&0');
           },
         ),
       ),
@@ -642,11 +646,13 @@ class ControllerState extends State<Controller> {
             setState(() {
               leftdark = 500;
             });
+            _send('Dpad&4');
           },
           onPanEnd: (_) {
             setState(() {
               leftdark = 400;
             });
+            _send('Dpad&0');
           },
         ),
       ),
@@ -667,11 +673,13 @@ class ControllerState extends State<Controller> {
             setState(() {
               rightdark = 500;
             });
+            _send('Dpad&8');
           },
           onPanEnd: (_) {
             setState(() {
               rightdark = 400;
             });
+            _send('Dpad&0');
           },
         ),
       ),
