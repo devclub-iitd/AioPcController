@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'Dialogs.dart';
+import 'dialogs/ButtonDelete.dart';
+import 'dialogs/LayoutSave.dart';
+import 'dialogs/ButtonChoice.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter/services.dart';
