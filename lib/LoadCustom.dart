@@ -1,4 +1,5 @@
 import 'package:aio_pc_controller/Custom.dart';
+import 'package:aio_pc_controller/LayoutSelect.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'Dialogs.dart';
@@ -86,7 +87,7 @@ class LoadCustomState extends State<LoadCustom> {
                 icon: Icons.delete,
                 onTap: () {
                   deleteTable(tableList[i]);
-                  refresh(context);
+                  loadCustomBuilder(context);
                 }),
             ],
           ),
@@ -138,7 +139,10 @@ class LoadCustomState extends State<LoadCustom> {
                         ),
                       ),
                       onTap: (){
-                        Navigator.pushReplacementNamed(context, '/layout_select');
+                        Navigator.pushReplacement(context, PageRouteBuilder(
+      pageBuilder: (context, animation1, animation2) => LayoutSelect(),
+      transitionDuration: Duration(seconds: 0),
+    ),);
                       },
                     ),
                   ),
@@ -185,16 +189,9 @@ class LoadCustomState extends State<LoadCustom> {
 
 void loadCustomBuilder(context) async {
   tableList = await getTables();
-  Navigator.pushReplacementNamed(context, '/loadcustom');
-}
-
-void refresh(context) async {
-  tableList = await getTables();
-  Navigator.pushReplacement(
-    context,
-    PageRouteBuilder(
+  Navigator.pushReplacement(context, PageRouteBuilder(
       pageBuilder: (context, animation1, animation2) => LoadCustom(),
       transitionDuration: Duration(seconds: 0),
-    ),
-  );
+    ),);
 }
+

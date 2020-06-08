@@ -26,6 +26,7 @@ class LayoutSelect extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Select Layout"),
+          automaticallyImplyLeading: false,
           bottom: PreferredSize(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
