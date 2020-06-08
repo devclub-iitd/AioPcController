@@ -17,6 +17,44 @@ class LoadCustomState extends State<LoadCustom> {
   Widget build(BuildContext context) {
     List<Widget> rows = new List<Widget>();
 
+    rows.add(new Material(
+      color: Colors.grey[200],
+      child: InkWell(
+        splashColor: Colors.grey[300],
+        onTap:(){
+          customLoader(context, '_untitled');
+        },
+        child: Container(
+          padding: const EdgeInsets.all(7.0),
+          margin: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Colors.black12, 
+                width: 5.0,
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: ListTile(
+            title: Icon(
+              Icons.add,
+              size: 40.0,
+              color: Colors.grey,
+            ),
+            subtitle: Center(
+              child: Text(
+                'Create a custom layout',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+          )
+        ),
+      ),
+    ),
+    );
+
     for (var i = 0; i < tableList.length; i++) {
       rows.add(new GestureDetector(
           child: Slidable(
@@ -121,7 +159,7 @@ class LoadCustomState extends State<LoadCustom> {
                         ),
                         child: Center(
                           child: Text(
-                            'My LAYOUTS',
+                            'MY LAYOUTS',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
