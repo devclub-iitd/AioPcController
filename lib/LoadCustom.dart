@@ -70,6 +70,61 @@ class LoadCustomState extends State<LoadCustom> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Load Custom Layout"),
+          bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child:Text(
+                            'LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 18.0,
+                            ),
+                          ) ,
+                        ),
+                      ),
+                      Container(
+                        color: Colors.blue,
+                        height: 4.0,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        color: Colors.blue[700],
+                        child: Center(
+                          child:Text(
+                            'MY LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ) ,
+                        ),
+                      ),
+                      Container(
+                        color: Colors.white,
+                        height: 4.0,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ), 
+            preferredSize: Size.fromHeight(48.0)
+          ),
         ),
         body: ListView(
           children: rows,
