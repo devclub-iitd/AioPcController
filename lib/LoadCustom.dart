@@ -100,7 +100,7 @@ class LoadCustomState extends State<LoadCustom> {
                         ),
                       ),
                       onTap: (){
-                        Navigator.pushNamed(context, '/layout_select');
+                        Navigator.pushReplacementNamed(context, '/layout_select');
                       },
                     ),
                   ),
@@ -147,7 +147,7 @@ class LoadCustomState extends State<LoadCustom> {
 
 void loadCustomBuilder(context) async {
   tableList = await getTables();
-  Navigator.pushNamed(context, '/loadcustom');
+  Navigator.pushReplacementNamed(context, '/loadcustom');
 }
 
 void refresh(context) async {

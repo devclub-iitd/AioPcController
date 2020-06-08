@@ -18,7 +18,6 @@ class _CustomLayoutState extends State<CustomLayout> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
     for(int i=0;i<globalLayoutButtonList.length;i++){
       layoutButtonList.add(new LayoutButton(globalLayoutButtonList[i]['type'],globalLayoutButtonList[i]['x'],globalLayoutButtonList[i]['y'],globalLayoutButtonList[i]['sz']));
     }
@@ -52,7 +51,6 @@ class _CustomLayoutState extends State<CustomLayout> {
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.dispose();
     if(tiltcontrol){
       sock.write("tilt&0%");

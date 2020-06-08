@@ -41,7 +41,6 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-    SystemChrome.setEnabledSystemUIOverlays([]);
   }
 
   @override
@@ -52,7 +51,6 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     if(tiltcontrol){
       sock.write("tilt&0%");
       tiltcontrol = false;

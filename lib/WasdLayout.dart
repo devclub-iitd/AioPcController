@@ -14,7 +14,6 @@ class _WasdLayoutState extends State<WasdLayout> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       appBar: AppBar(
         title: Text("WASD"),
@@ -165,7 +164,6 @@ class _WasdLayoutState extends State<WasdLayout> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     print("A");
     super.dispose();
     print("Disposed");
