@@ -31,50 +31,63 @@ class LayoutSelect extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
+                  child: Material(
+                    color: Colors.blue[700],
+                    child: InkWell(
+                      child: Container(
                         padding: const EdgeInsets.all(15.0),
-                        color: Colors.blue[700],
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.white, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
                         child: Center(
-                          child:Text(
+                          child: Text(
                             'LAYOUTS',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                               fontSize: 18.0,
                             ),
-                          ) ,
+                          ),
                         ),
                       ),
-                      Container(
-                        color: Colors.white,
-                        height: 4.0,
-                      ),
-                    ],
+                      onTap: (){},
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
+                  child: Material(
+                    color: Colors.blue,
+                    child: InkWell(
+                      child: Container(
                         padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.blue, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
                         child: Center(
-                          child:Text(
+                          child: Text(
                             'MY LAYOUTS',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white54,
                               fontSize: 18.0,
                             ),
-                          ) ,
+                          ),
                         ),
                       ),
-                      Container(
-                        color: Colors.blue,
-                        height: 4.0,
-                      ),
-                    ],
+                      onTap: (){
+                        loadCustomBuilder(context);
+                      },
+                    ),
                   ),
                 ),
               ],
