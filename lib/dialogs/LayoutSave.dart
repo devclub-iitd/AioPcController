@@ -1,3 +1,4 @@
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import '../Custom.dart';
 import '../DatabaseHelper.dart';
@@ -104,6 +105,7 @@ class LayoutSaveState extends State<LayoutSave> {
                       }
                     },
                     child: Text('Save'),
+                    color: currentThemeColors.dialogButtonColor,
                   ),
                 ),
               ),

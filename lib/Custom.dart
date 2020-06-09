@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dialogs/ButtonDelete.dart';
@@ -100,7 +101,7 @@ class CustomState extends State<Custom> {
                 min: minsz,
                 max: maxsz,
                 divisions: 30,
-                activeColor: Colors.red,
+                activeColor: currentThemeColors.sliderColor,
                 inactiveColor: Colors.black,
                 label: 'Set size',
                 onChanged: (double newValue) {

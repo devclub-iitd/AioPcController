@@ -1,3 +1,4 @@
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import '../Custom.dart';
 import '../ButtonIcons.dart';
@@ -34,7 +35,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
               'Select button type',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.blue[800],
+                  color: currentThemeColors.dialogTextColor,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -72,7 +73,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                         },
                       ),
                       Center(
-                          child: Text('Alphabet', style:TextStyle(fontSize: 10.0,color:Colors.blue[800],fontWeight: FontWeight.bold)),
+                          child: Text('Alphabet', style:TextStyle(fontSize: 10.0,color:currentThemeColors.dialogTextColor,fontWeight: FontWeight.bold)),
                         )
                       ],)
                       ,
@@ -124,7 +125,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                           Navigator.of(context).pop();
                         },
                       ),Center(
-                          child: Text('Digit', style:TextStyle(fontSize: 10.0,color:Colors.blue[800],fontWeight: FontWeight.bold)),
+                          child: Text('Digit', style:TextStyle(fontSize: 10.0,color:currentThemeColors.dialogTextColor,fontWeight: FontWeight.bold)),
                         )
                       ],),
                       Expanded(
@@ -178,7 +179,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                     }),
                     
                        Center(
-                          child: Text('Shift', style:TextStyle(fontSize: 11.0,color:Colors.blue[800],fontWeight: FontWeight.bold)),
+                          child: Text('Shift', style:TextStyle(fontSize: 11.0,color:currentThemeColors.dialogTextColor,fontWeight: FontWeight.bold)),
                         )
                       ],),
                       
@@ -211,7 +212,7 @@ class ButtonChoiceState extends State<ButtonChoice> {
                     }),
                     
                        Center(
-                          child: Text('Space', style:TextStyle(fontSize: 11.0,color:Colors.blue[800],fontWeight: FontWeight.bold)),
+                          child: Text('Space', style:TextStyle(fontSize: 11.0,color:currentThemeColors.dialogTextColor,fontWeight: FontWeight.bold)),
                         )
                       ],)
                       

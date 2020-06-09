@@ -1,8 +1,10 @@
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'globals.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();

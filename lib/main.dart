@@ -18,8 +18,27 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
+    bool darkModeOn = brightness == Brightness.dark;
+
+    if(darkModeOn) currentThemeColors = darkThemeColors;
+    else currentThemeColors = lightThemeColors;
+
+    var lightTheme = ThemeData(
+      brightness: Brightness.light,
+      primaryColor: currentThemeColors.primaryColor,
+      accentColor: currentThemeColors.accentColor,
+    );
+    var darkTheme = ThemeData(
+      brightness: Brightness.dark,
+      primaryColor: currentThemeColors.primaryColor,
+      accentColor: currentThemeColors.accentColor,
+    );
+
+
     return MaterialApp(
-      theme: lightTheme,
+      theme: darkModeOn?darkTheme:lightTheme,
       initialRoute: '/layout_select',
       routes: {
         '/': (context) => HomeScreen(),

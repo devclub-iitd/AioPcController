@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'CustomLayout.dart';
+import 'globals.dart';
 
 List<String> tableList;
 
@@ -63,15 +64,19 @@ class LoadCustomState extends State<LoadCustom> {
           actionExtentRatio: 0.25,
           child: Container(
             padding: const EdgeInsets.all(10.0),
-            color: currentThemeColors.primaryBackgroundColor,
+            color: currentThemeColors.listTileColor,
+            child: Container(
+              color: currentThemeColors.listTileColor,
+
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.indigoAccent,
+                backgroundColor: currentThemeColors.listIconColor,
                 child: Text(tableList[i][0].toUpperCase()),
                 foregroundColor: Colors.white,
               ),
               title: Text(tableList[i]),
-            ),
+            )
+          ),
           ),
           secondaryActions: <Widget>[
             IconSlideAction(
@@ -115,14 +120,14 @@ class LoadCustomState extends State<LoadCustom> {
               children: <Widget>[
                 Expanded(
                   child: Material(
-                    color: Colors.blue,
+                    color: currentThemeColors.unselectedTabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.blue, 
+                              color: currentThemeColors.unselectedTabBorderColor, 
                               width: 2.0,
                             )
                           )
@@ -149,14 +154,14 @@ class LoadCustomState extends State<LoadCustom> {
                 ),
                 Expanded(
                   child: Material(
-                    color: Colors.blue[700],
+                    color: currentThemeColors.selectedTabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.white, 
+                              color: currentThemeColors.selectedTabBorderColor, 
                               width: 2.0,
                             )
                           )

@@ -33,14 +33,14 @@ class LayoutSelect extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Material(
-                    color: Colors.blue[700],
+                    color: currentThemeColors.selectedTabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.white, 
+                              color: currentThemeColors.selectedTabBorderColor, 
                               width: 2.0,
                             )
                           )
@@ -62,14 +62,14 @@ class LayoutSelect extends StatelessWidget {
                 ),
                 Expanded(
                   child: Material(
-                    color: Colors.blue,
+                    color: currentThemeColors.unselectedTabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.blue, 
+                              color: currentThemeColors.unselectedTabBorderColor, 
                               width: 2.0,
                             )
                           )
@@ -101,7 +101,7 @@ class LayoutSelect extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -128,7 +128,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,7 +155,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,7 +182,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -207,60 +207,6 @@ class LayoutSelect extends StatelessWidget {
                 Navigator.pushNamed(context, '/controller');
               },
              ),
-            // GestureDetector(
-            //   child: Container(
-            //     color: Colors.blue[800],
-            //     margin: const EdgeInsets.all(2.0),
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //       children: <Widget>[
-            //         Icon(
-            //           Icons.create,
-            //           color: Colors.white,
-            //           size: 70.0,
-            //         ),
-            //         Text(
-            //           'Create Custom Layout',
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.w600,
-            //             color: Colors.white,
-            //             fontSize: 18.0,
-            //           ),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     customLoader(context, '_untitled');
-            //   },
-            // ),
-            // GestureDetector(
-            //   child :Container(
-            //     color: Colors.blue[800],
-            //     margin: const EdgeInsets.all(2.0),
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //       children: <Widget>[
-            //         Icon(
-            //           Icons.save_alt,
-            //           color: Colors.white,
-            //           size: 70.0,
-            //         ),
-            //         Text(
-            //           'My Custom Layouts',
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.w600,
-            //             color: Colors.white,
-            //             fontSize: 20.0,
-            //           ),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     loadCustomBuilder(context);
-            //   },
-            // ),
           ],
         ));
   }

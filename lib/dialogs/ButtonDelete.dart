@@ -1,3 +1,4 @@
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import '../Custom.dart';
 
@@ -31,7 +32,7 @@ class ButtonDeleteState extends State<ButtonDelete> {
               'Are you sure you want to delete this button?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.blue[800],
+                  color: currentThemeColors.dialogTextColor,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -51,7 +52,7 @@ class ButtonDeleteState extends State<ButtonDelete> {
                             .deleteButton(this.widget.parent.widget.id);
                         Navigator.pop(context);
                       },
-                      color: Colors.blue,
+                      color: currentThemeColors.dialogButtonColor,
                       textColor: Colors.white,
                       child: Text('Yes, Delete'),
                     ),
@@ -65,6 +66,7 @@ class ButtonDeleteState extends State<ButtonDelete> {
                         Navigator.pop(context);
                       },
                       child: Text('Cancel'),
+                      color: currentThemeColors.dialogButtonColor,
                     ),
                   ),
                 ),
