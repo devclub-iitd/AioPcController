@@ -97,11 +97,11 @@ class _GyroState extends State<Gyro> {
                         print('end');
                       },
                       child: Container(
-                        color: Colors.blue,
+                        color: currentThemeColors.accentColor,
                         padding: const EdgeInsets.all(80.0),
                         child: Icon(
                           Icons.arrow_downward,
-                          color: Colors.white,
+                          color: currentThemeColors.buttonTextColor,
                           size: 45.0,
                         ),
                       ),
@@ -116,11 +116,11 @@ class _GyroState extends State<Gyro> {
                         _send('up&w');
                       },
                       child: Container(
-                        color: Colors.blue,
+                        color: currentThemeColors.accentColor,
                         padding: const EdgeInsets.all(80.0),
                         child: Icon(
                           Icons.arrow_upward,
-                          color: Colors.white,
+                          color: currentThemeColors.buttonTextColor,
                           size: 45.0,
                         ),
                       ),

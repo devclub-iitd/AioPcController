@@ -1,5 +1,6 @@
 import 'package:aio_pc_controller/Custom.dart';
 import 'package:aio_pc_controller/LayoutSelect.dart';
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -18,9 +19,9 @@ class LoadCustomState extends State<LoadCustom> {
     List<Widget> rows = new List<Widget>();
 
     rows.add(new Material(
-      color: Colors.grey[200],
+      color: currentThemeColors.createBackgroundColor,
       child: InkWell(
-        splashColor: Colors.grey[300],
+        splashColor: currentThemeColors.createSplashColor,
         onTap:(){
           customLoader(context, '_untitled');
         },
@@ -29,7 +30,7 @@ class LoadCustomState extends State<LoadCustom> {
           margin: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             border: Border.all(
-                color: Colors.black12, 
+                color: currentThemeColors.createBorderColor, 
                 width: 5.0,
             ),
             borderRadius: BorderRadius.circular(20.0),
@@ -38,13 +39,13 @@ class LoadCustomState extends State<LoadCustom> {
             title: Icon(
               Icons.add,
               size: 40.0,
-              color: Colors.grey,
+              color: currentThemeColors.createTextColor,
             ),
             subtitle: Center(
               child: Text(
                 'Create a custom layout',
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: currentThemeColors.createTextColor,
                   fontSize: 17.0,
                 ),
               ),

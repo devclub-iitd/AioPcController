@@ -9,6 +9,7 @@ import 'Custom.dart';
 import 'LoadCustom.dart';
 import 'CustomLayout.dart';
 import 'Controller.dart';
+import 'globals.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
+      theme: lightTheme,
+      initialRoute: '/layout_select',
       routes: {
         '/': (context) => HomeScreen(),
         '/layout_select': (context) => LayoutSelect(),
