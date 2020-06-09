@@ -63,7 +63,7 @@ class LoadCustomState extends State<LoadCustom> {
           actionExtentRatio: 0.25,
           child: Container(
             padding: const EdgeInsets.all(10.0),
-            color: Colors.white,
+            color: currentThemeColors.primaryBackgroundColor,
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.indigoAccent,

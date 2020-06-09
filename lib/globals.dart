@@ -6,6 +6,7 @@ bool tiltcontrol = false;
 
 class ThemeColors{
   Color primaryColor;
+  Color primaryBackgroundColor;
   Color accentColor;
   Color buttonTextColor; 
 
@@ -15,11 +16,10 @@ class ThemeColors{
   Color createBorderColor;
   Color createTextColor;
 
-  // For List Tiles in My Layouts
-
 
   ThemeColors({
     this.primaryColor, 
+    this.primaryBackgroundColor,
     this.accentColor,
     this.buttonTextColor,
 
@@ -33,6 +33,7 @@ class ThemeColors{
 
 var lightThemeColors = ThemeColors(
   primaryColor: Colors.blue,
+  primaryBackgroundColor: Colors.white,
   accentColor: Colors.blue,
   buttonTextColor: Colors.white,
 
