@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:aio_pc_controller/globals.dart';
+import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dialogs/ButtonDelete.dart';
@@ -10,6 +8,7 @@ import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter/services.dart';
 import 'LoadCustom.dart';
+
 
 
 String globalLayoutName = '_untitled';

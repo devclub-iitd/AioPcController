@@ -1,7 +1,8 @@
-import 'package:aio_pc_controller/globals.dart';
+
 import 'package:flutter/material.dart';
 import '../Custom.dart';
 import '../ButtonIcons.dart';
+import '../Theme.dart';
 
 class ButtonChoice extends StatefulWidget {
   final CustomState parent;

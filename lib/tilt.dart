@@ -4,6 +4,7 @@ import 'config.dart';
 import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+import 'Theme.dart';
 
 void tilt() {
   final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
@@ -58,6 +59,7 @@ class _GyroState extends State<Gyro> {
     super.dispose();
   }
 
+  int updark = 0, downdark = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,15 +91,15 @@ class _GyroState extends State<Gyro> {
                   Center(
                     child: GestureDetector(
                       onPanStart: (details) {
+                        setState((){downdark = 1;});
                         _send('down&s');
-                        print('start');
                       },
                       onPanEnd: (details) {
+                        setState((){downdark = 0;});
                         _send('up&s');
-                        print('end');
                       },
                       child: Container(
-                        color: currentThemeColors.accentColor,
+                        color: currentThemeColors.buttonColor[downdark],
                         padding: const EdgeInsets.all(80.0),
                         child: Icon(
                           Icons.arrow_downward,
@@ -110,13 +112,15 @@ class _GyroState extends State<Gyro> {
                   Center(
                     child: GestureDetector(
                       onPanStart: (_) {
+                        setState((){updark = 1;});
                         _send('down&w');
                       },
                       onPanEnd: (_) {
+                        setState((){updark = 0;});
                         _send('up&w');
                       },
                       child: Container(
-                        color: currentThemeColors.accentColor,
+                        color: currentThemeColors.buttonColor[updark],
                         padding: const EdgeInsets.all(80.0),
                         child: Icon(
                           Icons.arrow_upward,

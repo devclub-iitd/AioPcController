@@ -9,7 +9,7 @@ import 'Custom.dart';
 import 'LoadCustom.dart';
 import 'CustomLayout.dart';
 import 'Controller.dart';
-import 'globals.dart';
+import 'Theme.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());

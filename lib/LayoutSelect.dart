@@ -1,6 +1,4 @@
-import 'package:aio_pc_controller/Custom.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
+import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'LoadCustom.dart';
 import 'tilt.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'Theme.dart';
 import 'config.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
@@ -67,7 +67,7 @@ class LayoutButton extends StatefulWidget{
   LayoutButtonState createState() => new LayoutButtonState();
 }
 class LayoutButtonState extends State<LayoutButton> {
-  int darkness = 500;
+  int darkness = 0;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -77,19 +77,19 @@ class LayoutButtonState extends State<LayoutButton> {
         child: Container(
           height: (this.widget.sz),
           width: (this.widget.sz),
-          color: Colors.blue[darkness],
+          color: currentThemeColors.buttonColor[darkness],
           padding: EdgeInsets.all(this.widget.sz / 3),
           child: ButtonIcon(this.widget.type, this.widget.sz),
         ),
         onPanStart: (_) {
           setState((){
-            darkness = 800;
+            darkness = 1;
           });
           _send('down&${this.widget.type.toLowerCase()}');
         },
         onPanEnd: (_) {
           setState((){
-            darkness = 500;
+            darkness = 0;
           });
           _send('up&${this.widget.type.toLowerCase()}');
         },

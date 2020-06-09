@@ -1,4 +1,4 @@
-import 'package:aio_pc_controller/globals.dart';
+import '../Theme.dart';
 import 'package:flutter/material.dart';
 import '../Custom.dart';
 import '../DatabaseHelper.dart';
