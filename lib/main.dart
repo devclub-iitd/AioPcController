@@ -10,6 +10,7 @@ import 'LoadCustom.dart';
 import 'CustomLayout.dart';
 import 'Controller.dart';
 import 'Theme.dart';
+import 'Trackpad.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: darkModeOn?darkTheme:lightTheme,
-      initialRoute: '/layout_select',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
         '/layout_select': (context) => LayoutSelect(),
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/loadcustom':(context) => LoadCustom(),
         '/custom_layout':(context) => CustomLayout(),
         '/controller':(context) => Controller(),
+        '/trackpad': (context) => Trackpad(),
       },
     );
   }

@@ -205,6 +205,33 @@ class LayoutSelect extends StatelessWidget {
                 Navigator.pushNamed(context, '/controller');
               },
              ),
+             GestureDetector(
+              child: Container(
+                color: currentThemeColors.gridButtonColor,
+                margin: const EdgeInsets.all(2.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.mouse,
+                      color: Colors.white,
+                      size: 70.0,
+                    ),
+                    Text(
+                      'Trackpad',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/trackpad');
+              },
+             ),
           ],
         ));
   }

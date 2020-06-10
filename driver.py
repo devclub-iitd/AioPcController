@@ -112,6 +112,8 @@ def main():
 							tilt(False, float(msg[2]))
 					elif(msg[0] == 'cont'):
 						handleController(msg[1:])
+					elif(msg[0] == 'track'):
+						handleTrackpad(msg[1:])
 
 			c.send(bytes('Thank you for connecting', "utf-8"))
 			
@@ -166,6 +168,11 @@ def handleController(msg):
 			print('^Not yet handled in driver^')
 	except:
 		print("Error: Incomplete message received")
+
+def handleTrackpad(msg):
+	if(len(msg) == 3):
+		if(msg[0] == 'move'):
+			pyautogui.move(float(msg[1])*10, float(msg[2])*10)
 
 if __name__=="__main__":
 	main()
