@@ -14,7 +14,8 @@ class Trackpad extends StatefulWidget {
 class _TrackpadState extends State<Trackpad> {
 
   var w, h;
-  double dx, dy;
+  double dx, dy, time;
+  Stopwatch timer = new Stopwatch();
   int dark = 0;
   @override
   Widget build(BuildContext context) {
@@ -33,21 +34,29 @@ class _TrackpadState extends State<Trackpad> {
             Positioned(
               child: GestureDetector(
                 onPanStart: (panInfo) {
-                  setState((){dark = 1;});
+                  setState((){
+                    dark = 1;
+                    time = 0;
+                  });
+                  timer.reset();
+                  timer.start();
                 },
                 onPanUpdate: (panInfo) {
                   setState(() {
                     dx=panInfo.delta.dx;
                     dy=panInfo.delta.dy;
                   });
-                  print('$dx'+'$dy');
-                  //_send('move'+'&'+dx.toString()+'&'+dy.toString());
+                  if((timer.elapsedMilliseconds/100).floor() == time){
+                    _send('move'+'&'+dx.toString()+'&'+dy.toString());
+                    time++;
+                  } 
                 },
                 onPanEnd: (panInfo) {
                   setState((){
                     dark = 0;
                     dx = dy = 0;
                   });
+                  timer.reset();
                   print(panInfo);
                 },
                 child: Container(

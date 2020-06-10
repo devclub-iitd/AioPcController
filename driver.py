@@ -172,7 +172,7 @@ def handleController(msg):
 def handleTrackpad(msg):
 	if(len(msg) == 3):
 		if(msg[0] == 'move'):
-			pyautogui.move(float(msg[1])*10, float(msg[2])*10)
+			pyautogui.move(float(msg[1])*5, float(msg[2])*5, duration=0.05)
 
 if __name__=="__main__":
 	main()
