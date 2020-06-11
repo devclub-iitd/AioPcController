@@ -7,14 +7,27 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'globals.dart';
 import 'Theme.dart';
 import 'LayoutSelect.dart';
+import 'dart:convert';
 import 'LoadCustom.dart';
+import 'dart:typed_data';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
+  String status;
+
+
   
   @override
   Widget build(BuildContext context) {
+    if(sock == null){
+      status = 'null';
+    }
+    else{
+      sock.write('status&test%');
+      //This is not correct right now. status should only be connected when the string 'pass' is received by the socket here. (it is sent by driver.py)
+      status = 'connected';
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("AIO PC Controller"),
@@ -101,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'MY LAYOUTS',
+                            'CUSTOM',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white54,
@@ -122,7 +135,35 @@ class HomeScreen extends StatelessWidget {
           ),
       ),
       body: SingleChildScrollView(
-        child:Padding(
+        child:status=='connected'?Padding(
+          padding: const EdgeInsets.all(20.0),
+         child:Column(children: <Widget>[
+           Center(
+           child:Text(("You are connected"), 
+           style:TextStyle(color:Colors.green),
+           )
+         ),
+         Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      color: currentThemeColors.accentColor,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        sock = null;
+                        Navigator.pushReplacement(context, PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
+                          transitionDuration: Duration(seconds: 0),
+                        ),);
+                      },
+                      child: Text('Disconnect'),
+                    ),
+                  ),
+                ),
+         ]
+        ),)
+          :
+          Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
             child: Column(
@@ -185,10 +226,12 @@ class HomeScreen extends StatelessWidget {
       print('port: '+port.toString());
       try {
         sock = await Socket.connect(address, port);
+        print(sock.address);
         Navigator.pushReplacementNamed(context, '/layout_select');
       }
       on Exception catch(e){
         print(e);
+        sock = null;
         Navigator.pushReplacementNamed(context, '/');
       }
     }

@@ -114,8 +114,10 @@ def main():
 						handleController(msg[1:])
 					elif(msg[0] == 'track'):
 						handleTrackpad(msg[1:])
+					elif(msg[0] == 'status'):
+						c.send(bytes('pass',"utf-8"))
 
-			c.send(bytes('Thank you for connecting', "utf-8"))
+			#c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
 		
