@@ -16,14 +16,11 @@ class HomeScreen extends StatelessWidget {
   final TextEditingController portController = TextEditingController();
   String status;
 
-
-  
   @override
   Widget build(BuildContext context) {
-    if(sock == null){
+    if (sock == null) {
       status = 'null';
-    }
-    else{
+    } else {
       sock.write('status&test%');
       //This is not correct right now. status should only be connected when the string 'pass' is received by the socket here. (it is sent by driver.py)
       status = 'connected';
@@ -42,13 +39,11 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.selectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
+                            border: Border(
+                                bottom: BorderSide(
+                          color: currentThemeColors.selectedTabBorderColor,
+                          width: 2.0,
+                        ))),
                         child: Center(
                           child: Text(
                             'CONNECT',
@@ -60,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                   ),
                 ),
@@ -71,13 +66,11 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.unselectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
+                            border: Border(
+                                bottom: BorderSide(
+                          color: currentThemeColors.unselectedTabBorderColor,
+                          width: 2.0,
+                        ))),
                         child: Center(
                           child: Text(
                             'LAYOUTS',
@@ -89,11 +82,15 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: (){
-                        Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => LayoutSelect(),
-                          transitionDuration: Duration(seconds: 0),
-                        ),);
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                LayoutSelect(),
+                            transitionDuration: Duration(seconds: 0),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -105,13 +102,11 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.unselectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
+                            border: Border(
+                                bottom: BorderSide(
+                          color: currentThemeColors.unselectedTabBorderColor,
+                          width: 2.0,
+                        ))),
                         child: Center(
                           child: Text(
                             'CUSTOM',
@@ -123,98 +118,100 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: (){
+                      onTap: () {
                         loadCustomBuilder(context);
                       },
                     ),
                   ),
                 ),
               ],
-            ), 
-            preferredSize: Size.fromHeight(48.0)
-          ),
+            ),
+            preferredSize: Size.fromHeight(48.0)),
       ),
       body: SingleChildScrollView(
-        child:status=='connected'?Padding(
-          padding: const EdgeInsets.all(20.0),
-         child:Column(children: <Widget>[
-           Center(
-           child:Text(("You are connected"), 
-           style:TextStyle(color:Colors.green),
-           )
-         ),
-         Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: RaisedButton(
-                      color: currentThemeColors.accentColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        sock = null;
-                        Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
-                          transitionDuration: Duration(seconds: 0),
-                        ),);
-                      },
-                      child: Text('Disconnect'),
-                    ),
-                  ),
-                ),
-         ]
-        ),)
-          :
-          Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  controller: ipController,
-                  decoration: InputDecoration(
-                      labelText: 'Enter the IP address of your PC'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextFormField(
-                  controller: portController,
-                  decoration: InputDecoration(
-                      labelText: 'Enter Port'
+        child: status == 'connected'
+            ? Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(children: <Widget>[
+                  Center(
+                      child: Text(
+                    ("You are connected"),
+                    style: TextStyle(color: Colors.green),
+                  )),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: RaisedButton(
+                        color: currentThemeColors.accentColor,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          sock.destroy();
+                          sock = null;
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  HomeScreen(),
+                              transitionDuration: Duration(seconds: 0),
+                            ),
+                          );
+                        },
+                        child: Text('Disconnect'),
                       ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly
-                  ],
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: RaisedButton(
-                      color: currentThemeColors.accentColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        _connectIP_Form(context);
-                      },
-                      child: Text('Connect'),
                     ),
                   ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: RaisedButton(
-                      color: currentThemeColors.accentColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        _connectIP_QRcode(context);
-                      },
-                      child: Text('Scan'),
-                    ),
+                ]),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: ipController,
+                        decoration: InputDecoration(
+                            labelText: 'Enter the IP address of your PC'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      TextFormField(
+                        controller: portController,
+                        decoration: InputDecoration(labelText: 'Enter Port'),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly
+                        ],
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: RaisedButton(
+                            color: currentThemeColors.accentColor,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              _connectIP_Form(context);
+                            },
+                            child: Text('Connect'),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: RaisedButton(
+                            color: currentThemeColors.accentColor,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              _connectIP_QRcode(context);
+                            },
+                            child: Text('Scan'),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -223,13 +220,12 @@ class HomeScreen extends StatelessWidget {
     if (ipController.text.isNotEmpty && portController.text.isNotEmpty) {
       String address = '${ipController.text}';
       int port = int.parse(portController.text);
-      print('port: '+port.toString());
+      print('port: ' + port.toString());
       try {
         sock = await Socket.connect(address, port);
         print(sock.address);
         Navigator.pushReplacementNamed(context, '/layout_select');
-      }
-      on Exception catch(e){
+      } on Exception catch (e) {
         print(e);
         sock = null;
         Navigator.pushReplacementNamed(context, '/');
@@ -239,33 +235,25 @@ class HomeScreen extends StatelessWidget {
 
   void _connectIP_QRcode(context) async {
     var qrscan = await BarcodeScanner.scan();
-    String result=qrscan.rawContent;
-    if(result != ''){
-      var address=result.split(':');
-      if(address.length==2){
-        try{
+    String result = qrscan.rawContent;
+    if (result != '') {
+      var address = result.split(':');
+      if (address.length == 2) {
+        try {
           int port = int.parse(address[1]);
           try {
             sock = await Socket.connect(address[0], port);
             Navigator.pushReplacementNamed(context, '/layout_select');
-          }
-          on Exception catch(e){
+          } on Exception catch (e) {
             print(e);
             Navigator.pushReplacementNamed(context, '/');
           }
-        }
-        on FormatException{
+        } on FormatException {
           Navigator.pushReplacementNamed(context, '/');
         }
-      }
-      else{
+      } else {
         Navigator.pushReplacementNamed(context, '/');
       }
-      
     }
   }
 }
-
-
-
-

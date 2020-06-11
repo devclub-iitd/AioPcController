@@ -59,7 +59,7 @@ class _PingTestState extends State<PingTest> {
       print("Sending message");
       stopwatch.reset();
       stopwatch.start();
-      sock.write("ping&"+_controller.text+"%");
+      sock.write("ping&" + _controller.text + "%");
     }
   }
 

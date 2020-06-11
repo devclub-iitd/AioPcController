@@ -87,36 +87,49 @@ def main():
 		print ('Got connection from', addr)
 
 		while True:
-			message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
+			try:
+				message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
 
-			message = message.split("%") #use & to split tokens, and % to split messages.
-			
-			for msg in message:
-				if msg != '':
-					msg = msg.split("&")
-					print("DEBUG: ", msg)
-					if(msg[0] == 'button'):
-						handleButton(msg[1], msg[2])
-					elif(msg[0] == 'tilt'):
-						if(len(msg) == 2):
-							if(msg[1] == '0'):
-								global button
-								button = '$'
-						if(len(msg) < 3):
-							continue
-						elif(msg[2] == ''):
-							continue
-						elif msg[1] == '+':
-							tilt(True, float(msg[2]))
-						elif msg[1] == '-':
-							tilt(False, float(msg[2]))
-					elif(msg[0] == 'cont'):
-						handleController(msg[1:])
-					elif(msg[0] == 'track'):
-						handleTrackpad(msg[1:])
-					elif(msg[0] == 'status'):
-						c.send(bytes('pass',"utf-8"))
-
+				message = message.split("%") #use & to split tokens, and % to split messages.
+				
+				for msg in message:
+					if msg != '':
+						msg = msg.split("&")
+						print("DEBUG: ", msg)
+						if(msg[0] == 'button'):
+							handleButton(msg[1], msg[2])
+						elif(msg[0] == 'tilt'):
+							if(len(msg) == 2):
+								if(msg[1] == '0'):
+									global button
+									button = '$'
+							if(len(msg) < 3):
+								continue
+							elif(msg[2] == ''):
+								continue
+							elif msg[1] == '+':
+								tilt(True, float(msg[2]))
+							elif msg[1] == '-':
+								tilt(False, float(msg[2]))
+						elif(msg[0] == 'cont'):
+							handleController(msg[1:])
+						elif(msg[0] == 'track'):
+							handleTrackpad(msg[1:])
+						elif(msg[0] == 'status'):
+							c.send(bytes('pass',"utf-8"))
+			except ConnectionResetError:
+				print("Disconnected from client")
+				ans = input("Do you want to connect again? (y/n): ")
+				if(ans == 'y'):
+					print("Connect at IP = "+serverIP)
+					print('Or scan this:')
+					qr.print_ascii(invert=True)
+					qr.print_ascii()
+				else:
+					c.close()
+					print("Socket closed")
+					os._exit(os.EX_OK)
+				break
 			#c.send(bytes('Thank you for connecting', "utf-8"))
 			
 		c.close()
