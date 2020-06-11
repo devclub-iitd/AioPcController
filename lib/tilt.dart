@@ -18,10 +18,10 @@ void _send(char) {
 
 void tsend() {
   if (gcurr > 0.6) {
-    String s = (min(gcurr / 7, 1) * min(gcurr / 7, 1)).toString();
+    String s = ( min(gcurr / 8, 1)).toString();
     sock.write("tilt&-&" + s + '%');
   } else if (gcurr < -0.6) {
-    String s = (min((-1 * gcurr) / 7, 1) * min((-1 * gcurr) / 7, 1)).toString();
+    String s = ( max((-1 * gcurr) / 8, -1)).toString();
     sock.write("tilt&+&" + s + '%');
   } else {
     sock.write("tilt&+&" + '0' + '%');
