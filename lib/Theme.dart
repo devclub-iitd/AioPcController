@@ -21,8 +21,7 @@ class ThemeColors{
   Color dialogButtonColor;
 
   //For Tabs
-  Color unselectedTabColor;
-  Color selectedTabColor;
+  Color tabColor;
   Color unselectedTabBorderColor;
   Color selectedTabBorderColor;
 
@@ -53,8 +52,7 @@ class ThemeColors{
     this.dialogTextColor,
     this.dialogButtonColor,
 
-    this.unselectedTabColor,
-    this.selectedTabColor,
+    this.tabColor,
     this.unselectedTabBorderColor,
     this.selectedTabBorderColor,
 
@@ -83,8 +81,7 @@ var lightThemeColors = ThemeColors(
   dialogTextColor: Colors.blue[800],
   dialogButtonColor: Colors.blue[800],
 
-  selectedTabColor: Colors.blue[700],
-  unselectedTabColor: Colors.blue,
+  tabColor: Colors.blue,
   unselectedTabBorderColor: Colors.blue,
   selectedTabBorderColor: Colors.white,
 
@@ -112,8 +109,7 @@ var darkThemeColors = ThemeColors(
   dialogTextColor: Colors.white,
   dialogButtonColor: Colors.teal,
 
-  selectedTabColor: Colors.black,
-  unselectedTabColor: Colors.grey[800],
+  tabColor: Colors.black,
   unselectedTabBorderColor: Colors.grey[900],
   selectedTabBorderColor: Colors.white,
 

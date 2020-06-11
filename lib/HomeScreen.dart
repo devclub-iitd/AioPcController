@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Material(
-                    color: currentThemeColors.selectedTabColor,
+                    color: currentThemeColors.tabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Material(
-                    color: currentThemeColors.unselectedTabColor,
+                    color: currentThemeColors.tabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Material(
-                    color: currentThemeColors.unselectedTabColor,
+                    color: currentThemeColors.tabColor,
                     child: InkWell(
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
