@@ -135,9 +135,18 @@ class HomeScreen extends StatelessWidget {
                 child: Column(children: <Widget>[
                   Center(
                       child: Text(
-                    ("You are connected"),
+                    ("You are connected."),
                     style: TextStyle(color: Colors.green),
                   )),
+                  Center(child: Text(
+                    ("IP Address: " + "${sock.address.host}"),
+                    style: TextStyle(color: Colors.green),)),
+                    Center(child: Text(
+                    ("Port: " + "${sock.remotePort}"),
+                    style: TextStyle(color: Colors.green),)),
+                    Center(child: Text(
+                    ("PID: " + "${sock.port}"),
+                    style: TextStyle(color: Colors.green),)),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -145,6 +154,7 @@ class HomeScreen extends StatelessWidget {
                         color: currentThemeColors.accentColor,
                         textColor: Colors.white,
                         onPressed: () {
+                          sock.write('disconnect%');
                           sock.destroy();
                           sock = null;
                           Navigator.pushReplacement(

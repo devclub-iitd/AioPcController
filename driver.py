@@ -117,6 +117,8 @@ def main():
 							handleTrackpad(msg[1:])
 						elif(msg[0] == 'status'):
 							c.send(bytes('pass',"utf-8"))
+						elif(msg[0] == 'disconnect'):
+							raise ConnectionResetError
 			except ConnectionResetError:
 				print("Disconnected from client")
 				ans = input("Do you want to connect again? (y/n): ")
