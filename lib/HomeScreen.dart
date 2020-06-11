@@ -203,9 +203,7 @@ class HomeScreen extends StatelessWidget {
         try{
           int port = int.parse(address[1]);
           try {
-            print('test');
             sock = await Socket.connect(address[0], port);
-            print('test');
             Navigator.pushReplacementNamed(context, '/layout_select');
           }
           on Exception catch(e){

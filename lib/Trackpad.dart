@@ -43,12 +43,15 @@ class _TrackpadState extends State<Trackpad> {
                 },
                 onPanUpdate: (panInfo) {
                   setState(() {
-                    dx=panInfo.delta.dx;
-                    dy=panInfo.delta.dy;
+                    dx += panInfo.delta.dx;
+                    dy += panInfo.delta.dy;
                   });
-                  if((timer.elapsedMilliseconds/100).floor() == time){
+                  if((timer.elapsedMilliseconds/70).floor() == time){
                     _send('move'+'&'+dx.toString()+'&'+dy.toString());
                     time++;
+                    setState(() {
+                      dx = dy = 0;
+                    }); 
                   } 
                 },
                 onPanEnd: (panInfo) {
