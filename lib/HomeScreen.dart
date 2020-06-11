@@ -144,9 +144,6 @@ class HomeScreen extends StatelessWidget {
                     Center(child: Text(
                     ("Port: " + "${sock.remotePort}"),
                     style: TextStyle(color: Colors.green),)),
-                    Center(child: Text(
-                    ("PID: " + "${sock.port}"),
-                    style: TextStyle(color: Colors.green),)),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
