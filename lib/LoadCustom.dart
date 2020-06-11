@@ -203,7 +203,7 @@ class LoadCustomState extends State<LoadCustom> {
                         ),
                         child: Center(
                           child: Text(
-                            'MY LAYOUTS',
+                            'CUSTOM',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
