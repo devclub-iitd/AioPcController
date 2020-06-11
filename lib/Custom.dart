@@ -1,11 +1,15 @@
-import 'dart:io';
-
+import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'Dialogs.dart';
+import 'dialogs/ButtonDelete.dart';
+import 'dialogs/LayoutSave.dart';
+import 'dialogs/ButtonChoice.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter/services.dart';
+import 'LoadCustom.dart';
+
+
 
 String globalLayoutName = '_untitled';
 List globalButtonONList = [];
@@ -42,7 +46,10 @@ class CustomState extends State<Custom> {
       buttonList.add(new CustomButton(this,i,buttonONList[i]['type'],buttonONList[i]['x'],buttonONList[i]['y'],buttonONList[i]['sz']));
     }
     buttonONList = [];
-    return Scaffold(
+    
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
           title: layoutName == '_untitled'? Text("Custom Layout"): Text(layoutName),
@@ -67,6 +74,7 @@ class CustomState extends State<Custom> {
                       return LayoutSave(this);
                     },
                   );
+                  updateTables();
                 }
               },
             )
@@ -92,7 +100,7 @@ class CustomState extends State<Custom> {
                 min: minsz,
                 max: maxsz,
                 divisions: 30,
-                activeColor: Colors.red,
+                activeColor: currentThemeColors.sliderColor,
                 inactiveColor: Colors.black,
                 label: 'Set size',
                 onChanged: (double newValue) {
@@ -105,9 +113,14 @@ class CustomState extends State<Custom> {
                   } on Exception {}
                 },
               ))
-        ]));
+        ])));
   }
 
+  Future<bool> _onWillPop() async{
+    Navigator.pop(context);
+    loadCustomBuilder(context);
+    return false;
+  }
   double getsz() {
     if (selected >= buttonList.length) {
       return minsz;
@@ -199,3 +212,4 @@ void customLoader(context, layoutName) async{
   }
   Navigator.pushNamed(context, '/custom');
 }
+

@@ -1,9 +1,11 @@
 import 'package:aio_pc_controller/Custom.dart';
+import 'package:aio_pc_controller/LayoutSelect.dart';
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
-import 'Dialogs.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'CustomLayout.dart';
+import 'Theme.dart';
 
 List<String> tableList;
 
@@ -17,6 +19,44 @@ class LoadCustomState extends State<LoadCustom> {
   Widget build(BuildContext context) {
     List<Widget> rows = new List<Widget>();
 
+    rows.add(new Material(
+      color: currentThemeColors.createBackgroundColor,
+      child: InkWell(
+        splashColor: currentThemeColors.createSplashColor,
+        onTap:(){
+          customLoader(context, '_untitled');
+        },
+        child: Container(
+          padding: const EdgeInsets.all(7.0),
+          margin: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: currentThemeColors.createBorderColor, 
+                width: 5.0,
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: ListTile(
+            title: Icon(
+              Icons.add,
+              size: 40.0,
+              color: currentThemeColors.createTextColor,
+            ),
+            subtitle: Center(
+              child: Text(
+                'Create a custom layout',
+                style: TextStyle(
+                  color: currentThemeColors.createTextColor,
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+          )
+        ),
+      ),
+    ),
+    );
+
     for (var i = 0; i < tableList.length; i++) {
       rows.add(new GestureDetector(
           child: Slidable(
@@ -24,15 +64,19 @@ class LoadCustomState extends State<LoadCustom> {
           actionExtentRatio: 0.25,
           child: Container(
             padding: const EdgeInsets.all(10.0),
-            color: Colors.white,
+            color: currentThemeColors.listTileColor,
+            child: Container(
+              color: currentThemeColors.listTileColor,
+
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.indigoAccent,
+                backgroundColor: currentThemeColors.listIconColor,
                 child: Text(tableList[i][0].toUpperCase()),
                 foregroundColor: Colors.white,
               ),
               title: Text(tableList[i]),
-            ),
+            )
+          ),
           ),
           secondaryActions: <Widget>[
             IconSlideAction(
@@ -48,7 +92,7 @@ class LoadCustomState extends State<LoadCustom> {
                 icon: Icons.delete,
                 onTap: () {
                   deleteTable(tableList[i]);
-                  refresh(context);
+                  loadCustomBuilder(context);
                 }),
             ],
           ),
@@ -69,7 +113,78 @@ class LoadCustomState extends State<LoadCustom> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Load Custom Layout"),
+          title: Text("My Custom Layouts"),
+          bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.unselectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.unselectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        Navigator.pushReplacement(context, PageRouteBuilder(
+      pageBuilder: (context, animation1, animation2) => LayoutSelect(),
+      transitionDuration: Duration(seconds: 0),
+    ),);
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.selectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.selectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'MY LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){},
+                    ),
+                  ),
+                ),
+              ],
+            ), 
+            preferredSize: Size.fromHeight(48.0)
+          ),
         ),
         body: ListView(
           children: rows,
@@ -79,16 +194,9 @@ class LoadCustomState extends State<LoadCustom> {
 
 void loadCustomBuilder(context) async {
   tableList = await getTables();
-  Navigator.pushNamed(context, '/loadcustom');
-}
-
-void refresh(context) async {
-  tableList = await getTables();
-  Navigator.pushReplacement(
-    context,
-    PageRouteBuilder(
+  Navigator.pushReplacement(context, PageRouteBuilder(
       pageBuilder: (context, animation1, animation2) => LoadCustom(),
       transitionDuration: Duration(seconds: 0),
-    ),
-  );
+    ),);
 }
+

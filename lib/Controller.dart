@@ -40,6 +40,9 @@ class ControllerState extends State<Controller> {
   int backdark = 400, startdark = 400;
 
   double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR, axislx=0, axisly=0, axisrx=0, axisry=0, lsbx, lsby, rsbx, rsby;
+
+  double dpadx, dpady, dpadh, dpadw;
+  int updark = 400, downdark = 400, leftdark = 400, rightdark = 400;
   
 
   double joyx(double x,double dx,double y,double dy,double w,double h){
@@ -108,6 +111,10 @@ class ControllerState extends State<Controller> {
     rsby = 6.8*h/9 - joyR;
     rsbx = 5.5*w/9 - joyR;
 
+    dpadx = 3.5*w/9;
+    dpady = 7*h/9;
+    dpadh = h/9;
+    dpadw = h/12;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -119,10 +126,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[400], Colors.blue[rtdark + 300]]),
+                    colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
-            child: Center(child:Text("RT")),
+            child: Center(child:Text("RT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&TriggerR');
@@ -147,10 +154,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[400], Colors.blue[rbdark + 300]]),
+                    colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
-            child: Center(child:Text("RB")),
+            child: Center(child:Text("RB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderR');
@@ -175,10 +182,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[ltdark + 300],Colors.blue[400]]),
+                    colors: [Colors.indigo[ltdark + 300],Colors.indigo[400]]),
                 border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
             ),
-            child: Center(child:Text("LT")),
+            child: Center(child:Text("LT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&TriggerL');
@@ -203,10 +210,10 @@ class ControllerState extends State<Controller> {
             width: w/2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.blue[lbdark + 300],Colors.blue[400]]),
+                    colors: [Colors.indigo[lbdark + 300],Colors.indigo[400]]),
                 border: Border(bottom: BorderSide(color:Colors.blue[900])),
             ),
-            child: Center(child:Text("LB")),
+            child: Center(child:Text("LB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderL');
@@ -441,6 +448,20 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
+        top: dpady - (dpadw+dpadh*2)*0.6,
+        left: dpadx - (dpadw+dpadh*2)*0.6,
+        child: GestureDetector(
+          child: Container(
+            height: (dpadw+dpadh*2)*1.2,
+            width: (dpadw+dpadh*2)*1.2,
+            decoration: BoxDecoration(
+                border: Border.all(color:Colors.grey[400]),
+                shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
+      Positioned(
         top: rsby+joyR-joyRange,
         left: rsbx+joyR-joyRange,
         child: GestureDetector(
@@ -481,8 +502,8 @@ class ControllerState extends State<Controller> {
               axislx = (lsbdx>0) ? min(lsbdx/joyRange,1) : max(lsbdx/joyRange,-1);
               axisly = (lsbdy>0) ? min(lsbdy/joyRange,1) : max(lsbdy/joyRange,-1);
             });
-            _send('down&AxisLx&'+axislx.toString());
-            _send('down&AxisLy&'+(-axisly).toString());
+            _send('AxisLx&'+axislx.toString());
+            _send('AxisLy&'+(-axisly).toString());
           },
 
           onPanEnd: (_){
@@ -490,9 +511,23 @@ class ControllerState extends State<Controller> {
             {
               lsbdx = lsbdy = axislx = axisly = 0;
             });
-            _send('down&AxisLx&0');
-            _send('down&AxisLy&0');
+            _send('AxisLx&0');
+            _send('AxisLy&0');
           },
+        ),
+      ),
+      Positioned(
+        top: dpady - dpadw/2,
+        left: dpadx - dpadw/2,
+        child: GestureDetector(
+          child: Container(
+            height: dpadw,
+            width: dpadh,
+            decoration: BoxDecoration(
+                color: Colors.grey[400],
+                border: Border.all(color:Colors.grey[400]),
+               ),
+          ),
         ),
       ),
       Positioned(
@@ -522,8 +557,8 @@ class ControllerState extends State<Controller> {
               axisrx = (rsbdx>0) ? min(rsbdx/joyRange,1) : max(rsbdx/joyRange,-1);
               axisry = (rsbdy>0) ? min(rsbdy/joyRange,1) : max(rsbdy/joyRange,-1);
             });
-            _send('down&AxisRx&'+axisrx.toString());
-            _send('down&AxisRy&'+(-axisry).toString());
+            _send('AxisRx&'+axisrx.toString());
+            _send('AxisRy&'+(-axisry).toString());
           },
 
           onPanEnd: (_){
@@ -531,8 +566,120 @@ class ControllerState extends State<Controller> {
             {
               rsbdx = rsbdy = axisrx = axisry = 0;
             });
-            _send('down&AxisRx&0');
-            _send('down&AxisRy&0');
+            _send('AxisRx&0');
+            _send('AxisRy&0');
+          },
+        ),
+      ),
+      Positioned(
+        top: dpady - dpadh - dpadw/2,
+        left: dpadx - dpadw/2,
+        child: GestureDetector(
+          child: Container(
+            height: dpadh,
+            width: dpadw,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                    colors: [Colors.grey[updark + 100], Colors.grey[updark]]),
+                border: Border(left: BorderSide(color:Colors.black,width:0.5),right:BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5)),
+            ),
+          ),
+          onPanStart: (_) {
+            setState(() {
+              updark = 500;
+            });
+            _send('Dpad&1');
+          },
+          onPanEnd: (_) {
+            setState(() {
+              updark = 400;
+            });
+            _send('Dpad&0');
+          },
+        ),
+      ),
+      Positioned(
+        top: dpady + dpadw/2,
+        left: dpadx - dpadw/2,
+        child: GestureDetector(
+          child: Container(
+            height: dpadh,
+            width: dpadw,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                    colors: [Colors.grey[downdark], Colors.grey[downdark + 100]]),
+                border: Border(left: BorderSide(color:Colors.black,width:0.5),right:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+            ),
+          ),
+          onPanStart: (_) {
+            setState(() {
+              downdark = 500;
+            });
+            _send('Dpad&2');
+          },
+          onPanEnd: (_) {
+            setState(() {
+              downdark = 400;
+            });
+            _send('Dpad&0');
+          },
+        ),
+      ),
+      Positioned(
+        top: dpady - dpadw/2,
+        left: dpadx - dpadw/2 - dpadh,
+        child: GestureDetector(
+          child: Container(
+            height: dpadw,
+            width: dpadh,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.grey[leftdark + 100], Colors.grey[leftdark]]),
+                border: Border(left: BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+            ),
+          ),
+          onPanStart: (_) {
+            setState(() {
+              leftdark = 500;
+            });
+            _send('Dpad&4');
+          },
+          onPanEnd: (_) {
+            setState(() {
+              leftdark = 400;
+            });
+            _send('Dpad&0');
+          },
+        ),
+      ),
+      Positioned(
+        top: dpady - dpadw/2,
+        left: dpadx + dpadw/2,
+        child: GestureDetector(
+          child: Container(
+            height: dpadw,
+            width: dpadh,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.grey[rightdark], Colors.grey[rightdark + 100]]),
+                border: Border(right: BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+            ),
+          ),
+          onPanStart: (_) {
+            setState(() {
+              rightdark = 500;
+            });
+            _send('Dpad&8');
+          },
+          onPanEnd: (_) {
+            setState(() {
+              rightdark = 400;
+            });
+            _send('Dpad&0');
           },
         ),
       ),

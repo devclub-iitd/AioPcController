@@ -1,6 +1,4 @@
-import 'package:aio_pc_controller/Custom.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
+import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'LoadCustom.dart';
 import 'tilt.dart';
@@ -26,13 +24,82 @@ class LayoutSelect extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Select Layout"),
+          automaticallyImplyLeading: false,
+          bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.selectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.selectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){},
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.unselectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.unselectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'MY LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        loadCustomBuilder(context);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ), 
+            preferredSize: Size.fromHeight(48.0)
+          ),
         ),
         body: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,7 +126,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,7 +153,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,7 +180,7 @@ class LayoutSelect extends StatelessWidget {
             ),
             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -137,48 +204,21 @@ class LayoutSelect extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, '/controller');
               },
-            ),
-            GestureDetector(
+             ),
+             GestureDetector(
               child: Container(
-                color: Colors.blue[800],
+                color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Icon(
-                      Icons.create,
+                      Icons.mouse,
                       color: Colors.white,
                       size: 70.0,
                     ),
                     Text(
-                      'Create Custom Layout',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              onTap: () {
-                customLoader(context, '_untitled');
-              },
-            ),
-            GestureDetector(
-              child :Container(
-                color: Colors.blue[800],
-                margin: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Icon(
-                      Icons.save_alt,
-                      color: Colors.white,
-                      size: 70.0,
-                    ),
-                    Text(
-                      'My Custom Layouts',
+                      'Trackpad',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
@@ -189,9 +229,9 @@ class LayoutSelect extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                loadCustomBuilder(context);
+                Navigator.pushNamed(context, '/trackpad');
               },
-            ),
+             ),
           ],
         ));
   }

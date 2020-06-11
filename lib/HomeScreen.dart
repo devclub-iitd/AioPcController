@@ -1,8 +1,11 @@
+import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'globals.dart';
+import 'Theme.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
@@ -41,6 +44,8 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: RaisedButton(
+                      color: currentThemeColors.accentColor,
+                      textColor: Colors.white,
                       onPressed: () {
                         _connectIP_Form(context);
                       },
@@ -52,6 +57,8 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: RaisedButton(
+                      color: currentThemeColors.accentColor,
+                      textColor: Colors.white,
                       onPressed: () {
                         _connectIP_QRcode(context);
                       },
