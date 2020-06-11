@@ -1,3 +1,5 @@
+import 'package:aio_pc_controller/HomeScreen.dart';
+
 import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'LoadCustom.dart';
@@ -31,6 +33,40 @@ class LayoutSelect extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Material(
+                    color: currentThemeColors.unselectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.unselectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'CONNECT',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        Navigator.pushReplacement(context, PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
+                          transitionDuration: Duration(seconds: 0),
+                        ),);
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Material(
                     color: currentThemeColors.selectedTabColor,
                     child: InkWell(
                       child: Container(
@@ -49,7 +85,7 @@ class LayoutSelect extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                             ),
                           ),
                         ),
@@ -78,7 +114,7 @@ class LayoutSelect extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white54,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                             ),
                           ),
                         ),

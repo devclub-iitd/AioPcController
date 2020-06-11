@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'globals.dart';
 import 'Theme.dart';
+import 'LayoutSelect.dart';
+import 'LoadCustom.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
@@ -16,6 +18,108 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("AIO PC Controller"),
+        bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.selectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.selectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'CONNECT',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){},
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.unselectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.unselectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        Navigator.pushReplacement(context, PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => LayoutSelect(),
+                          transitionDuration: Duration(seconds: 0),
+                        ),);
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    color: currentThemeColors.unselectedTabColor,
+                    child: InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: currentThemeColors.unselectedTabBorderColor, 
+                              width: 2.0,
+                            )
+                          )
+                        ),
+                        child: Center(
+                          child: Text(
+                            'MY LAYOUTS',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white54,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        loadCustomBuilder(context);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ), 
+            preferredSize: Size.fromHeight(48.0)
+          ),
       ),
       body: SingleChildScrollView(
         child:Padding(
