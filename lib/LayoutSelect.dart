@@ -150,33 +150,6 @@ class LayoutSelect extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Icon(
-                      Icons.network_check,
-                      color: Colors.white,
-                      size: 70.0,
-                    ),
-                    Text(
-                      'Ping Test',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/ping_test');
-              },
-            ),
-            GestureDetector(
-              child: Container(
-                color: currentThemeColors.gridButtonColor,
-                margin: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Icon(
                       Icons.keyboard,
                       color: Colors.white,
                       size: 70.0,
