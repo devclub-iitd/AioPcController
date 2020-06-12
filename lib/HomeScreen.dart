@@ -13,10 +13,7 @@ import 'dart:typed_data';
 
 class HomeScreen extends StatefulWidget{
   
-  final Socket channel;
 
-  HomeScreen({Key key, @required this.channel})
-      : super(key: key);
   @override 
   HomeScreenState createState() => new HomeScreenState();
 }
@@ -181,7 +178,7 @@ class HomeScreenState extends State<HomeScreen> {
                             context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) =>
-                                  HomeScreen(channel:sock),
+                                  HomeScreen(),
                               transitionDuration: Duration(seconds: 0),
                             ),
                           );

@@ -43,9 +43,7 @@ class MyApp extends StatelessWidget {
       theme: darkModeOn?darkTheme:lightTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(
-          channel:sock,
-        ),
+        '/': (context) => HomeScreen(),
         '/layout_select': (context) => LayoutSelect(),
         '/ping_test': (context) => PingTest(),
         '/wasd_layout': (context) => WasdLayout(),

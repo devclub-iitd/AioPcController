@@ -147,7 +147,7 @@ class LoadCustomState extends State<LoadCustom> {
                       ),
                       onTap: (){
                         Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => HomeScreen(channel:sock),
+                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
                           transitionDuration: Duration(seconds: 0),
                         ),);
                       },
