@@ -14,6 +14,7 @@ xcontroller = None
 if(xSupport):
 	import pyxinput
 	xcontroller = pyxinput.vController()
+	import dinput
 button = '$'
 duty_ratio = 0
 sub = '$'
@@ -72,13 +73,14 @@ def main():
 		output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
 		serverIP = output+":"+str(port)
 	
-	print("Connect at IP = "+serverIP)
-	print('Or scan this:')
 	qr = QRCode()
 	qr.add_data(serverIP)
-	qr.print_ascii(invert=True)
-	qr.print_ascii()
+	
 	while True: 
+		print("Connect at IP = "+serverIP)
+		print('Or scan this:')
+		qr.print_ascii(invert=True)
+		qr.print_ascii()
 		print ("Socket is listening...")
 
 		c, addr = s.accept()
@@ -120,20 +122,13 @@ def main():
 							raise ConnectionResetError
 			except ConnectionResetError:
 				print("Disconnected from client")
+				c.close()
+				print("Socket closed")
 				ans = input("Do you want to connect again? (y/n): ")
-				if(ans == 'y'):
-					print("Connect at IP = "+serverIP)
-					print('Or scan this:')
-					qr.print_ascii(invert=True)
-					qr.print_ascii()
-				else:
-					c.close()
-					print("Socket closed")
-					os._exit(os.EX_OK)
+				if(ans == 'n'):
+					os._exit(0)
 				break
 			#c.send(bytes('Thank you for connecting', "utf-8"))
-			
-		c.close()
 		
 
 def handleButton(type, msg):
@@ -145,6 +140,8 @@ def handleButton(type, msg):
 			keyboard.press(Key.shift)
 		else:
 			keyboard.press(msg)
+		if xSupport:
+			dinput.handleInputs(1,msg)
 	else:
 		# pyautogui.keyUp(msg)
 		if(msg=='space'):
@@ -153,6 +150,8 @@ def handleButton(type, msg):
 			keyboard.release(Key.shift)
 		else:
 			keyboard.release(msg)
+		if xSupport:
+			dinput.handleInputs(0,msg)
 
 def tilt(message,value):
 	global button
