@@ -11,6 +11,7 @@ import 'CustomLayout.dart';
 import 'Controller.dart';
 import 'Theme.dart';
 import 'Trackpad.dart';
+import 'config.dart';
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -42,7 +43,9 @@ class MyApp extends StatelessWidget {
       theme: darkModeOn?darkTheme:lightTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => HomeScreen(
+          channel:sock,
+        ),
         '/layout_select': (context) => LayoutSelect(),
         '/ping_test': (context) => PingTest(),
         '/wasd_layout': (context) => WasdLayout(),

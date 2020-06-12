@@ -7,6 +7,7 @@ import 'DatabaseHelper.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'CustomLayout.dart';
 import 'Theme.dart';
+import 'config.dart';
 
 List<String> tableList;
 
@@ -146,7 +147,7 @@ class LoadCustomState extends State<LoadCustom> {
                       ),
                       onTap: (){
                         Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
+                          pageBuilder: (context, animation1, animation2) => HomeScreen(channel:sock),
                           transitionDuration: Duration(seconds: 0),
                         ),);
                       },

@@ -11,20 +11,31 @@ import 'dart:convert';
 import 'LoadCustom.dart';
 import 'dart:typed_data';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget{
+  
+  final Socket channel;
+
+  HomeScreen({Key key, @required this.channel})
+      : super(key: key);
+  @override 
+  HomeScreenState createState() => new HomeScreenState();
+}
+class HomeScreenState extends State<HomeScreen> {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
   String status;
-
+  
   @override
   Widget build(BuildContext context) {
-    if (sock == null) {
+        if (sock == null) {
       status = 'null';
     } else {
       sock.write('status&test%');
+
       //This is not correct right now. status should only be connected when the string 'pass' is received by the socket here. (it is sent by driver.py)
       status = 'connected';
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("AIO PC Controller"),
@@ -144,6 +155,18 @@ class HomeScreen extends StatelessWidget {
                     Center(child: Text(
                     ("Port: " + "${sock.remotePort}"),
                     style: TextStyle(color: Colors.green),)),
+                    
+            StreamBuilder(
+              stream: sockStream,
+              builder: (context, snapshot) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Text(snapshot.hasData
+                      ? ((String.fromCharCodes(snapshot.data)=='pass')?'Server is responding well!':'Server is responding.. but there might be some error')
+                      : 'Server is not responding.. You need to re-establish connection.'),
+                );
+              },
+            ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -158,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                             context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) =>
-                                  HomeScreen(),
+                                  HomeScreen(channel:sock),
                               transitionDuration: Duration(seconds: 0),
                             ),
                           );
@@ -230,6 +253,7 @@ class HomeScreen extends StatelessWidget {
       print('port: ' + port.toString());
       try {
         sock = await Socket.connect(address, port);
+        sockStream = sock.asBroadcastStream();
         print(sock.address);
         Navigator.pushReplacementNamed(context, '/layout_select');
       } on Exception catch (e) {
@@ -250,6 +274,7 @@ class HomeScreen extends StatelessWidget {
           int port = int.parse(address[1]);
           try {
             sock = await Socket.connect(address[0], port);
+            sockStream = sock.asBroadcastStream();
             Navigator.pushReplacementNamed(context, '/layout_select');
           } on Exception catch (e) {
             print(e);
@@ -262,5 +287,10 @@ class HomeScreen extends StatelessWidget {
         Navigator.pushReplacementNamed(context, '/');
       }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

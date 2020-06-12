@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';
 import 'globals.dart';
+import 'config.dart';
 
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
@@ -57,7 +58,7 @@ class LayoutSelect extends StatelessWidget {
                       ),
                       onTap: (){
                         Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
+                          pageBuilder: (context, animation1, animation2) => HomeScreen(channel:sock),
                           transitionDuration: Duration(seconds: 0),
                         ),);
                       },
