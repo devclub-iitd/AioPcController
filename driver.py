@@ -78,7 +78,6 @@ def main():
 	qr.add_data(serverIP)
 	qr.print_ascii(invert=True)
 	qr.print_ascii()
-
 	while True: 
 		print ("Socket is listening...")
 

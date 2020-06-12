@@ -24,15 +24,29 @@ class HomeScreenState extends State<HomeScreen> {
   
   @override
   Widget build(BuildContext context) {
-        if (sock == null) {
+    if (sock == null) {
       status = 'null';
     } else {
-      sock.write('status&test%');
-
-      //This is not correct right now. status should only be connected when the string 'pass' is received by the socket here. (it is sent by driver.py)
-      status = 'connected';
+      bool open = true;
+      var test;
+      try{
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if(open) status = 'connected';
+      }
+      on OSError{
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+      on SocketException{
+        sock = null;
+        status = 'null';
+        open = false;
+      }
     }
-
+    print(status);
     return Scaffold(
       appBar: AppBar(
         title: Text("AIO PC Controller"),
