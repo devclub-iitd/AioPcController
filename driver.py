@@ -1,14 +1,16 @@
 import socket
 import pyautogui
 import time
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, Controller as KeyboardController
+from pynput.mouse import Controller as MouseController
 import subprocess
 import threading
 from qrcode import QRCode
 import os
 import platform
 pyautogui.PAUSE = 0.01
-keyboard = Controller()
+keyboard = KeyboardController()
+mouse = MouseController()
 xSupport = True if platform.system() == 'Windows' else False
 xcontroller = None
 if(xSupport):
@@ -185,9 +187,13 @@ def handleController(msg):
 		print("Error: Incomplete message received")
 
 def handleTrackpad(msg):
-	if(len(msg) == 3):
-		if(msg[0] == 'move'):
-			pyautogui.move(float(msg[1])*5, float(msg[2])*5, duration=0.05)
+	try:
+		if(len(msg) == 3):
+			if(msg[0] == 'move'):
+				# pyautogui.move(float(msg[1])*5, float(msg[2])*5, duration=0.05)
+				mouse.move(float(msg[1])*5, float(msg[2])*5)
+	except:
+		print('Invalid message')
 
 if __name__=="__main__":
 	main()

@@ -14,7 +14,7 @@ class Trackpad extends StatefulWidget {
 class _TrackpadState extends State<Trackpad> {
 
   var w, h;
-  double dx, dy, time;
+  double dx=0, dy=0, time=0;
   Stopwatch timer = new Stopwatch();
   int dark = 0;
   @override
@@ -40,13 +40,15 @@ class _TrackpadState extends State<Trackpad> {
                   });
                   timer.reset();
                   timer.start();
+                  print("Pan Start");
                 },
                 onPanUpdate: (panInfo) {
                   setState(() {
                     dx += panInfo.delta.dx;
                     dy += panInfo.delta.dy;
                   });
-                  if((timer.elapsedMilliseconds/70).floor() == time){
+                  print("Pan Update");
+                  if((timer.elapsedMilliseconds/25).floor() >= time){
                     _send('move'+'&'+dx.toString()+'&'+dy.toString());
                     time++;
                     setState(() {
@@ -60,6 +62,7 @@ class _TrackpadState extends State<Trackpad> {
                     dx = dy = 0;
                   });
                   timer.reset();
+                  print("Pan End");
                   print(panInfo);
                 },
                 child: Container(
