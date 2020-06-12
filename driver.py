@@ -1,15 +1,14 @@
 import socket
 import pyautogui
 import time
-from pynput.keyboard import Key, Controller as KeyboardController
-from pynput.mouse import Controller as MouseController
 import subprocess
 import threading
 from qrcode import QRCode
 import os
 import platform
+from pynput.mouse import Controller as MouseController
 pyautogui.PAUSE = 0.01
-keyboard = KeyboardController()
+keyboard = None
 mouse = MouseController()
 xSupport = True if platform.system() == 'Windows' else False
 xcontroller = None
@@ -17,6 +16,12 @@ if(xSupport):
 	import pyxinput
 	xcontroller = pyxinput.vController()
 	import dinput
+	from pynput.keyboard import Key, Controller as KeyboardController
+	keyboard = KeyboardController()
+else:
+	from pymouse import PyMouse
+	from pykeyboard import PyKeyboard
+	keyboard = PyKeyboard()
 button = '$'
 duty_ratio = 0
 sub = '$'
@@ -142,24 +147,28 @@ def main():
 def handleButton(type, msg):
 	if(type == 'down'):
 		# pyautogui.keyDown(msg)
-		if(msg=='space'):
-			keyboard.press(Key.space)
-		elif(msg=='shift'):
-			keyboard.press(Key.shift)
-		else:
-			keyboard.press(msg)
+		# if(msg=='space'):
+		# 	keyboard.press(Key.space)
+		# elif(msg=='shift'):
+		# 	keyboard.press(Key.shift)
+		# else:
+		# 	keyboard.press(msg)
 		if xSupport:
 			dinput.handleInputs(1,msg)
+		else:
+			keyboard.press_key(msg)
 	else:
 		# pyautogui.keyUp(msg)
-		if(msg=='space'):
-			keyboard.release(Key.space)
-		elif(msg=='shift'):
-			keyboard.release(Key.shift)
-		else:
-			keyboard.release(msg)
+		# if(msg=='space'):
+		# 	keyboard.release(Key.space)
+		# elif(msg=='shift'):
+		# 	keyboard.release(Key.shift)
+		# else:
+		# 	keyboard.release(msg)
 		if xSupport:
 			dinput.handleInputs(0,msg)
+		else:
+			keyboard.release_key(msg)
 
 def tilt(message,value):
 	global button
