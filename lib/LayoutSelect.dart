@@ -2,7 +2,7 @@ import 'package:aio_pc_controller/HomeScreen.dart';
 import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'LoadCustom.dart';
-import 'tilt.dart';
+import 'Tilt.dart';
 import 'dart:async';
 import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';

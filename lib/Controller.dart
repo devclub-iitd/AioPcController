@@ -713,7 +713,7 @@ class ControllerState extends State<Controller> {
         top: pingy,
         left: pingx,
         child: Container(
-            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+            child: status == 'connected' ? pingDisplay(sockStream) : Text('Not Connected'),
         ),
       ),
     ]));

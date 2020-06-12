@@ -51,7 +51,10 @@ class _TrackpadState extends State<Trackpad> {
         title: Text("Trackpad"),
         actions: <Widget>[
           Container(
-            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+            child: Center(
+                child: status == 'connected'
+                    ? pingDisplay(sockStream)
+                    : Text('Not Connected')),
             padding: const EdgeInsets.only(right: 30.0),
           ),
         ],

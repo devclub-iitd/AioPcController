@@ -92,7 +92,10 @@ class _GyroState extends State<Gyro> {
           title: Text("Tilt to Control"),
           actions: <Widget>[
             Container(
-              child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+              child: Center(
+                  child: status == 'connected'
+                      ? pingDisplay(sockStream)
+                      : Text('Not Connected')),
             ),
             IconButton(
               onPressed: () {
