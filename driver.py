@@ -22,6 +22,11 @@ duty_ratio = 0
 sub = '$'
 serverIP = ''
 
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+
 class myThread (threading.Thread):
 	def __init__(self, threadID, name, counter):
 		threading.Thread.__init__(self)
@@ -70,7 +75,8 @@ def main():
      
 	s.listen()
 	try:
-		serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+		# serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+		serverIP = get_ip_address()+":"+str(port)
 	except socket.gaierror: 
 		output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
 		serverIP = output+":"+str(port)
