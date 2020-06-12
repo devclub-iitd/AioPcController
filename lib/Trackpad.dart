@@ -15,10 +15,31 @@ class _TrackpadState extends State<Trackpad> {
 
   var w, h;
   double dx=0, dy=0, time=0;
+  String status;
   Stopwatch timer = new Stopwatch();
   int dark = 0;
   @override
   Widget build(BuildContext context) {
+    if (sock == null) {
+      status = 'null';
+    } else {
+      bool open = true;
+      var test;
+      try {
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if (open) status = 'connected';
+      } on OSError {
+        sock = null;
+        status = 'null';
+        open = false;
+      } on SocketException {
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+    }
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -28,6 +49,12 @@ class _TrackpadState extends State<Trackpad> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Trackpad"),
+        actions: <Widget>[
+          Container(
+            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+            padding: const EdgeInsets.only(right: 30.0),
+          ),
+        ],
       ),
       body: Stack(
           children: <Widget>[

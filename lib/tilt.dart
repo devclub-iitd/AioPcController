@@ -5,12 +5,14 @@ import 'package:sensors/sensors.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
 import 'Theme.dart';
+import 'dart:io';
 
 void tilt() {
   final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
-    gcurr = event.y * (event.x<0?-1:1);
+    gcurr = event.y * (event.x < 0 ? -1 : 1);
   });
 }
+
 void _send(char) {
   print("Sending " + char);
   sock.write('button' + '&' + char + '%');
@@ -18,10 +20,10 @@ void _send(char) {
 
 void tsend() {
   if (gcurr > 0.6) {
-    String s = ( min(gcurr / 8, 1)).toString();
+    String s = (min(gcurr / 8, 1)).toString();
     sock.write("tilt&-&" + s + '%');
   } else if (gcurr < -0.6) {
-    String s = ( max((-1 * gcurr) / 8, -1)).toString();
+    String s = (max((-1 * gcurr) / 8, -1)).toString();
     sock.write("tilt&+&" + s + '%');
   } else {
     sock.write("tilt&+&" + '0' + '%');
@@ -35,6 +37,8 @@ class Gyro extends StatefulWidget {
 
 class _GyroState extends State<Gyro> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  String status;
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +56,7 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    if(tiltcontrol){
+    if (tiltcontrol) {
       sock.write("tilt&0%");
       tiltcontrol = false;
     }
@@ -62,11 +66,34 @@ class _GyroState extends State<Gyro> {
   int updark = 0, downdark = 0;
   @override
   Widget build(BuildContext context) {
+    if (sock == null) {
+      status = 'null';
+    } else {
+      bool open = true;
+      var test;
+      try {
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if (open) status = 'connected';
+      } on OSError {
+        sock = null;
+        status = 'null';
+        open = false;
+      } on SocketException {
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+    }
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Tilt to Control"),
           actions: <Widget>[
+            Container(
+              child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+            ),
             IconButton(
               onPressed: () {
                 setState(() {
@@ -91,11 +118,15 @@ class _GyroState extends State<Gyro> {
                   Center(
                     child: GestureDetector(
                       onPanStart: (details) {
-                        setState((){downdark = 1;});
+                        setState(() {
+                          downdark = 1;
+                        });
                         _send('down&s');
                       },
                       onPanEnd: (details) {
-                        setState((){downdark = 0;});
+                        setState(() {
+                          downdark = 0;
+                        });
                         _send('up&s');
                       },
                       child: Container(
@@ -112,11 +143,15 @@ class _GyroState extends State<Gyro> {
                   Center(
                     child: GestureDetector(
                       onPanStart: (_) {
-                        setState((){updark = 1;});
+                        setState(() {
+                          updark = 1;
+                        });
                         _send('down&w');
                       },
                       onPanEnd: (_) {
-                        setState((){updark = 0;});
+                        setState(() {
+                          updark = 0;
+                        });
                         _send('up&w');
                       },
                       child: Container(

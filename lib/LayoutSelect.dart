@@ -9,6 +9,12 @@ import 'package:flutter/services.dart';
 import 'globals.dart';
 import 'config.dart';
 
+void statusCheck() {
+  pingClock.reset();
+  pingClock.start();
+  sock.write('status&test%');
+}
+
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
 
@@ -20,6 +26,9 @@ class LayoutSelect extends StatelessWidget {
         if (tiltcontrol) {
           tsend();
         }
+      });
+      Timer.periodic(Duration(milliseconds: 1000), (Timer t) {
+          statusCheck();
       });
       ovisit = true;
     }

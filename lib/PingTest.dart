@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'config.dart';
+import 'globals.dart';
 
 class PingTest extends StatefulWidget {
   @override
@@ -8,7 +9,6 @@ class PingTest extends StatefulWidget {
 
 class _PingTestState extends State<PingTest> {
   TextEditingController _controller = TextEditingController();
-  Stopwatch stopwatch = new Stopwatch();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _PingTestState extends State<PingTest> {
               ),
             ),
             StreamBuilder(
-              stream: sock,
+              stream: sockStream,
               builder: (context, snapshot) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
@@ -35,7 +35,7 @@ class _PingTestState extends State<PingTest> {
                       ? '${String.fromCharCodes(snapshot.data)}' +
                           '\n' +
                           'Latency is ' +
-                          '${stopwatch.elapsedMilliseconds}' +
+                          '${pingClock.elapsedMilliseconds}' +
                           ' ms'
                       : ''),
                 );
@@ -57,8 +57,6 @@ class _PingTestState extends State<PingTest> {
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       print("Sending message");
-      stopwatch.reset();
-      stopwatch.start();
       sock.write("ping&" + _controller.text + "%");
     }
   }

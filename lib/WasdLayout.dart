@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'Theme.dart';
+import 'dart:io';
 
 class WasdLayout extends StatefulWidget {
   @override
@@ -12,8 +13,29 @@ class WasdLayout extends StatefulWidget {
 class _WasdLayoutState extends State<WasdLayout> {
 
   int wdark = 0, adark = 0, shiftdark = 0, sdark = 0, ddark = 0, spacedark = 0;
+  String status;
   @override
   Widget build(BuildContext context) {
+    if (sock == null) {
+      status = 'null';
+    } else {
+      bool open = true;
+      var test;
+      try {
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if (open) status = 'connected';
+      } on OSError {
+        sock = null;
+        status = 'null';
+        open = false;
+      } on SocketException {
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+    }
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -21,6 +43,12 @@ class _WasdLayoutState extends State<WasdLayout> {
     return Scaffold(
       appBar: AppBar(
         title: Text("WASD"),
+        actions: <Widget>[
+          Container(
+            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+            padding: const EdgeInsets.only(right: 30.0),
+          ),
+        ],
       ),
       body: Stack(
           children: <Widget>[

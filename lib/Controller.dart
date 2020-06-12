@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'dart:math';
+import 'dart:io';
 
 class Controller extends StatefulWidget {
   @override
@@ -10,6 +11,8 @@ class Controller extends StatefulWidget {
 }
 
 class ControllerState extends State<Controller> {
+  String status;
+
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -33,7 +36,7 @@ class ControllerState extends State<Controller> {
   }
 
   var w, h;
-  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr;
+  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr, pingx, pingy;
   int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400, exitdark = 400;
 
   double backx, backy, backh, backw, startx, starty, starth, startw;
@@ -62,6 +65,26 @@ class ControllerState extends State<Controller> {
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
+    if (sock == null) {
+      status = 'null';
+    } else {
+      bool open = true;
+      var test;
+      try {
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if (open) status = 'connected';
+      } on OSError {
+        sock = null;
+        status = 'null';
+        open = false;
+      } on SocketException {
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+    }
 
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
@@ -115,6 +138,9 @@ class ControllerState extends State<Controller> {
     dpady = 7*h/9;
     dpadh = h/9;
     dpadw = h/12;
+
+    pingx = w/20;
+    pingy = h*0.9;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -681,6 +707,13 @@ class ControllerState extends State<Controller> {
             });
             _send('Dpad&0');
           },
+        ),
+      ),
+      Positioned(
+        top: pingy,
+        left: pingx,
+        child: Container(
+            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
         ),
       ),
     ]));

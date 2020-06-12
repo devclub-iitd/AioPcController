@@ -11,17 +11,16 @@ import 'dart:convert';
 import 'LoadCustom.dart';
 import 'dart:typed_data';
 
-class HomeScreen extends StatefulWidget{
-  
-
-  @override 
+class HomeScreen extends StatefulWidget {
+  @override
   HomeScreenState createState() => new HomeScreenState();
 }
+
 class HomeScreenState extends State<HomeScreen> {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
   String status;
-  
+
   @override
   Widget build(BuildContext context) {
     if (sock == null) {
@@ -29,18 +28,16 @@ class HomeScreenState extends State<HomeScreen> {
     } else {
       bool open = true;
       var test;
-      try{
+      try {
         sock.write('status&test%');
         test = sock.address.host;
         test = sock.remotePort;
-        if(open) status = 'connected';
-      }
-      on OSError{
+        if (open) status = 'connected';
+      } on OSError {
         sock = null;
         status = 'null';
         open = false;
-      }
-      on SocketException{
+      } on SocketException {
         sock = null;
         status = 'null';
         open = false;
@@ -160,24 +157,29 @@ class HomeScreenState extends State<HomeScreen> {
                     ("You are connected."),
                     style: TextStyle(color: Colors.green),
                   )),
-                  Center(child: Text(
+                  Center(
+                      child: Text(
                     ("IP Address: " + "${sock.address.host}"),
-                    style: TextStyle(color: Colors.green),)),
-                    Center(child: Text(
+                    style: TextStyle(color: Colors.green),
+                  )),
+                  Center(
+                      child: Text(
                     ("Port: " + "${sock.remotePort}"),
-                    style: TextStyle(color: Colors.green),)),
-                    
-            StreamBuilder(
-              stream: sockStream,
-              builder: (context, snapshot) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: Text(snapshot.hasData
-                      ? ((String.fromCharCodes(snapshot.data)=='pass')?'Server is responding well!':'Server is responding.. but there might be some error')
-                      : 'Server is not responding.. You need to re-establish connection.'),
-                );
-              },
-            ),
+                    style: TextStyle(color: Colors.green),
+                  )),
+                  StreamBuilder(
+                    stream: sockStream,
+                    builder: (context, snapshot) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        child: Text(snapshot.hasData
+                            ? ((String.fromCharCodes(snapshot.data) == 'pass')
+                                ? 'Server is responding well!'
+                                : 'Server is responding.. but there might be some error')
+                            : 'Server is not responding.. You need to re-establish connection.'),
+                      );
+                    },
+                  ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),

@@ -4,6 +4,7 @@ import 'config.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'globals.dart';
+import 'dart:io';
 String globalLayoutName;
 List globalLayoutButtonList;
 
@@ -14,10 +15,31 @@ class CustomLayout extends StatefulWidget {
 
 class _CustomLayoutState extends State<CustomLayout> {
   List<LayoutButton> layoutButtonList = [];
+  String status;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    if (sock == null) {
+      status = 'null';
+    } else {
+      bool open = true;
+      var test;
+      try {
+        sock.write('status&test%');
+        test = sock.address.host;
+        test = sock.remotePort;
+        if (open) status = 'connected';
+      } on OSError {
+        sock = null;
+        status = 'null';
+        open = false;
+      } on SocketException {
+        sock = null;
+        status = 'null';
+        open = false;
+      }
+    }
     for(int i=0;i<globalLayoutButtonList.length;i++){
       layoutButtonList.add(new LayoutButton(globalLayoutButtonList[i]['type'],globalLayoutButtonList[i]['x'],globalLayoutButtonList[i]['y'],globalLayoutButtonList[i]['sz']));
     }
@@ -27,6 +49,9 @@ class _CustomLayoutState extends State<CustomLayout> {
       appBar: AppBar(
         title: Text(globalLayoutName),
         actions: <Widget>[
+          Container(
+            child: status == 'connected' ? pingDisplay(sockStream) : Text(''),
+          ),
           IconButton(
               onPressed: () {
                 setState(() {
@@ -40,7 +65,7 @@ class _CustomLayoutState extends State<CustomLayout> {
               },
               icon: Icon(Icons.rotate_left,
                   color: tiltcontrol ? Colors.green : Colors.red),
-            )
+          ),
         ],
       ),
       body: Stack(

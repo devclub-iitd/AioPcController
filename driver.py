@@ -104,7 +104,7 @@ def main():
 				for msg in message:
 					if msg != '':
 						msg = msg.split("&")
-						print("DEBUG: ", msg)
+						# print("DEBUG: ", msg)
 						if(msg[0] == 'button'):
 							handleButton(msg[1], msg[2])
 						elif(msg[0] == 'tilt'):
