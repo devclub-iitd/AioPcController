@@ -10,6 +10,16 @@ import 'dart:io';
 void tilt() {
   final subscription = accelerometerEvents.listen((AccelerometerEvent event) {
     gcurr = event.y * (event.x < 0 ? -1 : 1);
+    if(gcurr>0)
+    {
+      gcurr = (asin(min(gcurr / 10, 1))/1.5707963267948966);
+      print("gcurr: "+gcurr.toString());
+    }
+    else
+    {
+      gcurr = -1*(asin(min((-1*gcurr) / 10, 1))/1.5707963267948966);
+      print("gcurr: "+gcurr.toString());
+    }
   });
 }
 
@@ -19,11 +29,11 @@ void _send(char) {
 }
 
 void tsend() {
-  if (gcurr > 0.6) {
-    String s = (min(gcurr / 8, 1)).toString();
+  if (gcurr > 0.05) {
+    String s = (min(gcurr*2, 1)).toString();
     sock.write("tilt&-&" + s + '%');
-  } else if (gcurr < -0.6) {
-    String s = (max((-1 * gcurr) / 8, -1)).toString();
+  } else if (gcurr < -0.05) {
+    String s = (min(gcurr*-2, 1)).toString();
     sock.write("tilt&+&" + s + '%');
   } else {
     sock.write("tilt&+&" + '0' + '%');
