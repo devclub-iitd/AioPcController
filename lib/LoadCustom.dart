@@ -8,7 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'CustomLayout.dart';
 import 'Theme.dart';
 import 'config.dart';
-
+import 'Tabs.dart';
 List<String> tableList;
 
 class LoadCustom extends StatefulWidget {
@@ -117,108 +117,7 @@ class LoadCustomState extends State<LoadCustom> {
         appBar: AppBar(
           title: Text("My Custom Layouts"),
           bottom: PreferredSize(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: Material(
-                    color: currentThemeColors.tabColor,
-                    child: InkWell(
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.unselectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
-                        child: Center(
-                          child: Text(
-                            'CONNECT',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white54,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: (){
-                        Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => HomeScreen(),
-                          transitionDuration: Duration(seconds: 0),
-                        ),);
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Material(
-                    color: currentThemeColors.tabColor,
-                    child: InkWell(
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.unselectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
-                        child: Center(
-                          child: Text(
-                            'LAYOUTS',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white54,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: (){
-                        Navigator.pushReplacement(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => LayoutSelect(),
-                          transitionDuration: Duration(seconds: 0),
-                        ),);
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Material(
-                    color: currentThemeColors.tabColor,
-                    child: InkWell(
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentThemeColors.selectedTabBorderColor, 
-                              width: 2.0,
-                            )
-                          )
-                        ),
-                        child: Center(
-                          child: Text(
-                            'CUSTOM',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: (){},
-                    ),
-                  ),
-                ),
-              ],
-            ), 
+            child: Tabs('CUSTOM'),
             preferredSize: Size.fromHeight(48.0)
           ),
         ),

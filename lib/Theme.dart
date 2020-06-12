@@ -24,6 +24,8 @@ class ThemeColors{
   Color tabColor;
   Color unselectedTabBorderColor;
   Color selectedTabBorderColor;
+  Color selectedTabTextColor;
+  Color unselectedTabTextColor;
 
   //For Gridview in layout select
   Color gridButtonColor;
@@ -55,6 +57,8 @@ class ThemeColors{
     this.tabColor,
     this.unselectedTabBorderColor,
     this.selectedTabBorderColor,
+    this.unselectedTabTextColor,
+    this.selectedTabTextColor,
 
     this.gridButtonColor,
 
@@ -84,6 +88,8 @@ var lightThemeColors = ThemeColors(
   tabColor: Colors.blue,
   unselectedTabBorderColor: Colors.blue,
   selectedTabBorderColor: Colors.white,
+  unselectedTabTextColor: Colors.white54,
+  selectedTabTextColor: Colors.white,
 
   gridButtonColor: Colors.blue[800],
 
@@ -112,6 +118,8 @@ var darkThemeColors = ThemeColors(
   tabColor: Colors.black,
   unselectedTabBorderColor: Colors.grey[900],
   selectedTabBorderColor: Colors.white,
+  unselectedTabTextColor: Colors.white54,
+  selectedTabTextColor: Colors.white,
 
   gridButtonColor: Colors.teal,
 
