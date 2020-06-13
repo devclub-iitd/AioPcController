@@ -68,7 +68,7 @@ void saveButtons(
   await db.execute('DELETE FROM [$layoutName]');
   await db.transaction((txn) async {
     for (int i = 0; i < buttonList.length; i++) {
-      if (buttonList[i]['x'] >= -50) {
+      if (buttonList[i]['x'] >= -200) {
         await txn.rawInsert(
             'INSERT INTO [$layoutName](type, x, y, sz) VALUES("${buttonList[i]['type']}", ${buttonList[i]['x']}, ${buttonList[i]['y']}, ${buttonList[i]['sz']})');
       }
