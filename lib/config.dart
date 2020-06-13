@@ -37,20 +37,21 @@ StreamBuilder pingDisplay(stream) {
     builder: (context, snapshot) {
       pingClock.stop();
       return Center(
-        child: Text(
-          snapshot.hasData
-              ? ((String.fromCharCodes(snapshot.data) ==
+        child: 
+          snapshot.hasData ? (
+            (String.fromCharCodes(snapshot.data) ==
                       'pass' + statusKey.toString())
-                  ? '${pingClock.elapsedMilliseconds}' + 'ms'
-                  : '')
-              : '',
-          style: TextStyle(
+                  ? Text('${pingClock.elapsedMilliseconds}' + 'ms',style: TextStyle(
               color: pingClock.elapsedMilliseconds < 70
                   ? Colors.green
                   : (pingClock.elapsedMilliseconds < 140
                       ? Colors.yellow
                       : Colors.red)),
-        ),
+        )
+                  : Text(''))
+              : Icon(Icons.signal_wifi_off , color:Colors.red),
+
+          
       );
     },
   );
