@@ -107,6 +107,7 @@ class TrackpadDetector extends StatefulWidget {
 }
 
 class TrackpadDetectorState extends State<TrackpadDetector> {
+  int ldark = 0, rdark = 0;
   double dx = 0,
       dy = 0,
       time = 0,
@@ -184,9 +185,15 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           left: 0,
           child: GestureDetector(
             onPanStart: (_) {
+              setState(() {
+                ldark = 1;
+              });
               _send('click&down&left');
             },
             onPanEnd: (_) {
+              setState(() {
+                ldark = 0;
+              });
               _send('click&up&left');
             },
             child: Container(
@@ -194,7 +201,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               width: clickw,
               height: clickh,
               decoration: BoxDecoration(
-                color: currentThemeColors.accentColor,
+                color: currentThemeColors.buttonColor[ldark],
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
@@ -205,9 +212,15 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           left: w / 2,
           child: GestureDetector(
             onPanStart: (_) {
+              setState(() {
+                rdark = 1;
+              });
               _send('click&down&right');
             },
             onPanEnd: (_) {
+              setState(() {
+                rdark = 0;
+              });
               _send('click&up&right');
             },
             child: Container(
@@ -215,7 +228,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               width: clickw,
               height: clickh,
               decoration: BoxDecoration(
-                color: currentThemeColors.accentColor,
+                color: currentThemeColors.buttonColor[rdark],
                 borderRadius: BorderRadius.circular(5),
               ),
             ),

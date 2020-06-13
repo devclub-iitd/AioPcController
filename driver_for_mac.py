@@ -6,7 +6,7 @@ import threading
 from qrcode import QRCode
 import os
 import platform
-from pynput.mouse import Controller as MouseController
+from pynput.mouse import Button, Controller as MouseController
 pyautogui.PAUSE = 0.01
 keyboard = None
 mouse = MouseController()
@@ -205,8 +205,19 @@ def handleTrackpad(msg):
 	try:
 		if(len(msg) == 3):
 			if(msg[0] == 'move'):
-				# pyautogui.move(float(msg[1])*5, float(msg[2])*5, duration=0.05)
 				mouse.move(float(msg[1])*5, float(msg[2])*5)
+			elif(msg[0] == 'click'):
+				if(msg[1] == 'down'):
+					if(msg[2] == 'left'):
+						print('Check')
+						mouse.press(Button.left)
+					elif(msg[2] == 'right'):
+						mouse.press(Button.right)
+				else:
+					if(msg[2] == 'left'):
+						mouse.release(Button.left)
+					elif(msg[2] == 'right'):
+						mouse.release(Button.right)
 	except:
 		print('Invalid message')
 
