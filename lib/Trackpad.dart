@@ -61,24 +61,24 @@ class TrackpadState extends State<Trackpad> {
                     : Text('Not Connected')),
           ),
           Positioned(
-        top: exity,
-        left: exitx,
-        child: GestureDetector(
-          child: Container(
-              height: 2 * exitr,
-              width: 2 * exitr,
-              decoration: BoxDecoration(
-                gradient:
-                    RadialGradient(colors: [Colors.red[400], Colors.black]),
-                border: Border.all(color: Colors.black),
-                shape: BoxShape.circle,
-              ),
-              child: Center(child: Icon(Icons.cancel))),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+            top: exity,
+            left: exitx,
+            child: GestureDetector(
+              child: Container(
+                  height: 2 * exitr,
+                  width: 2 * exitr,
+                  decoration: BoxDecoration(
+                    gradient:
+                        RadialGradient(colors: [Colors.red[400], Colors.black]),
+                    border: Border.all(color: Colors.black),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(child: Icon(Icons.cancel))),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -107,23 +107,43 @@ class TrackpadDetector extends StatefulWidget {
 }
 
 class TrackpadDetectorState extends State<TrackpadDetector> {
-  double dx = 0, dy = 0, time = 0, x = -1000, y = -1000, sz;
+  double dx = 0,
+      dy = 0,
+      time = 0,
+      x = -1000,
+      y = -1000,
+      sz,
+      padh,
+      padw,
+      clickh,
+      clickw,
+      clickmargin;
   Stopwatch timer = new Stopwatch();
 
   @override
   Widget build(BuildContext context) {
-    
-    sz=this.widget.parent.w/15;
+    double w = this.widget.parent.w, h = this.widget.parent.h;
+
+    sz = w / 15;
+
+    padw = w;
+    padh = h * 0.80;
+
+    clickmargin = h * 0.015;
+    clickw = w / 2 - 2 * clickmargin;
+    clickh = h * 0.20 - 2 * clickmargin;
 
     return Stack(
       children: <Widget>[
         Positioned(
+          top: 0,
+          left: 0,
           child: GestureDetector(
             onPanStart: (panInfo) {
               setState(() {
                 time = 0;
-                x = panInfo.globalPosition.dx - sz/2;
-                y = panInfo.globalPosition.dy - sz/2;
+                x = panInfo.globalPosition.dx - sz / 2;
+                y = panInfo.globalPosition.dy - sz / 2;
               });
               timer.reset();
               timer.start();
@@ -153,10 +173,51 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               print(panInfo);
             },
             child: Container(
-              width: this.widget.parent.w,
-              height: this.widget.parent.h,
+              width: padw,
+              height: padh,
               color: currentThemeColors.primaryBackgroundColor,
-              padding: const EdgeInsets.all(20.0),
+            ),
+          ),
+        ),
+        Positioned(
+          top: h * 0.80,
+          left: 0,
+          child: GestureDetector(
+            onPanStart: (_) {
+              _send('click&down&left');
+            },
+            onPanEnd: (_) {
+              _send('click&up&left');
+            },
+            child: Container(
+              margin: EdgeInsets.all(clickmargin),
+              width: clickw,
+              height: clickh,
+              decoration: BoxDecoration(
+                color: currentThemeColors.accentColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: h * 0.80,
+          left: w / 2,
+          child: GestureDetector(
+            onPanStart: (_) {
+              _send('click&down&right');
+            },
+            onPanEnd: (_) {
+              _send('click&up&right');
+            },
+            child: Container(
+              margin: EdgeInsets.all(clickmargin),
+              width: clickw,
+              height: clickh,
+              decoration: BoxDecoration(
+                color: currentThemeColors.accentColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
           ),
         ),

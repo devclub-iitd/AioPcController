@@ -1,17 +1,36 @@
 import socket
 import pyautogui
 import time
-from pynput.keyboard import Key, Controller
 import subprocess
 import threading
 from qrcode import QRCode
 import os
+import platform
+from pynput.mouse import Controller as MouseController
 pyautogui.PAUSE = 0.01
-keyboard = Controller()
+keyboard = None
+mouse = MouseController()
+xSupport = True if platform.system() == 'Windows' else False
+xcontroller = None
+if(xSupport):
+	import pyxinput
+	xcontroller = pyxinput.vController()
+	import dinput
+	from pynput.keyboard import Key, Controller as KeyboardController
+	keyboard = KeyboardController()
+else:
+	from pymouse import PyMouse
+	from pykeyboard import PyKeyboard
+	keyboard = PyKeyboard()
 button = '$'
 duty_ratio = 0
 sub = '$'
 serverIP = ''
+
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
 
 class myThread (threading.Thread):
 	def __init__(self, threadID, name, counter):
@@ -61,19 +80,20 @@ def main():
      
 	s.listen()
 	try:
-		serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+		# serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+		serverIP = get_ip_address()+":"+str(port)
 	except socket.gaierror: 
 		output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
 		serverIP = output+":"+str(port)
 	
-	print("Connect at IP = "+serverIP)
-	print('Or scan this:')
 	qr = QRCode()
 	qr.add_data(serverIP)
-	qr.print_ascii(invert=True)
-	qr.print_ascii()
-
+	
 	while True: 
+		print("Connect at IP = "+serverIP)
+		print('Or scan this:')
+		qr.print_ascii(invert=True)
+		qr.print_ascii()
 		print ("Socket is listening...")
 
 		c, addr = s.accept()
@@ -81,42 +101,74 @@ def main():
 		print ('Got connection from', addr)
 
 		while True:
-			message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
+			try:
+				message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
 
-			message = message.split("%") #use & to split tokens, and % to split messages.
-			
-			for msg in message:
-				if msg != '':
-					msg = msg.split("&")
-					print("DEBUG: ", msg)
-					if(msg[0] == 'button'):
-						handleButton(msg[1], msg[2])
-					elif(msg[0] == 'tilt'):
-						if(len(msg) == 2):
-							if(msg[1] == '0'):
-								global button
-								button = '$'
-						if(len(msg) < 3):
-							continue
-						elif(msg[2] == ''):
-							continue
-						elif msg[1] == '+':
-							tilt(True, float(msg[2]))
-						elif msg[1] == '-':
-							tilt(False, float(msg[2]))
-
-			c.send(bytes('Thank you for connecting', "utf-8"))
-			
-		c.close()
+				message = message.split("%") #use & to split tokens, and % to split messages.
+				
+				for msg in message:
+					if msg != '':
+						msg = msg.split("&")
+						print("DEBUG: ", msg)
+						if(msg[0] == 'button'):
+							handleButton(msg[1], msg[2])
+						elif(msg[0] == 'tilt'):
+							if(len(msg) == 2):
+								if(msg[1] == '0'):
+									global button
+									button = '$'
+							if(len(msg) < 3):
+								continue
+							elif(msg[2] == ''):
+								continue
+							elif msg[1] == '+':
+								tilt(True, float(msg[2]))
+							elif msg[1] == '-':
+								tilt(False, float(msg[2]))
+						elif(msg[0] == 'cont'):
+							handleController(msg[1:])
+						elif(msg[0] == 'track'):
+							handleTrackpad(msg[1:])
+						elif(msg[0] == 'status'):
+							c.send(bytes('pass'+msg[1],"utf-8"))
+						elif(msg[0] == 'disconnect'):
+							raise ConnectionResetError
+			except ConnectionResetError:
+				print("Disconnected from client")
+				c.close()
+				print("Socket closed")
+				ans = input("Do you want to connect again? (y/n): ")
+				if(ans == 'n'):
+					os._exit(0)
+				break
+			#c.send(bytes('Thank you for connecting', "utf-8"))
 		
 
 def handleButton(type, msg):
 	if(type == 'down'):
 		# pyautogui.keyDown(msg)
-		keyboard.press(msg)
+		# if(msg=='space'):
+		# 	keyboard.press(Key.space)
+		# elif(msg=='shift'):
+		# 	keyboard.press(Key.shift)
+		# else:
+		# 	keyboard.press(msg)
+		if xSupport:
+			dinput.handleInputs(1,msg)
+		else:
+			keyboard.press_key(msg)
 	else:
 		# pyautogui.keyUp(msg)
-		keyboard.release(msg)
+		# if(msg=='space'):
+		# 	keyboard.release(Key.space)
+		# elif(msg=='shift'):
+		# 	keyboard.release(Key.shift)
+		# else:
+		# 	keyboard.release(msg)
+		if xSupport:
+			dinput.handleInputs(0,msg)
+		else:
+			keyboard.release_key(msg)
 
 def tilt(message,value):
 	global button
@@ -127,6 +179,36 @@ def tilt(message,value):
 	else:
 		button = 'd'
 		duty_ratio = value
+
+def handleController(msg):
+	try:
+		if(not xSupport):
+			return
+		if('down' in msg[0] or 'up' in msg[0]):
+			if('Btn' in msg[1]):
+				typeInt = 1 if msg[0] == 'down' else 0
+				xcontroller.set_value(msg[1], typeInt)
+			elif('Trigger' in msg[1]):
+				typeInt = 127 if msg[0] == 'down' else 0
+				xcontroller.set_value(msg[1], typeInt)
+		elif('Axis' in msg[0]):
+			xcontroller.set_value(msg[0], float(msg[1]))
+		elif('Dpad' in msg[0]):
+			xcontroller.set_value(msg[0], int(msg[1]))
+		else:
+			print(msg)
+			print('^Not yet handled in driver^')
+	except:
+		print("Error: Incomplete message received")
+
+def handleTrackpad(msg):
+	try:
+		if(len(msg) == 3):
+			if(msg[0] == 'move'):
+				# pyautogui.move(float(msg[1])*5, float(msg[2])*5, duration=0.05)
+				mouse.move(float(msg[1])*5, float(msg[2])*5)
+	except:
+		print('Invalid message')
 
 if __name__=="__main__":
 	main()

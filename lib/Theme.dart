@@ -100,16 +100,16 @@ var lightThemeColors = ThemeColors(
 
 var darkThemeColors = ThemeColors(
   primaryColor: Colors.black,
-  primaryBackgroundColor: Colors.black54,
+  primaryBackgroundColor: Colors.grey[850],
   accentColor: Colors.teal,
   buttonTextColor: Colors.white,
 
-  createBackgroundColor: Colors.black,
+  createBackgroundColor: Colors.grey[850],
   createSplashColor: Colors.grey[300],
   createBorderColor: Colors.teal,
   createTextColor: Colors.teal,
 
-  listTileColor: Colors.black87,
+  listTileColor: Colors.grey[900],
   listIconColor: Colors.teal,
 
   dialogTextColor: Colors.white,
