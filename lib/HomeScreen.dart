@@ -25,7 +25,7 @@ class HomeScreenState extends State<HomeScreen> {
       bool open = true;
       var test;
       try {
-        sock.write('status&test%');
+        sock.write('status&'+statusKey.toString()+'%');
         test = sock.address.host;
         test = sock.remotePort;
         if (open) status = 'connected';
@@ -76,7 +76,7 @@ class HomeScreenState extends State<HomeScreen> {
                             ? ((String.fromCharCodes(snapshot.data) == 'pass'+statusKey.toString())
                                 ? 'Server is responding well!'
                                 : 'Server is responding.. but there might be some error')
-                            : 'Server is not responding.. You need to re-establish connection.'),
+                            : 'Server is NOT responding :\'('),
                       );
                     },
                   ),
