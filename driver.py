@@ -127,7 +127,7 @@ def main():
 		canvas1.create_window(300, 400, window=panel)
 
 		# qr.print_ascii(invert=True)
-		qr.print_ascii()
+		# qr.print_ascii()
 		root.update()
 		# print ("Socket is listening...")
 
