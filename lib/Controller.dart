@@ -36,32 +36,76 @@ class ControllerState extends State<Controller> {
   }
 
   var w, h;
-  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr, pingx, pingy;
-  int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400, exitdark = 400;
+  double toph,
+      rtx,
+      rty,
+      rbx,
+      rby,
+      ltx,
+      lty,
+      lbx,
+      lby,
+      ax,
+      ay,
+      r,
+      xx,
+      xy,
+      yx,
+      yy,
+      bx,
+      by,
+      exitx,
+      exity,
+      exitr,
+      pingx,
+      pingy;
+  int rtdark = 400,
+      rbdark = 400,
+      lbdark = 400,
+      ltdark = 400,
+      adark = 400,
+      xdark = 400,
+      ydark = 400,
+      bdark = 400,
+      exitdark = 400;
 
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
 
-  double lsbdx=0, lsbdy=0, rsbdx=0, rsbdy=0, joyRange, joyR, axislx=0, axisly=0, axisrx=0, axisry=0, lsbx, lsby, rsbx, rsby;
+  double lsbdx = 0,
+      lsbdy = 0,
+      rsbdx = 0,
+      rsbdy = 0,
+      joyRange,
+      joyR,
+      axislx = 0,
+      axisly = 0,
+      axisrx = 0,
+      axisry = 0,
+      lsbx,
+      lsby,
+      rsbx,
+      rsby;
 
   double dpadx, dpady, dpadh, dpadw;
   int updark = 400, downdark = 400, leftdark = 400, rightdark = 400;
-  
 
-  double joyx(double x,double dx,double y,double dy,double w,double h){
+  double joyx(double x, double dx, double y, double dy, double w, double h) {
     double jR = joyRange;
-    if(dx*dx+dy*dy>=jR*jR){
-      return x+jR*dx/(sqrt(dx*dx+dy*dy));
-    }
-    else return x+dx;
+    if (dx * dx + dy * dy >= jR * jR) {
+      return x + jR * dx / (sqrt(dx * dx + dy * dy));
+    } else
+      return x + dx;
   }
-  double joyy(double x,double dx,double y,double dy,double w,double h){
+
+  double joyy(double x, double dx, double y, double dy, double w, double h) {
     double jR = joyRange;
-    if(dx*dx+dy*dy>=jR*jR){
-      return y+jR*dy/(sqrt(dx*dx+dy*dy));
-    }
-    else return y+dy;
+    if (dx * dx + dy * dy >= jR * jR) {
+      return y + jR * dy / (sqrt(dx * dx + dy * dy));
+    } else
+      return y + dy;
   }
+
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -71,7 +115,7 @@ class ControllerState extends State<Controller> {
       bool open = true;
       var test;
       try {
-        sock.write('status&'+statusKey.toString()+'%');
+        sock.write('status&' + statusKey.toString() + '%');
         test = sock.address.host;
         test = sock.remotePort;
         if (open) status = 'connected';
@@ -93,7 +137,7 @@ class ControllerState extends State<Controller> {
     rtx = w / 2;
     rty = 0.0;
 
-    rbx = w/2;
+    rbx = w / 2;
     rby = toph;
 
     ltx = 0.0;
@@ -102,45 +146,45 @@ class ControllerState extends State<Controller> {
     lbx = 0.0;
     lby = toph;
 
-    r = h/15;
-    ax = yx = 7*w/9;
-    ay = 5*h/9;
+    r = h / 15;
+    ax = yx = 7 * w / 9;
+    ay = 5 * h / 9;
 
-    xx = 7*w/9 - h/9;
-    xy = by = 4*h/9;
+    xx = 7 * w / 9 - h / 9;
+    xy = by = 4 * h / 9;
 
-    yy = 3*h/9;
-    bx = 7*w/9 + h/9;
-    
-    exitx = w*0.95;
-    exity = h*0.9;
-    exitr = h/30;
+    yy = 3 * h / 9;
+    bx = 7 * w / 9 + h / 9;
 
-    backh = h/10;
-    backw = w/10;
-    backx = w/2 - w/9 - backw/2;
-    backy = h/3 - backh/2;
+    exitx = w * 0.95;
+    exity = h * 0.9;
+    exitr = h / 30;
 
-    starth = h/10;
-    startw = w/10;
-    startx = w/2 + w/9 - startw/2;
-    starty = h/3 - starth/2;
+    backh = h / 10;
+    backw = w / 10;
+    backx = w / 2 - w / 9 - backw / 2;
+    backy = h / 3 - backh / 2;
 
-    joyRange = h/10;
-    joyR = h/12;
+    starth = h / 10;
+    startw = w / 10;
+    startx = w / 2 + w / 9 - startw / 2;
+    starty = h / 3 - starth / 2;
 
-    lsby = 5*h/9 - joyR;
-    lsbx = 2*w/9 - joyR;
-    rsby = 6.8*h/9 - joyR;
-    rsbx = 5.5*w/9 - joyR;
+    joyRange = h / 10;
+    joyR = h / 12;
 
-    dpadx = 3.5*w/9;
-    dpady = 7*h/9;
-    dpadh = h/9;
-    dpadw = h/12;
+    lsby = 5 * h / 9 - joyR;
+    lsbx = 2 * w / 9 - joyR;
+    rsby = 6.8 * h / 9 - joyR;
+    rsbx = 5.5 * w / 9 - joyR;
 
-    pingx = w/20;
-    pingy = h*0.9;
+    dpadx = 3.5 * w / 9;
+    dpady = 7 * h / 9;
+    dpadh = h / 9;
+    dpadw = h / 12;
+
+    pingx = w / 20;
+    pingy = h * 0.9;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -149,13 +193,19 @@ class ControllerState extends State<Controller> {
         child: GestureDetector(
           child: Container(
             height: toph,
-            width: w/2,
+            width: w / 2,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
-                border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
+              gradient: LinearGradient(
+                  colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
+              border:
+                  Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
             ),
-            child: Center(child:Text("RT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
+            child: Center(
+                child: Text(
+              "RT",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
           ),
           onPanStart: (_) {
             _send('down&TriggerR');
@@ -177,13 +227,18 @@ class ControllerState extends State<Controller> {
         child: GestureDetector(
           child: Container(
             height: toph,
-            width: w/2,
+            width: w / 2,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
-                border: Border(bottom: BorderSide(color:Colors.blue[900])),
+              gradient: LinearGradient(
+                  colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
+              border: Border(bottom: BorderSide(color: Colors.blue[900])),
             ),
-            child: Center(child:Text("RB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
+            child: Center(
+                child: Text(
+              "RB",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderR');
@@ -205,13 +260,19 @@ class ControllerState extends State<Controller> {
         child: GestureDetector(
           child: Container(
             height: toph,
-            width: w/2,
+            width: w / 2,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.indigo[ltdark + 300],Colors.indigo[400]]),
-                border: Border(bottom: BorderSide(color:Colors.white,width:0.1)),
+              gradient: LinearGradient(
+                  colors: [Colors.indigo[ltdark + 300], Colors.indigo[400]]),
+              border:
+                  Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
             ),
-            child: Center(child:Text("LT", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
+            child: Center(
+                child: Text(
+              "LT",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
           ),
           onPanStart: (_) {
             _send('down&TriggerL');
@@ -233,13 +294,18 @@ class ControllerState extends State<Controller> {
         child: GestureDetector(
           child: Container(
             height: toph,
-            width: w/2,
+            width: w / 2,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.indigo[lbdark + 300],Colors.indigo[400]]),
-                border: Border(bottom: BorderSide(color:Colors.blue[900])),
+              gradient: LinearGradient(
+                  colors: [Colors.indigo[lbdark + 300], Colors.indigo[400]]),
+              border: Border(bottom: BorderSide(color: Colors.blue[900])),
             ),
-            child: Center(child:Text("LB", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold),)),
+            child: Center(
+                child: Text(
+              "LB",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
           ),
           onPanStart: (_) {
             _send('down&BtnShoulderL');
@@ -260,15 +326,15 @@ class ControllerState extends State<Controller> {
         left: ax,
         child: GestureDetector(
           child: Container(
-            height: 2*r,
-            width: 2*r,
+            height: 2 * r,
+            width: 2 * r,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.green[adark],Colors.green[adark+300]]),
-                border: Border.all(color:Colors.green[900]),
-                shape: BoxShape.circle,
+              gradient: RadialGradient(
+                  colors: [Colors.green[adark], Colors.green[adark + 300]]),
+              border: Border.all(color: Colors.green[900]),
+              shape: BoxShape.circle,
             ),
-            child: Center(child:Text("A")),
+            child: Center(child: Text("A")),
           ),
           onPanStart: (_) {
             _send('down&BtnA');
@@ -289,15 +355,15 @@ class ControllerState extends State<Controller> {
         left: xx,
         child: GestureDetector(
           child: Container(
-            height: 2*r,
-            width: 2*r,
+            height: 2 * r,
+            width: 2 * r,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.blue[xdark],Colors.blue[xdark+300]]),
-                border: Border.all(color:Colors.blue[900]),
-                shape: BoxShape.circle,
+              gradient: RadialGradient(
+                  colors: [Colors.blue[xdark], Colors.blue[xdark + 300]]),
+              border: Border.all(color: Colors.blue[900]),
+              shape: BoxShape.circle,
             ),
-            child: Center(child:Text("X")),
+            child: Center(child: Text("X")),
           ),
           onPanStart: (_) {
             _send('down&BtnX');
@@ -318,15 +384,15 @@ class ControllerState extends State<Controller> {
         left: yx,
         child: GestureDetector(
           child: Container(
-            height: 2*r,
-            width: 2*r,
+            height: 2 * r,
+            width: 2 * r,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.yellow[ydark],Colors.yellow[ydark+300]]),
-                border: Border.all(color:Colors.yellow[900]),
-                shape: BoxShape.circle,
+              gradient: RadialGradient(
+                  colors: [Colors.yellow[ydark], Colors.yellow[ydark + 300]]),
+              border: Border.all(color: Colors.yellow[900]),
+              shape: BoxShape.circle,
             ),
-            child: Center(child:Text("Y")),
+            child: Center(child: Text("Y")),
           ),
           onPanStart: (_) {
             _send('down&BtnY');
@@ -347,15 +413,15 @@ class ControllerState extends State<Controller> {
         left: bx,
         child: GestureDetector(
           child: Container(
-            height: 2*r,
-            width: 2*r,
+            height: 2 * r,
+            width: 2 * r,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.red[bdark],Colors.red[bdark+300]]),
-                border: Border.all(color:Colors.red[900]),
-                shape: BoxShape.circle,
+              gradient: RadialGradient(
+                  colors: [Colors.red[bdark], Colors.red[bdark + 300]]),
+              border: Border.all(color: Colors.red[900]),
+              shape: BoxShape.circle,
             ),
-            child: Center(child:Text("B")),
+            child: Center(child: Text("B")),
           ),
           onPanStart: (_) {
             _send('down&BtnB');
@@ -376,17 +442,16 @@ class ControllerState extends State<Controller> {
         left: exitx,
         child: GestureDetector(
           child: Container(
-            height: 2*exitr,
-            width: 2*exitr,
-            decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.red[bdark],Colors.black]),
-                border: Border.all(color:Colors.black),
+              height: 2 * exitr,
+              width: 2 * exitr,
+              decoration: BoxDecoration(
+                gradient:
+                    RadialGradient(colors: [Colors.red[bdark], Colors.black]),
+                border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
-            ),
-            child: Center(child:Icon(Icons.cancel))
-          ),
-          onTap: (){
+              ),
+              child: Center(child: Icon(Icons.cancel))),
+          onTap: () {
             Navigator.pop(context);
           },
         ),
@@ -396,21 +461,19 @@ class ControllerState extends State<Controller> {
         left: backx,
         child: GestureDetector(
           child: Container(
-            height: backh,
-            width: backw,
-            decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.grey[backdark],Colors.grey]),
-                border: Border.all(color:Colors.black),
-                borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular( 16.0),
-                bottomLeft: Radius.circular(16.0),
-                bottomRight: Radius.circular( 16.0),
-            )
-            ),
-            child: Center(child:Icon(Icons.content_copy))
-          ),
+              height: backh,
+              width: backw,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                      colors: [Colors.grey[backdark], Colors.grey]),
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                    bottomLeft: Radius.circular(16.0),
+                    bottomRight: Radius.circular(16.0),
+                  )),
+              child: Center(child: Icon(Icons.content_copy))),
           onPanStart: (_) {
             _send('down&BtnBack');
             setState(() {
@@ -430,21 +493,19 @@ class ControllerState extends State<Controller> {
         left: startx,
         child: GestureDetector(
           child: Container(
-            height: backh,
-            width: backw,
-            decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.grey[startdark],Colors.grey]),
-                border: Border.all(color:Colors.black),
-                borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular( 16.0),
-                bottomLeft: Radius.circular(16.0),
-                bottomRight: Radius.circular( 16.0),
-            )
-            ),
-            child: Center(child:Icon(Icons.dehaze))
-          ),
+              height: backh,
+              width: backw,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                      colors: [Colors.grey[startdark], Colors.grey]),
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                    bottomLeft: Radius.circular(16.0),
+                    bottomRight: Radius.circular(16.0),
+                  )),
+              child: Center(child: Icon(Icons.dehaze))),
           onPanStart: (_) {
             _send('down&BtnStart');
             setState(() {
@@ -460,81 +521,81 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: lsby+joyR-joyRange,
-        left: lsbx+joyR-joyRange,
+        top: lsby + joyR - joyRange,
+        left: lsbx + joyR - joyRange,
         child: GestureDetector(
           child: Container(
-            height: 2*joyRange,
-            width: 2*joyRange,
+            height: 2 * joyRange,
+            width: 2 * joyRange,
             decoration: BoxDecoration(
-                border: Border.all(color:Colors.grey[400]),
-                shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey[400]),
+              shape: BoxShape.circle,
             ),
           ),
         ),
       ),
       Positioned(
-        top: dpady - (dpadw+dpadh*2)*0.6,
-        left: dpadx - (dpadw+dpadh*2)*0.6,
+        top: dpady - (dpadw + dpadh * 2) * 0.6,
+        left: dpadx - (dpadw + dpadh * 2) * 0.6,
         child: GestureDetector(
           child: Container(
-            height: (dpadw+dpadh*2)*1.2,
-            width: (dpadw+dpadh*2)*1.2,
+            height: (dpadw + dpadh * 2) * 1.2,
+            width: (dpadw + dpadh * 2) * 1.2,
             decoration: BoxDecoration(
-                border: Border.all(color:Colors.grey[400]),
-                shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey[400]),
+              shape: BoxShape.circle,
             ),
           ),
         ),
       ),
       Positioned(
-        top: rsby+joyR-joyRange,
-        left: rsbx+joyR-joyRange,
+        top: rsby + joyR - joyRange,
+        left: rsbx + joyR - joyRange,
         child: GestureDetector(
           child: Container(
-            height: 2*joyRange,
-            width: 2*joyRange,
+            height: 2 * joyRange,
+            width: 2 * joyRange,
             decoration: BoxDecoration(
-                border: Border.all(color:Colors.grey[400]),
-                shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey[400]),
+              shape: BoxShape.circle,
             ),
           ),
         ),
       ),
       Positioned(
-        top: joyy(lsbx,lsbdx,lsby,lsbdy,w,h),
-        left: joyx(lsbx,lsbdx,lsby,lsbdy,w,h),
+        top: joyy(lsbx, lsbdx, lsby, lsbdy, w, h),
+        left: joyx(lsbx, lsbdx, lsby, lsbdy, w, h),
         child: GestureDetector(
-          child:Opacity(
+          child: Opacity(
             opacity: 0.8,
-          child: Container(
-            height: 2*joyR,
-            width: 2*joyR,
-            decoration: BoxDecoration(
+            child: Container(
+              height: 2 * joyR,
+              width: 2 * joyR,
+              decoration: BoxDecoration(
                 gradient: RadialGradient(
-                    colors: [Colors.grey[400],Colors.grey[500]]),
-                border: Border.all(color:Colors.grey[400]),
+                    colors: [Colors.grey[400], Colors.grey[500]]),
+                border: Border.all(color: Colors.grey[400]),
                 shape: BoxShape.circle,
-                
+              ),
+              child: Center(child: Text("L")),
             ),
-            child: Center(child:Text("L")),
           ),
-          ),
-
           onPanUpdate: (tapInfo) {
             setState(() {
               lsbdx += tapInfo.delta.dx;
               lsbdy += tapInfo.delta.dy;
-              axislx = (lsbdx>0) ? min(lsbdx/joyRange,1) : max(lsbdx/joyRange,-1);
-              axisly = (lsbdy>0) ? min(lsbdy/joyRange,1) : max(lsbdy/joyRange,-1);
+              axislx = (lsbdx > 0)
+                  ? min(lsbdx / joyRange, 1)
+                  : max(lsbdx / joyRange, -1);
+              axisly = (lsbdy > 0)
+                  ? min(lsbdy / joyRange, 1)
+                  : max(lsbdy / joyRange, -1);
             });
-            _send('AxisLx&'+axislx.toString());
-            _send('AxisLy&'+(-axisly).toString());
+            _send('AxisLx&' + axislx.toString());
+            _send('AxisLy&' + (-axisly).toString());
           },
-
-          onPanEnd: (_){
-            setState(()
-            {
+          onPanEnd: (_) {
+            setState(() {
               lsbdx = lsbdy = axislx = axisly = 0;
             });
             _send('AxisLx&0');
@@ -543,53 +604,53 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: dpady - dpadw/2,
-        left: dpadx - dpadw/2,
+        top: dpady - dpadw / 2,
+        left: dpadx - dpadw / 2,
         child: GestureDetector(
           child: Container(
             height: dpadw,
             width: dpadh,
             decoration: BoxDecoration(
-                color: Colors.grey[400],
-                border: Border.all(color:Colors.grey[400]),
-               ),
+              color: Colors.grey[400],
+              border: Border.all(color: Colors.grey[400]),
+            ),
           ),
         ),
       ),
       Positioned(
-        top: joyy(rsbx,rsbdx,rsby,rsbdy,w,h),
-        left: joyx(rsbx,rsbdx,rsby,rsbdy,w,h),
+        top: joyy(rsbx, rsbdx, rsby, rsbdy, w, h),
+        left: joyx(rsbx, rsbdx, rsby, rsbdy, w, h),
         child: GestureDetector(
-          child:Opacity(
+          child: Opacity(
             opacity: 0.8,
-          child: Container(
-            height: 2*joyR,
-            width: 2*joyR,
-            decoration: BoxDecoration(
+            child: Container(
+              height: 2 * joyR,
+              width: 2 * joyR,
+              decoration: BoxDecoration(
                 gradient: RadialGradient(
-                    colors: [Colors.grey[400],Colors.grey[500]]),
-                border: Border.all(color:Colors.grey[400]),
+                    colors: [Colors.grey[400], Colors.grey[500]]),
+                border: Border.all(color: Colors.grey[400]),
                 shape: BoxShape.circle,
-                
+              ),
+              child: Center(child: Text("R")),
             ),
-            child: Center(child:Text("R")),
           ),
-          ),
-
           onPanUpdate: (tapInfo) {
             setState(() {
               rsbdx += tapInfo.delta.dx;
               rsbdy += tapInfo.delta.dy;
-              axisrx = (rsbdx>0) ? min(rsbdx/joyRange,1) : max(rsbdx/joyRange,-1);
-              axisry = (rsbdy>0) ? min(rsbdy/joyRange,1) : max(rsbdy/joyRange,-1);
+              axisrx = (rsbdx > 0)
+                  ? min(rsbdx / joyRange, 1)
+                  : max(rsbdx / joyRange, -1);
+              axisry = (rsbdy > 0)
+                  ? min(rsbdy / joyRange, 1)
+                  : max(rsbdy / joyRange, -1);
             });
-            _send('AxisRx&'+axisrx.toString());
-            _send('AxisRy&'+(-axisry).toString());
+            _send('AxisRx&' + axisrx.toString());
+            _send('AxisRy&' + (-axisry).toString());
           },
-
-          onPanEnd: (_){
-            setState(()
-            {
+          onPanEnd: (_) {
+            setState(() {
               rsbdx = rsbdy = axisrx = axisry = 0;
             });
             _send('AxisRx&0');
@@ -598,18 +659,21 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: dpady - dpadh - dpadw/2,
-        left: dpadx - dpadw/2,
+        top: dpady - dpadh - dpadw / 2,
+        left: dpadx - dpadw / 2,
         child: GestureDetector(
           child: Container(
             height: dpadh,
             width: dpadw,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
+              gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                    colors: [Colors.grey[updark + 100], Colors.grey[updark]]),
-                border: Border(left: BorderSide(color:Colors.black,width:0.5),right:BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5)),
+                  colors: [Colors.grey[updark + 100], Colors.grey[updark]]),
+              border: Border(
+                  left: BorderSide(color: Colors.black, width: 0.5),
+                  right: BorderSide(color: Colors.black, width: 0.5),
+                  top: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -627,18 +691,21 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: dpady + dpadw/2,
-        left: dpadx - dpadw/2,
+        top: dpady + dpadw / 2,
+        left: dpadx - dpadw / 2,
         child: GestureDetector(
           child: Container(
             height: dpadh,
             width: dpadw,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
+              gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                    colors: [Colors.grey[downdark], Colors.grey[downdark + 100]]),
-                border: Border(left: BorderSide(color:Colors.black,width:0.5),right:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+                  colors: [Colors.grey[downdark], Colors.grey[downdark + 100]]),
+              border: Border(
+                  left: BorderSide(color: Colors.black, width: 0.5),
+                  right: BorderSide(color: Colors.black, width: 0.5),
+                  bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -656,16 +723,19 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: dpady - dpadw/2,
-        left: dpadx - dpadw/2 - dpadh,
+        top: dpady - dpadw / 2,
+        left: dpadx - dpadw / 2 - dpadh,
         child: GestureDetector(
           child: Container(
             height: dpadw,
             width: dpadh,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.grey[leftdark + 100], Colors.grey[leftdark]]),
-                border: Border(left: BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+              gradient: LinearGradient(
+                  colors: [Colors.grey[leftdark + 100], Colors.grey[leftdark]]),
+              border: Border(
+                  left: BorderSide(color: Colors.black, width: 0.5),
+                  top: BorderSide(color: Colors.black, width: 0.5),
+                  bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -683,16 +753,21 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: dpady - dpadw/2,
-        left: dpadx + dpadw/2,
+        top: dpady - dpadw / 2,
+        left: dpadx + dpadw / 2,
         child: GestureDetector(
           child: Container(
             height: dpadw,
             width: dpadh,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.grey[rightdark], Colors.grey[rightdark + 100]]),
-                border: Border(right: BorderSide(color:Colors.black,width:0.5),top:BorderSide(color:Colors.black,width:0.5),bottom:BorderSide(color:Colors.black,width:0.5)),
+              gradient: LinearGradient(colors: [
+                Colors.grey[rightdark],
+                Colors.grey[rightdark + 100]
+              ]),
+              border: Border(
+                  right: BorderSide(color: Colors.black, width: 0.5),
+                  top: BorderSide(color: Colors.black, width: 0.5),
+                  bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -713,16 +788,19 @@ class ControllerState extends State<Controller> {
         top: pingy,
         left: pingx,
         child: Container(
-            child: status == 'connected' ? pingDisplay(sockStream) : Text('Not Connected'),
+          child: status == 'connected'
+              ? pingDisplay(sockStream)
+              : Text('Not Connected'),
         ),
       ),
     ]));
-
   }
 
   void _send(char) {
     print("Sending " + char);
-    if(sock == null) print("Could not send.");
-    else sock.write('cont' + '&' + char + '%');
+    if (sock == null)
+      print("Could not send.");
+    else
+      sock.write('cont' + '&' + char + '%');
   }
 }

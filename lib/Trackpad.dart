@@ -12,9 +12,8 @@ class Trackpad extends StatefulWidget {
 }
 
 class TrackpadState extends State<Trackpad> {
-
   var w, h;
-  double dx=0, dy=0, time=0;
+  double dx = 0, dy = 0, time = 0;
   String status;
   Stopwatch timer = new Stopwatch();
   int dark = 0;
@@ -26,7 +25,7 @@ class TrackpadState extends State<Trackpad> {
       bool open = true;
       var test;
       try {
-        sock.write('status&'+statusKey.toString()+'%');
+        sock.write('status&' + statusKey.toString() + '%');
         test = sock.address.host;
         test = sock.remotePort;
         if (open) status = 'connected';
@@ -47,24 +46,20 @@ class TrackpadState extends State<Trackpad> {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Trackpad"),
-        actions: <Widget>[
-          Container(
+      body: Stack(
+        children: <Widget>[
+          TrackpadDetector(this),
+          Positioned(
+            right: 0.05 * w,
+            top: 0.1 * h,
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
                     : Text('Not Connected')),
-            padding: const EdgeInsets.only(right: 30.0),
           ),
         ],
       ),
-      body: Stack(
-          children: <Widget>[
-            TrackpadDetector(this),
-          ],
-        ),
-      );
+    );
   }
 
   @override
@@ -78,7 +73,6 @@ class TrackpadState extends State<Trackpad> {
     print("A");
     super.dispose();
     print("Disposed");
-
   }
 }
 
@@ -88,60 +82,83 @@ class TrackpadDetector extends StatefulWidget {
   TrackpadDetector(this.parent);
   @override
   TrackpadDetectorState createState() => TrackpadDetectorState();
-
 }
 
 class TrackpadDetectorState extends State<TrackpadDetector> {
-  double dx=0, dy=0, time=0;
+  double dx = 0, dy = 0, time = 0, x = -1000, y = -1000;
   Stopwatch timer = new Stopwatch();
-  int dark = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      child: GestureDetector(
-        onPanStart: (panInfo) {
-          setState((){
-            dark = 1;
-            time = 0;
-          });
-          timer.reset();
-          timer.start();
-          print("Pan Start");
-        },
-        onPanUpdate: (panInfo) {
-          setState(() {
-            dx += panInfo.delta.dx;
-            dy += panInfo.delta.dy;
-          });
-          print("Pan Update");
-          if((timer.elapsedMilliseconds/25).floor() >= time){
-            _send('move'+'&'+dx.toString()+'&'+dy.toString());
-            time++;
-            setState(() {
-              dx = dy = 0;
-            }); 
-          } 
-        },
-        onPanEnd: (panInfo) {
-          setState((){
-            dark = 0;
-            dx = dy = 0;
-          });
-          timer.reset();
-          print("Pan End");
-          print(panInfo);
-        },
-        child: Container(
-          width: this.widget.parent.w,
-          height: this.widget.parent.h,
-          color: currentThemeColors.buttonColor[dark],
-          padding: const EdgeInsets.all(20.0),
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          child: GestureDetector(
+            onPanStart: (panInfo) {
+              setState(() {
+                time = 0;
+                x = panInfo.globalPosition.dx;
+                y = panInfo.globalPosition.dy;
+              });
+              timer.reset();
+              timer.start();
+            },
+            onPanUpdate: (panInfo) {
+              setState(() {
+                dx += panInfo.delta.dx;
+                dy += panInfo.delta.dy;
+                x += panInfo.delta.dx;
+                y += panInfo.delta.dy;
+              });
+              print(panInfo.globalPosition.dx);
+              if ((timer.elapsedMilliseconds / 25).floor() >= time) {
+                _send('move' + '&' + dx.toString() + '&' + dy.toString());
+                time++;
+                setState(() {
+                  dx = dy = 0;
+                });
+              }
+            },
+            onPanEnd: (panInfo) {
+              setState(() {
+                dx = dy = 0;
+                x = y = -1000;
+              });
+              timer.reset();
+              print(panInfo);
+            },
+            child: Container(
+              width: this.widget.parent.w,
+              height: this.widget.parent.h,
+              color: currentThemeColors.primaryBackgroundColor,
+              padding: const EdgeInsets.all(20.0),
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          top: y,
+          left: x,
+          child: Container(
+            child: Opacity(
+              opacity: 0.8,
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                      colors: [Colors.grey[400], Colors.grey[500]]),
+                  border: Border.all(color: Colors.grey[400]),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
-  void _send(char){
+
+  void _send(char) {
     print("Sending " + char);
     sock.write('track' + '&' + char + '%');
   }
