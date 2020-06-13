@@ -166,6 +166,7 @@ class HomeScreenState extends State<HomeScreen> {
       print('port: ' + port.toString());
       try {
         sock = await Socket.connect(address, port);
+        sock.setOption(SocketOption.tcpNoDelay, true);
         sockStream = sock.asBroadcastStream();
         print(sock.address);
         Navigator.pushReplacementNamed(context, '/layout_select');
@@ -187,6 +188,7 @@ class HomeScreenState extends State<HomeScreen> {
           int port = int.parse(address[1]);
           try {
             sock = await Socket.connect(address[0], port);
+            sock.setOption(SocketOption.tcpNoDelay, true);
             sockStream = sock.asBroadcastStream();
             Navigator.pushReplacementNamed(context, '/layout_select');
           } on Exception catch (e) {
