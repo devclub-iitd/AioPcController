@@ -8,10 +8,10 @@ import 'dart:io';
 
 class Trackpad extends StatefulWidget {
   @override
-  _TrackpadState createState() => _TrackpadState();
+  TrackpadState createState() => TrackpadState();
 }
 
-class _TrackpadState extends State<Trackpad> {
+class TrackpadState extends State<Trackpad> {
 
   var w, h;
   double dx=0, dy=0, time=0;
@@ -61,57 +61,10 @@ class _TrackpadState extends State<Trackpad> {
       ),
       body: Stack(
           children: <Widget>[
-            Positioned(
-              child: GestureDetector(
-                onPanStart: (panInfo) {
-                  setState((){
-                    dark = 1;
-                    time = 0;
-                  });
-                  timer.reset();
-                  timer.start();
-                  print("Pan Start");
-                },
-                onPanUpdate: (panInfo) {
-                  setState(() {
-                    dx += panInfo.delta.dx;
-                    dy += panInfo.delta.dy;
-                  });
-                  print("Pan Update");
-                  if((timer.elapsedMilliseconds/25).floor() >= time){
-                    _send('move'+'&'+dx.toString()+'&'+dy.toString());
-                    time++;
-                    setState(() {
-                      dx = dy = 0;
-                    }); 
-                  } 
-                },
-                onPanEnd: (panInfo) {
-                  setState((){
-                    dark = 0;
-                    dx = dy = 0;
-                  });
-                  timer.reset();
-                  print("Pan End");
-                  print(panInfo);
-                },
-                child: Container(
-                  width: w,
-                  height: h,
-                  color: currentThemeColors.buttonColor[dark],
-                  padding: const EdgeInsets.all(20.0),
-                ),
-              ),
-            ), 
+            TrackpadDetector(this),
           ],
         ),
       );
-  }
-
-  void _send(char){
-    print("Sending " + char);
-    if(sock == null) print("Could not send.");
-    else sock.write('track' + '&' + char + '%');
   }
 
   @override
@@ -126,5 +79,70 @@ class _TrackpadState extends State<Trackpad> {
     super.dispose();
     print("Disposed");
 
+  }
+}
+
+class TrackpadDetector extends StatefulWidget {
+  final TrackpadState parent;
+
+  TrackpadDetector(this.parent);
+  @override
+  TrackpadDetectorState createState() => TrackpadDetectorState();
+
+}
+
+class TrackpadDetectorState extends State<TrackpadDetector> {
+  double dx=0, dy=0, time=0;
+  Stopwatch timer = new Stopwatch();
+  int dark = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      child: GestureDetector(
+        onPanStart: (panInfo) {
+          setState((){
+            dark = 1;
+            time = 0;
+          });
+          timer.reset();
+          timer.start();
+          print("Pan Start");
+        },
+        onPanUpdate: (panInfo) {
+          setState(() {
+            dx += panInfo.delta.dx;
+            dy += panInfo.delta.dy;
+          });
+          print("Pan Update");
+          if((timer.elapsedMilliseconds/25).floor() >= time){
+            _send('move'+'&'+dx.toString()+'&'+dy.toString());
+            time++;
+            setState(() {
+              dx = dy = 0;
+            }); 
+          } 
+        },
+        onPanEnd: (panInfo) {
+          setState((){
+            dark = 0;
+            dx = dy = 0;
+          });
+          timer.reset();
+          print("Pan End");
+          print(panInfo);
+        },
+        child: Container(
+          width: this.widget.parent.w,
+          height: this.widget.parent.h,
+          color: currentThemeColors.buttonColor[dark],
+          padding: const EdgeInsets.all(20.0),
+        ),
+      ),
+    );
+  }
+  void _send(char){
+    print("Sending " + char);
+    sock.write('track' + '&' + char + '%');
   }
 }
