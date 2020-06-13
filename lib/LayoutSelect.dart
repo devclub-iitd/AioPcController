@@ -12,27 +12,6 @@ import 'Tabs.dart';
 import 'config.dart';
 import 'dart:math';
 import 'dart:io';
-void statusCheck() {
-  pingClock.reset();
-  pingClock.start();
-  statusKey = statusKeyGenerator.nextInt(100);
-  var test;
-  if(sock == null) return;
-  try {  
-      sock.write('status&'+statusKey.toString()+'%');
-        test = sock.address.host;
-        test = sock.remotePort;
-      } on OSError {
-        sock = null;
-        return;
-      } on SocketException {
-        sock = null;
-        return;
-      } on NoSuchMethodError{
-        sock = null;
-        return;
-      }
-}
 
 class LayoutSelect extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
@@ -47,7 +26,7 @@ class LayoutSelect extends StatelessWidget {
         }
       });
       Timer.periodic(Duration(milliseconds: 1000), (Timer t) {
-          statusCheck();
+        statusCheck();
       });
       ovisit = true;
     }
@@ -56,9 +35,7 @@ class LayoutSelect extends StatelessWidget {
           title: Text("Select Layout"),
           automaticallyImplyLeading: false,
           bottom: PreferredSize(
-            child: Tabs('LAYOUTS'),
-            preferredSize: Size.fromHeight(48.0)
-          ),
+              child: Tabs('LAYOUTS'), preferredSize: Size.fromHeight(48.0)),
         ),
         body: GridView.count(
           crossAxisCount: 2,
@@ -143,8 +120,8 @@ class LayoutSelect extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, '/controller');
               },
-             ),
-             GestureDetector(
+            ),
+            GestureDetector(
               child: Container(
                 color: currentThemeColors.gridButtonColor,
                 margin: const EdgeInsets.all(2.0),
@@ -170,7 +147,7 @@ class LayoutSelect extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, '/trackpad');
               },
-             ),
+            ),
           ],
         ));
   }

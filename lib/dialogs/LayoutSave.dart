@@ -70,8 +70,10 @@ class LayoutSaveState extends State<LayoutSave> {
                   padding: const EdgeInsets.all(10.0),
                   child: RaisedButton(
                     onPressed: () async {
-                      setState((){ error = ''; });
-                      
+                      setState(() {
+                        error = '';
+                      });
+
                       if (_formKey.currentState.validate()) {
                         var check = await createTable(layoutName.text);
                         if (check) {

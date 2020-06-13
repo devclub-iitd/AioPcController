@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'LayoutSelect.dart';
 import 'HomeScreen.dart';
@@ -11,6 +10,7 @@ import 'Controller.dart';
 import 'Theme.dart';
 import 'Trackpad.dart';
 import 'config.dart';
+
 void main() async {
   // modify with your true address/port
   runApp(MyApp());
@@ -19,12 +19,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
+    final Brightness brightness =
+        WidgetsBinding.instance.window.platformBrightness;
     bool darkModeOn = brightness == Brightness.dark;
 
-    if(darkModeOn) currentThemeColors = darkThemeColors;
-    else currentThemeColors = lightThemeColors;
+    if (darkModeOn)
+      currentThemeColors = darkThemeColors;
+    else
+      currentThemeColors = lightThemeColors;
 
     var lightTheme = ThemeData(
       brightness: Brightness.light,
@@ -37,22 +39,20 @@ class MyApp extends StatelessWidget {
       accentColor: currentThemeColors.accentColor,
     );
 
-
     return MaterialApp(
-      theme: darkModeOn?darkTheme:lightTheme,
+      theme: darkModeOn ? darkTheme : lightTheme,
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
         '/layout_select': (context) => LayoutSelect(),
         '/wasd_layout': (context) => WasdLayout(),
-        '/gyro':(context) => Gyro(),
-        '/custom':(context) => Custom(),
-        '/loadcustom':(context) => LoadCustom(),
-        '/custom_layout':(context) => CustomLayout(),
-        '/controller':(context) => Controller(),
+        '/gyro': (context) => Gyro(),
+        '/custom': (context) => Custom(),
+        '/loadcustom': (context) => LoadCustom(),
+        '/custom_layout': (context) => CustomLayout(),
+        '/controller': (context) => Controller(),
         '/trackpad': (context) => Trackpad(),
       },
     );
   }
 }
-
