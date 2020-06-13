@@ -14,7 +14,7 @@ class Trackpad extends StatefulWidget {
 class TrackpadState extends State<Trackpad> {
   var w, h;
   double dx = 0, dy = 0, time = 0;
-  double exitx =100.0, exity = 100, exitr =10;
+  double exitx, exity, exitr;
   String status;
   Stopwatch timer = new Stopwatch();
   int dark = 0;
@@ -46,6 +46,10 @@ class TrackpadState extends State<Trackpad> {
     ]);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+
+    exitx = w * 0.95;
+    exity = h * 0.9;
+    exitr = h / 30;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -67,7 +71,7 @@ class TrackpadState extends State<Trackpad> {
               width: 2 * exitr,
               decoration: BoxDecoration(
                 gradient:
-                    RadialGradient(colors: [Colors.red[900], Colors.black]),
+                    RadialGradient(colors: [Colors.red[400], Colors.black]),
                 border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
               ),
