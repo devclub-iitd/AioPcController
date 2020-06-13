@@ -4,11 +4,7 @@ import 'package:flutter/services.dart';
 import 'config.dart';
 import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
-import 'globals.dart';
 import 'Theme.dart';
-import 'LayoutSelect.dart';
-import 'dart:convert';
-import 'LoadCustom.dart';
 import 'Tabs.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -77,7 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24.0),
                         child: Text(snapshot.hasData
-                            ? ((String.fromCharCodes(snapshot.data) == 'pass')
+                            ? ((String.fromCharCodes(snapshot.data) == 'pass'+statusKey.toString())
                                 ? 'Server is responding well!'
                                 : 'Server is responding.. but there might be some error')
                             : 'Server is not responding.. You need to re-establish connection.'),

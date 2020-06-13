@@ -21,7 +21,7 @@ class _WasdLayoutState extends State<WasdLayout> {
       bool open = true;
       var test;
       try {
-        sock.write('status&test%');
+        sock.write('status&'+statusKey.toString()+'%');
         test = sock.address.host;
         test = sock.remotePort;
         if (open) status = 'connected';

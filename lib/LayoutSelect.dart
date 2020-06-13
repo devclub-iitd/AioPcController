@@ -9,11 +9,29 @@ import 'package:flutter/services.dart';
 import 'globals.dart';
 import 'config.dart';
 import 'Tabs.dart';
-
+import 'config.dart';
+import 'dart:math';
+import 'dart:io';
 void statusCheck() {
   pingClock.reset();
   pingClock.start();
-  sock.write('status&test%');
+  statusKey = statusKeyGenerator.nextInt(100);
+  var test;
+  if(sock == null) return;
+  try {  
+      sock.write('status&'+statusKey.toString()+'%');
+        test = sock.address.host;
+        test = sock.remotePort;
+      } on OSError {
+        sock = null;
+        return;
+      } on SocketException {
+        sock = null;
+        return;
+      } on NoSuchMethodError{
+        sock = null;
+        return;
+      }
 }
 
 class LayoutSelect extends StatelessWidget {

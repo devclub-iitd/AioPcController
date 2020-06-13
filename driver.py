@@ -130,7 +130,7 @@ def main():
 						elif(msg[0] == 'track'):
 							handleTrackpad(msg[1:])
 						elif(msg[0] == 'status'):
-							c.send(bytes('pass',"utf-8"))
+							c.send(bytes('pass'+msg[1],"utf-8"))
 						elif(msg[0] == 'disconnect'):
 							raise ConnectionResetError
 			except ConnectionResetError:
