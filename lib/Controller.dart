@@ -446,7 +446,7 @@ class ControllerState extends State<Controller> {
               width: 2 * exitr,
               decoration: BoxDecoration(
                 gradient:
-                    RadialGradient(colors: [Colors.red[bdark], Colors.black]),
+                    RadialGradient(colors: [Colors.red[exitdark], Colors.black]),
                 border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
               ),

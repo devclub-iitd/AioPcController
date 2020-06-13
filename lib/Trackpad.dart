@@ -13,6 +13,8 @@ class Trackpad extends StatefulWidget {
 
 class TrackpadState extends State<Trackpad> {
   var w, h;
+  double dx = 0, dy = 0, time = 0;
+  double exitx, exity, exitr;
   String status;
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,9 @@ class TrackpadState extends State<Trackpad> {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
 
+    exitx = w * 0.95;
+    exity = h * 0.9;
+    exitr = h / 30;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -55,6 +60,25 @@ class TrackpadState extends State<Trackpad> {
                     ? pingDisplay(sockStream)
                     : Text('Not Connected')),
           ),
+          Positioned(
+        top: exity,
+        left: exitx,
+        child: GestureDetector(
+          child: Container(
+              height: 2 * exitr,
+              width: 2 * exitr,
+              decoration: BoxDecoration(
+                gradient:
+                    RadialGradient(colors: [Colors.red[400], Colors.black]),
+                border: Border.all(color: Colors.black),
+                shape: BoxShape.circle,
+              ),
+              child: Center(child: Icon(Icons.cancel))),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
         ],
       ),
     );
