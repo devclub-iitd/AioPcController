@@ -20,4 +20,28 @@ Widget ButtonIcon(String type, double sz) {
       color: Colors.white,
       size: (sz) / 3,
     );
+  if (type == 'up')
+    return Icon(
+      Icons.arrow_upward,
+      color: Colors.white,
+      size: (sz) / 3,
+    );
+  if (type == 'down')
+    return Icon(
+      Icons.arrow_downward,
+      color: Colors.white,
+      size: (sz) / 3,
+    );
+  if (type == 'left')
+    return Icon(
+      Icons.arrow_back,
+      color: Colors.white,
+      size: (sz) / 3,
+    );
+  if (type == 'right')
+    return Icon(
+      Icons.arrow_forward,
+      color: Colors.white,
+      size: (sz) / 3,
+    );
 }

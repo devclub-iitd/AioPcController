@@ -1,9 +1,11 @@
+import 'package:aio_pc_controller/ButtonIcons.dart';
 import 'package:aio_pc_controller/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'config.dart';
 import 'Theme.dart';
 import 'dart:io';
+import 'ButtonIcons.dart';
 
 class WasdLayout extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class WasdLayout extends StatefulWidget {
 
 class _WasdLayoutState extends State<WasdLayout> {
   int wdark = 0, adark = 0, shiftdark = 0, sdark = 0, ddark = 0, spacedark = 0;
+  double w,h,wx,wy,ax,ay,sx,sy,dx,dy,shiftx,shifty,spacex,spacey,sz;
   String status;
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,30 @@ class _WasdLayoutState extends State<WasdLayout> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
+
+    sz=h*0.17;
+
+    wx=w*0.85;
+    wy=h*0.20;
+
+    sx=w*0.85;
+    sy=h*0.60;
+
+    ax=w*0.10;
+    ay=h*0.50;
+
+    dx=w*0.30;
+    dy=h*0.50;
+
+    spacex=w*0.70;
+    spacey=h*0.40;
+
+    shiftx=w*0.20;
+    shifty=h*0.25;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("WASD"),
@@ -48,15 +75,15 @@ class _WasdLayoutState extends State<WasdLayout> {
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
                     : Text('Not Connected')),
-            padding: const EdgeInsets.only(right: 30.0),
+            padding: EdgeInsets.only(right: w/20),
           ),
         ],
       ),
       body: Stack(
         children: <Widget>[
           Positioned(
-            right: 100.0,
-            top: 110.0,
+            left: wx-sz/2,
+            top: wy-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -71,19 +98,16 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&w');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[wdark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.arrow_upward,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('up', sz)
               ),
             ),
           ),
           Positioned(
-            right: 100.0,
-            top: 220.0,
+            left: sx-sz/2,
+            top: sy-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -98,19 +122,16 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&s');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[sdark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.arrow_downward,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('down', sz)
               ),
             ),
           ),
           Positioned(
-            right: 200.0,
-            top: 165.0,
+            left: spacex-sz/2,
+            top: spacey-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -125,19 +146,16 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&space');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[spacedark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.space_bar,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('space', sz)
               ),
             ),
           ),
           Positioned(
-            left: 175.0,
-            top: 70.0,
+            left: shiftx-sz/2,
+            top: shifty-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -152,19 +170,16 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&shift');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[shiftdark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.keyboard_capslock,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('shift', sz)
               ),
             ),
           ),
           Positioned(
-            left: 250.0,
-            top: 165.0,
+            left: dx-sz/2,
+            top: dy-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -179,19 +194,16 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&d');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[ddark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('right', sz)
               ),
             ),
           ),
           Positioned(
-            left: 100.0,
-            top: 165.0,
+            left: ax-sz/2,
+            top: ay-sz/2,
             child: GestureDetector(
               onPanStart: (_) {
                 setState(() {
@@ -206,13 +218,10 @@ class _WasdLayoutState extends State<WasdLayout> {
                 _send('up&a');
               },
               child: Container(
+                height: sz,
+                width: sz,
                 color: currentThemeColors.buttonColor[adark],
-                padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: currentThemeColors.buttonTextColor,
-                  size: 24.0,
-                ),
+                child: ButtonIcon('left', sz),
               ),
             ),
           ),

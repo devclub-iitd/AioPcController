@@ -13,10 +13,7 @@ class Trackpad extends StatefulWidget {
 
 class TrackpadState extends State<Trackpad> {
   var w, h;
-  double dx = 0, dy = 0, time = 0;
   String status;
-  Stopwatch timer = new Stopwatch();
-  int dark = 0;
   @override
   Widget build(BuildContext context) {
     if (sock == null) {
@@ -45,6 +42,7 @@ class TrackpadState extends State<Trackpad> {
     ]);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -85,11 +83,14 @@ class TrackpadDetector extends StatefulWidget {
 }
 
 class TrackpadDetectorState extends State<TrackpadDetector> {
-  double dx = 0, dy = 0, time = 0, x = -1000, y = -1000;
+  double dx = 0, dy = 0, time = 0, x = -1000, y = -1000, sz;
   Stopwatch timer = new Stopwatch();
 
   @override
   Widget build(BuildContext context) {
+    
+    sz=this.widget.parent.w/15;
+
     return Stack(
       children: <Widget>[
         Positioned(
@@ -97,8 +98,8 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
             onPanStart: (panInfo) {
               setState(() {
                 time = 0;
-                x = panInfo.globalPosition.dx - 40;
-                y = panInfo.globalPosition.dy - 40;
+                x = panInfo.globalPosition.dx - sz/2;
+                y = panInfo.globalPosition.dy - sz/2;
               });
               timer.reset();
               timer.start();
@@ -142,8 +143,8 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
             child: Opacity(
               opacity: 0.8,
               child: Container(
-                height: 80,
-                width: 80,
+                height: sz,
+                width: sz,
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                       colors: [Colors.grey[400], Colors.grey[600]]),
