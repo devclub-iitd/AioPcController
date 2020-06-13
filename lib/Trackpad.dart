@@ -42,6 +42,8 @@ class TrackpadState extends State<Trackpad> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
 
@@ -54,7 +56,7 @@ class TrackpadState extends State<Trackpad> {
           TrackpadDetector(this),
           Positioned(
             right: 0.05 * w,
-            top: 0.1 * h,
+            top: 0.07 * h,
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
@@ -92,9 +94,8 @@ class TrackpadState extends State<Trackpad> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    print("A");
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.dispose();
-    print("Disposed");
   }
 }
 

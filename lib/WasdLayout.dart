@@ -243,8 +243,6 @@ class _WasdLayoutState extends State<WasdLayout> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    print("A");
     super.dispose();
-    print("Disposed");
   }
 }
