@@ -14,6 +14,7 @@ class Trackpad extends StatefulWidget {
 class TrackpadState extends State<Trackpad> {
   var w, h;
   double dx = 0, dy = 0, time = 0;
+  double exitx =100.0, exity = 100, exitr =10;
   String status;
   Stopwatch timer = new Stopwatch();
   int dark = 0;
@@ -57,6 +58,25 @@ class TrackpadState extends State<Trackpad> {
                     ? pingDisplay(sockStream)
                     : Text('Not Connected')),
           ),
+          Positioned(
+        top: exity,
+        left: exitx,
+        child: GestureDetector(
+          child: Container(
+              height: 2 * exitr,
+              width: 2 * exitr,
+              decoration: BoxDecoration(
+                gradient:
+                    RadialGradient(colors: [Colors.red[900], Colors.black]),
+                border: Border.all(color: Colors.black),
+                shape: BoxShape.circle,
+              ),
+              child: Center(child: Icon(Icons.cancel))),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
         ],
       ),
     );
