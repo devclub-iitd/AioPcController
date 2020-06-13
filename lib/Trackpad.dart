@@ -97,8 +97,8 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
             onPanStart: (panInfo) {
               setState(() {
                 time = 0;
-                x = panInfo.globalPosition.dx;
-                y = panInfo.globalPosition.dy;
+                x = panInfo.globalPosition.dx - 40;
+                y = panInfo.globalPosition.dy - 40;
               });
               timer.reset();
               timer.start();
@@ -142,12 +142,11 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
             child: Opacity(
               opacity: 0.8,
               child: Container(
-                height: 50,
-                width: 50,
+                height: 80,
+                width: 80,
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
-                      colors: [Colors.grey[400], Colors.grey[500]]),
-                  border: Border.all(color: Colors.grey[400]),
+                      colors: [Colors.grey[400], Colors.grey[600]]),
                   shape: BoxShape.circle,
                 ),
               ),
