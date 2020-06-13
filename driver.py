@@ -7,6 +7,16 @@ from qrcode import QRCode
 import os
 import platform
 from pynput.mouse import Controller as MouseController
+from PIL import ImageTk
+
+import tkinter as tk
+
+root= tk.Tk()
+
+canvas1 = tk.Canvas(root, width = 600, height = 600)
+canvas1.pack() 
+
+
 pyautogui.PAUSE = 0.01
 keyboard = None
 mouse = MouseController()
@@ -53,15 +63,24 @@ class myThread (threading.Thread):
 
 
 thread1 = myThread(1, "Thread-1", 1)
+
+
 def main():
+
 	s = socket.socket()      
 	thread1.start()
-	print ("Socket successfully created.")
+
+	canvas1.delete("all")
 
 	while True:
 		try:
-			print("Enter port (leave blank for 4444): ",end="")
-			inp = input()
+			canvas1.delete("all")
+
+			label1 = tk.Label(root, text= 'Socket successfully created.', fg='blue', font=('helvetica', 12, 'bold'))
+			canvas1.create_window(300, 50, window=label1)
+			
+		
+			inp = entry1.get()
 			
 			if inp == '': 
 				port = 4444
@@ -69,7 +88,11 @@ def main():
 				port = int(inp)
 			
 			s.bind(('', port))
-			print ("Socket binded to %s" %(port))
+
+			label2 = tk.Label(root, text= 'Socket binded to '+str(port), fg='blue', font=('helvetica', 12, 'bold'))
+			canvas1.create_window(300, 120, window=label2)
+
+			# print ("Socket binded to %s" %(port))
 			break
 		except OSError:
 			print("Port " + str(port) + " is already in use. Please use the following command:")
@@ -90,11 +113,23 @@ def main():
 	qr.add_data(serverIP)
 	
 	while True: 
-		print("Connect at IP = "+serverIP)
-		print('Or scan this:')
-		qr.print_ascii(invert=True)
+
+		label3 = tk.Label(root, text= 'Connect to ip '+str(serverIP)+" Or Scan this", fg='red', font=('helvetica', 12, 'bold'))
+		canvas1.create_window(300, 180, window=label3)
+
+		# print("Connect at IP = "+serverIP)
+		# print('Or scan this:')
+		# qr.make()
+		img = qr.make_image()
+		img = ImageTk.PhotoImage(img)
+
+		panel = tk.Label(root, image = img)
+		canvas1.create_window(300, 400, window=panel)
+
+		# qr.print_ascii(invert=True)
 		qr.print_ascii()
-		print ("Socket is listening...")
+		root.update()
+		# print ("Socket is listening...")
 
 		c, addr = s.accept()
 		
@@ -211,4 +246,15 @@ def handleTrackpad(msg):
 		print('Invalid message')
 
 if __name__=="__main__":
-	main()
+	
+	label1 = tk.Label(root, text= 'Enter the port (leave blank for 4444): ', fg='green', font=('helvetica', 12, 'bold'))
+	canvas1.create_window(300, 80, window=label1)
+
+	button1 = tk.Button(text='Submit',command=main, bg='brown',fg='white')
+	canvas1.create_window(300, 380, window=button1)
+
+	entry1 = tk.Entry (root) 
+	canvas1.create_window(300, 180, window=entry1)
+
+	root.mainloop()
+	# main()

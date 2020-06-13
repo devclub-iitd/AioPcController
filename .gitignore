@@ -29,6 +29,7 @@
 .pub-cache/
 .pub/
 /build/
+/dist/
 ios/Flutter/Flutter\ 2.framework/Flutter
 ios/Flutter/Flutter\ 2.framework/Headers/*
 
@@ -45,3 +46,4 @@ app.*.map.json
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 dist/driver.exe
 driver.spec
+vXboxInterface.dll
