@@ -206,10 +206,9 @@ def handleTrackpad(msg):
 		if(len(msg) == 3):
 			if(msg[0] == 'move'):
 				mouse.move(float(msg[1])*5, float(msg[2])*5)
-			elif(msg[0] == 'click'):
+			elif(msg[0] == 'button'):
 				if(msg[1] == 'down'):
 					if(msg[2] == 'left'):
-						print('Check')
 						mouse.press(Button.left)
 					elif(msg[2] == 'right'):
 						mouse.press(Button.right)
@@ -218,6 +217,12 @@ def handleTrackpad(msg):
 						mouse.release(Button.left)
 					elif(msg[2] == 'right'):
 						mouse.release(Button.right)
+			elif(msg[0] == 'click'):
+				clicks = int(msg[1])
+				if(msg[2] == 'left'):
+					mouse.click(Button.left, clicks)
+				if(msg[2] == 'right'):
+					mouse.click(Button.right, clicks)
 	except:
 		print('Invalid message')
 
