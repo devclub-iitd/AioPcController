@@ -5,6 +5,9 @@ import 'config.dart';
 import 'dart:math';
 import 'dart:io';
 
+double slice(double x){
+  return (x*100).round()/100;
+}
 class Controller extends StatefulWidget {
   @override
   ControllerState createState() => new ControllerState();
@@ -591,8 +594,8 @@ class ControllerState extends State<Controller> {
                   ? min(lsbdy / joyRange, 1)
                   : max(lsbdy / joyRange, -1);
             });
-            _send('AxisLx&' + axislx.toString());
-            _send('AxisLy&' + (-axisly).toString());
+            _send('AxisLx&' + slice(axislx).toString());
+            _send('AxisLy&' + slice((-axisly)).toString());
           },
           onPanEnd: (_) {
             setState(() {
@@ -646,8 +649,8 @@ class ControllerState extends State<Controller> {
                   ? min(rsbdy / joyRange, 1)
                   : max(rsbdy / joyRange, -1);
             });
-            _send('AxisRx&' + axisrx.toString());
-            _send('AxisRy&' + (-axisry).toString());
+            _send('AxisRx&' + slice(axisrx).toString());
+            _send('AxisRy&' + slice(-axisry).toString());
           },
           onPanEnd: (_) {
             setState(() {
@@ -790,14 +793,13 @@ class ControllerState extends State<Controller> {
         child: Container(
           child: status == 'connected'
               ? pingDisplay(sockStream)
-              : Icon(Icons.signal_wifi_off , color:Colors.red),
+              : noConnection(context),
         ),
       ),
     ]));
   }
 
   void _send(char) {
-    print("Sending " + char);
     if (sock == null)
       print("Could not send.");
     else

@@ -60,7 +60,7 @@ class TrackpadState extends State<Trackpad> {
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Icon(Icons.signal_wifi_off , color:Colors.red),),
+                    : noConnection(context),),
           ),
           Positioned(
             top: exity,
@@ -148,6 +148,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               _send('click&2&left');
             },
             onPanStart: (panInfo) {
+              this.widget.parent.setState((){});
               setState(() {
                 time = 0;
                 x = panInfo.globalPosition.dx - sz / 2;
