@@ -35,7 +35,6 @@ class ControllerState extends State<Controller> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    cntdark = 100;
     _send('Toggle&0');
     super.dispose();
   }
@@ -74,8 +73,7 @@ class ControllerState extends State<Controller> {
       xdark = 400,
       ydark = 400,
       bdark = 400,
-      exitdark = 400,
-      cntdark = 100;
+      exitdark = 400;
 
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
@@ -814,29 +812,24 @@ class ControllerState extends State<Controller> {
             height: 1.5 * r,
             width: 1.5 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.green[cntdark], Colors.green[cntdark]]),
-              border: Border.all(color: Colors.yellow[900]),
+              color: toggle ? Colors.green : Colors.red,
               shape: BoxShape.circle,
             ),
-            child: Center(child: Text("CNT")),
+            child: Center(
+                child: Text(
+              toggle ? 'ON' : 'OFF',
+              style: TextStyle(color: Colors.white),
+            )),
           ),
           onPanStart: (_) {
-            toggle = !toggle;
-            if(toggle)
-            {
+            setState(() {
+              toggle = !toggle;
+            });
+            if (toggle) {
               _send('Toggle&1');
-            }
-            else
-            {
+            } else {
               _send('Toggle&0');
             }
-            setState(() {
-              if(toggle)
-                cntdark = 300;
-              else
-                cntdark = 100;
-            });
           },
         ),
       ),
