@@ -142,7 +142,7 @@ def main():
 				
 				if(buffer==''):
 					raise ConnectionResetError
-					
+
 				message += buffer
 				if buffer[-1] != '%':
 					continue
@@ -181,6 +181,10 @@ def main():
 				print("Disconnected from client")
 				c.close()
 				print("Socket closed")
+				if(xcontroller!=None):
+					xcontroller.UnPlug(force=True)
+					del xcontroller
+					xcontroller = None
 				ans = input("Do you want to connect again? (y/n): ")
 				if(ans == 'n'):
 					os._exit(0)
