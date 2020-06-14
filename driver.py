@@ -135,9 +135,17 @@ def main():
 		
 		print ('Got connection from', addr)
 
+		message = ''
+
 		while True:
 			try:
-				message = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
+
+				buffer = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
+
+
+				message += buffer
+				if buffer[-1] != '%':
+					continue
 
 				message = message.split("%") #use & to split tokens, and % to split messages.
 				
@@ -168,6 +176,7 @@ def main():
 							c.send(bytes('pass'+msg[1],"utf-8"))
 						elif(msg[0] == 'disconnect'):
 							raise ConnectionResetError
+				message = ''
 			except ConnectionResetError:
 				print("Disconnected from client")
 				c.close()

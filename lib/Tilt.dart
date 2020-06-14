@@ -13,12 +13,10 @@ void tilt() {
     if(gcurr>0)
     {
       gcurr = (asin(min(gcurr / 10, 1))/1.5707963267948966);
-      print("gcurr: "+gcurr.toString());
     }
     else
     {
       gcurr = -1*(asin(min((-1*gcurr) / 10, 1))/1.5707963267948966);
-      print("gcurr: "+gcurr.toString());
     }
   });
 }
