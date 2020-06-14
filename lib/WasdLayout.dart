@@ -74,7 +74,7 @@ class _WasdLayoutState extends State<WasdLayout> {
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Text('Not Connected')),
+                    : Icon(Icons.signal_wifi_off , color:Colors.red)),
             padding: EdgeInsets.only(right: w/20),
           ),
         ],

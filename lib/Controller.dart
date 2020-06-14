@@ -790,7 +790,7 @@ class ControllerState extends State<Controller> {
         child: Container(
           child: status == 'connected'
               ? pingDisplay(sockStream)
-              : Text('Not Connected'),
+              : Icon(Icons.signal_wifi_off , color:Colors.red),
         ),
       ),
     ]));

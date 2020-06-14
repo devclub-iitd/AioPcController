@@ -58,7 +58,7 @@ class _CustomLayoutState extends State<CustomLayout> {
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Text('Not Connected')),
+                    : Icon(Icons.signal_wifi_off , color:Colors.red)),
           ),
           IconButton(
             onPressed: () {
