@@ -61,7 +61,9 @@ class ControllerState extends State<Controller> {
       exity,
       exitr,
       pingx,
-      pingy;
+      pingy,
+      cntx,
+      cnty;
   int rtdark = 400,
       rbdark = 400,
       lbdark = 400,
@@ -70,7 +72,8 @@ class ControllerState extends State<Controller> {
       xdark = 400,
       ydark = 400,
       bdark = 400,
-      exitdark = 400;
+      exitdark = 400,
+      cntdark = 100;
 
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
@@ -89,6 +92,8 @@ class ControllerState extends State<Controller> {
       lsby,
       rsbx,
       rsby;
+  
+  bool toggle = false;
 
   double dpadx, dpady, dpadh, dpadw;
   int updark = 400, downdark = 400, leftdark = 400, rightdark = 400;
@@ -188,6 +193,9 @@ class ControllerState extends State<Controller> {
 
     pingx = w / 20;
     pingy = h * 0.9;
+
+    cntx = w / 2;
+    cnty = 4 * h / 9;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -794,6 +802,40 @@ class ControllerState extends State<Controller> {
           child: status == 'connected'
               ? pingDisplay(sockStream)
               : noConnection(context),
+        ),
+      ),
+      Positioned(
+        top: cnty,
+        left: cntx,
+        child: GestureDetector(
+          child: Container(
+            height: 1.5 * r,
+            width: 1.5 * r,
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                  colors: [Colors.green[cntdark], Colors.green[cntdark]]),
+              border: Border.all(color: Colors.yellow[900]),
+              shape: BoxShape.circle,
+            ),
+            child: Center(child: Text("CNT")),
+          ),
+          onPanStart: (_) {
+            toggle = !toggle;
+            if(toggle)
+            {
+              _send('Toggle&1');
+            }
+            else
+            {
+              _send('Toggle&0');
+            }
+            setState(() {
+              if(toggle)
+                cntdark = 300;
+              else
+                cntdark = 100;
+            });
+          },
         ),
       ),
     ]));

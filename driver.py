@@ -24,7 +24,6 @@ xSupport = True if platform.system() == 'Windows' else False
 xcontroller = None
 if(xSupport):
 	import pyxinput
-	xcontroller = pyxinput.vController()
 	import dinput
 	from pynput.keyboard import Key, Controller as KeyboardController
 	keyboard = KeyboardController()
@@ -225,15 +224,23 @@ def tilt(message,value):
 		duty_ratio = value
 
 def handleController(msg):
+	global xcontroller
 	try:
-		if(not xSupport):
+		if('Toggle' in msg[0]):
+			if(msg[1] == '1'):
+				xcontroller = pyxinput.vController()
+			elif(xcontroller!=None):
+				xcontroller.UnPlug(force=True)
+				del xcontroller
+				xcontroller = None
+		elif(not xSupport or xcontroller == None):
 			return
-		if('down' in msg[0] or 'up' in msg[0]):
+		elif('down' in msg[0] or 'up' in msg[0]):
 			if('Btn' in msg[1]):
 				typeInt = 1 if msg[0] == 'down' else 0
 				xcontroller.set_value(msg[1], typeInt)
 			elif('Trigger' in msg[1]):
-				typeInt = 127 if msg[0] == 'down' else 0
+				typeInt = 255 if msg[0] == 'down' else 0
 				xcontroller.set_value(msg[1], typeInt)
 		elif('Axis' in msg[0]):
 			xcontroller.set_value(msg[0], float(msg[1]))
@@ -242,7 +249,8 @@ def handleController(msg):
 		else:
 			print(msg)
 			print('^Not yet handled in driver^')
-	except:
+	except Exception as e:
+		print(e)
 		print("Error: Incomplete message received")
 
 def handleTrackpad(msg):
