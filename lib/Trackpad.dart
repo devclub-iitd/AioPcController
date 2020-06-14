@@ -226,7 +226,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           left: w / 2,
           child: GestureDetector(
             onTap: (){
-              _send('click&right');
+              _send('click&1&right');
             },
             onDoubleTap: (){
               _send('click&2&right');

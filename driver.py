@@ -6,7 +6,7 @@ import threading
 from qrcode import QRCode
 import os
 import platform
-from pynput.mouse import Controller as MouseController
+from pynput.mouse import Button, Controller as MouseController
 from PIL import ImageTk
 
 import tkinter as tk
@@ -28,7 +28,6 @@ if(xSupport):
 	from pynput.keyboard import Key, Controller as KeyboardController
 	keyboard = KeyboardController()
 else:
-	from pymouse import PyMouse
 	from pykeyboard import PyKeyboard
 	keyboard = PyKeyboard()
 button = '$'
@@ -140,8 +139,10 @@ def main():
 			try:
 
 				buffer = c.recv(256).decode("utf-8"); #message comes in byte array so change it to string first
-
-
+				
+				if(buffer==''):
+					raise ConnectionResetError
+					
 				message += buffer
 				if buffer[-1] != '%':
 					continue
@@ -275,7 +276,8 @@ def handleTrackpad(msg):
 					mouse.click(Button.left, clicks)
 				if(msg[2] == 'right'):
 					mouse.click(Button.right, clicks)
-	except:
+	except Exception as e:
+		print(e)
 		print('Invalid message')
 
 if __name__=="__main__":
