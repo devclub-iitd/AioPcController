@@ -36,6 +36,8 @@ class ControllerState extends State<Controller> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    
+    toggle = false;
     _send('Toggle&0');
     super.dispose();
   }
@@ -66,6 +68,7 @@ class ControllerState extends State<Controller> {
       pingy,
       cntx,
       cnty;
+    
   int rtdark = 400,
       rbdark = 400,
       lbdark = 400,
