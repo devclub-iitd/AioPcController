@@ -65,7 +65,7 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.portraitDown,
     ]);
     if (tiltcontrol) {
-      sock.write("tilt&0%");
+      sock.write("tilt&toggle&0%");
       tiltcontrol = false;
     }
     super.dispose();
@@ -132,7 +132,7 @@ void statusCheck() {
                 setState(() {
                   tiltcontrol = !tiltcontrol;
                 });
-                if (!tiltcontrol) sock.write("tilt&0%");
+                if (!tiltcontrol) sock.write("tilt&toggle&0%");
                 _scaffoldKey.currentState.showSnackBar(SnackBar(
                     content: Text('Tilting mode has been turned ' +
                         (tiltcontrol ? 'ON' : 'OFF')),

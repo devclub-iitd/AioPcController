@@ -36,6 +36,7 @@ class ControllerState extends State<Controller> {
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     cntdark = 100;
+    toggle = false;
     _send('Toggle&0');
     super.dispose();
   }
@@ -66,6 +67,7 @@ class ControllerState extends State<Controller> {
       pingy,
       cntx,
       cnty;
+    
   int rtdark = 400,
       rbdark = 400,
       lbdark = 400,
