@@ -5,9 +5,10 @@ import 'config.dart';
 import 'dart:math';
 import 'dart:io';
 
-double slice(double x){
-  return (x*100).round()/100;
+double slice(double x) {
+  return (x * 100).round() / 100;
 }
+
 class Controller extends StatefulWidget {
   @override
   ControllerState createState() => new ControllerState();
@@ -35,7 +36,7 @@ class ControllerState extends State<Controller> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    cntdark = 100;
+    
     toggle = false;
     _send('Toggle&0');
     super.dispose();
@@ -76,8 +77,7 @@ class ControllerState extends State<Controller> {
       xdark = 400,
       ydark = 400,
       bdark = 400,
-      exitdark = 400,
-      cntdark = 100;
+      exitdark = 400;
 
   double backx, backy, backh, backw, startx, starty, starth, startw;
   int backdark = 400, startdark = 400;
@@ -96,7 +96,7 @@ class ControllerState extends State<Controller> {
       lsby,
       rsbx,
       rsby;
-  
+
   bool toggle = false;
 
   double dpadx, dpady, dpadh, dpadw;
@@ -460,8 +460,8 @@ class ControllerState extends State<Controller> {
               height: 2 * exitr,
               width: 2 * exitr,
               decoration: BoxDecoration(
-                gradient:
-                    RadialGradient(colors: [Colors.red[exitdark], Colors.black]),
+                gradient: RadialGradient(
+                    colors: [Colors.red[exitdark], Colors.black]),
                 border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
               ),
@@ -809,36 +809,31 @@ class ControllerState extends State<Controller> {
         ),
       ),
       Positioned(
-        top: cnty,
-        left: cntx,
+        top: cnty - 0.75 * r,
+        left: cntx - 0.75 * r,
         child: GestureDetector(
           child: Container(
             height: 1.5 * r,
             width: 1.5 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.green[cntdark], Colors.green[cntdark]]),
-              border: Border.all(color: Colors.yellow[900]),
+              color: toggle ? Colors.green : Colors.red,
               shape: BoxShape.circle,
             ),
-            child: Center(child: Text("CNT")),
+            child: Center(
+                child: Text(
+              toggle ? 'ON' : 'OFF',
+              style: TextStyle(color: Colors.white),
+            )),
           ),
           onPanStart: (_) {
-            toggle = !toggle;
-            if(toggle)
-            {
+            setState(() {
+              toggle = !toggle;
+            });
+            if (toggle) {
               _send('Toggle&1');
-            }
-            else
-            {
+            } else {
               _send('Toggle&0');
             }
-            setState(() {
-              if(toggle)
-                cntdark = 300;
-              else
-                cntdark = 100;
-            });
           },
         ),
       ),
