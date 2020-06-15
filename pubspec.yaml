@@ -82,5 +82,5 @@ flutter:
 flutter_icons:
   ios: true
   android: true
-  image_path_ios: "assets/launcher/icon.png"
-  image_path_android: "assets/launcher/icon.png"
+  image_path_ios: "assets/launcher/ios_icon.png"
+  image_path_android: "assets/launcher/android_icon.png"
