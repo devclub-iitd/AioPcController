@@ -166,7 +166,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               });
               print(panInfo.globalPosition.dx);
               if ((timer.elapsedMilliseconds / 25).floor() >= time) {
-                _send('move' + '&' + dx.toString() + '&' + dy.toString());
+                _send('move' + '&' + dx.toStringAsFixed(5) + '&' + dy.toStringAsFixed(5));
                 time++;
                 setState(() {
                   dx = dy = 0;

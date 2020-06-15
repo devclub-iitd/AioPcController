@@ -28,10 +28,10 @@ void _send(char) {
 
 void tsend() {
   if (gcurr > 0.05) {
-    String s = (min(gcurr*2, 1)).toString();
+    String s = (min(gcurr*2, 1)).toStringAsFixed(2);
     sock.write("tilt&-&" + s + '%');
   } else if (gcurr < -0.05) {
-    String s = (min(gcurr*-2, 1)).toString();
+    String s = (min(gcurr*-2, 1)).toStringAsFixed(2);
     sock.write("tilt&+&" + s + '%');
   } else {
     sock.write("tilt&+&" + '0' + '%');

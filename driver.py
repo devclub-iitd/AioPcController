@@ -295,7 +295,7 @@ def handleController(msg):
 
 	if('Toggle' in msg[0]):
 		if(msg[1] == '1'):
-			xcontroller = pyxinput.vController()
+			xcontroller = vController()
 		elif(xcontroller!=None):
 			xcontroller.UnPlug(force=True)
 			del xcontroller
