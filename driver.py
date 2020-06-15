@@ -87,10 +87,10 @@ def main():
 			
 			s.bind(('', port))
 
-			label2 = tk.Label(root, text= 'Socket binded to '+str(port), fg='blue', font=('helvetica', 12, 'bold'))
+			label2 = tk.Label(root, text= 'Socket bound to '+str(port), fg='blue', font=('helvetica', 12, 'bold'))
 			canvas1.create_window(300, 120, window=label2)
 
-			# print ("Socket binded to %s" %(port))
+			# print ("Socket bound to %s" %(port))
 			break
 		except OSError:
 			print("Port " + str(port) + " is already in use. Please use the following command:")

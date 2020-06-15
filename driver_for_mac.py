@@ -69,7 +69,7 @@ def main():
 				port = int(inp)
 			
 			s.bind(('', port))
-			print ("Socket binded to %s" %(port))
+			print ("Socket bound to %s" %(port))
 			break
 		except OSError:
 			print("Port " + str(port) + " is already in use. Please use the following command:")
