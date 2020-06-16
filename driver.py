@@ -12,7 +12,7 @@ from PIL import ImageTk
 import tkinter as tk
 
 root= tk.Tk()
-
+root.title("Pokestick")
 canvas1 = tk.Canvas(root, width = 600, height = 600)
 canvas1.pack() 
 
