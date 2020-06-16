@@ -48,12 +48,12 @@ class LayoutSelect extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Icon(
-                      Icons.keyboard,
+                      Icons.directions_car,
                       color: Colors.white,
                       size: 70.0,
                     ),
                     Text(
-                      'WASD',
+                      'Racing Keyboard',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

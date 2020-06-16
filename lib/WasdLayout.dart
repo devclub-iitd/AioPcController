@@ -68,13 +68,13 @@ class _WasdLayoutState extends State<WasdLayout> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("WASD"),
+        title: Text("Racing Keyboard"),
         actions: <Widget>[
           Container(
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Text('Not Connected')),
+                    : noConnection(context)),
             padding: EdgeInsets.only(right: w/20),
           ),
         ],

@@ -60,7 +60,7 @@ class TrackpadState extends State<Trackpad> {
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Text('Not Connected')),
+                    : noConnection(context),),
           ),
           Positioned(
             top: exity,
@@ -141,7 +141,14 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           top: 0,
           left: 0,
           child: GestureDetector(
+            onTap: (){
+              _send('click&1&left');
+            },
+            onDoubleTap: (){
+              _send('click&2&left');
+            },
             onPanStart: (panInfo) {
+              this.widget.parent.setState((){});
               setState(() {
                 time = 0;
                 x = panInfo.globalPosition.dx - sz / 2;
@@ -159,7 +166,7 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
               });
               print(panInfo.globalPosition.dx);
               if ((timer.elapsedMilliseconds / 25).floor() >= time) {
-                _send('move' + '&' + dx.toString() + '&' + dy.toString());
+                _send('move' + '&' + dx.toStringAsFixed(5) + '&' + dy.toStringAsFixed(5));
                 time++;
                 setState(() {
                   dx = dy = 0;
@@ -185,17 +192,23 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           top: h * 0.80,
           left: 0,
           child: GestureDetector(
+            onTap: (){
+              _send('click&1&left');
+            },
+            onDoubleTap: (){
+              _send('click&2&left');
+            },
             onPanStart: (_) {
               setState(() {
                 ldark = 1;
               });
-              _send('click&down&left');
+              _send('button&down&left');
             },
             onPanEnd: (_) {
               setState(() {
                 ldark = 0;
               });
-              _send('click&up&left');
+              _send('button&up&left');
             },
             child: Container(
               margin: EdgeInsets.all(clickmargin),
@@ -212,17 +225,23 @@ class TrackpadDetectorState extends State<TrackpadDetector> {
           top: h * 0.80,
           left: w / 2,
           child: GestureDetector(
+            onTap: (){
+              _send('click&1&right');
+            },
+            onDoubleTap: (){
+              _send('click&2&right');
+            },
             onPanStart: (_) {
               setState(() {
                 rdark = 1;
               });
-              _send('click&down&right');
+              _send('button&down&right');
             },
             onPanEnd: (_) {
               setState(() {
                 rdark = 0;
               });
-              _send('click&up&right');
+              _send('button&up&right');
             },
             child: Container(
               margin: EdgeInsets.all(clickmargin),

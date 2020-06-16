@@ -5,6 +5,10 @@ import 'config.dart';
 import 'dart:math';
 import 'dart:io';
 
+double slice(double x) {
+  return (x * 100).round() / 100;
+}
+
 class Controller extends StatefulWidget {
   @override
   ControllerState createState() => new ControllerState();
@@ -32,6 +36,9 @@ class ControllerState extends State<Controller> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    
+    toggle = false;
+    _send('Toggle&0');
     super.dispose();
   }
 
@@ -58,7 +65,10 @@ class ControllerState extends State<Controller> {
       exity,
       exitr,
       pingx,
-      pingy;
+      pingy,
+      cntx,
+      cnty;
+    
   int rtdark = 400,
       rbdark = 400,
       lbdark = 400,
@@ -86,6 +96,8 @@ class ControllerState extends State<Controller> {
       lsby,
       rsbx,
       rsby;
+
+  bool toggle = false;
 
   double dpadx, dpady, dpadh, dpadw;
   int updark = 400, downdark = 400, leftdark = 400, rightdark = 400;
@@ -185,6 +197,9 @@ class ControllerState extends State<Controller> {
 
     pingx = w / 20;
     pingy = h * 0.9;
+
+    cntx = w / 2;
+    cnty = 4 * h / 9;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -445,8 +460,8 @@ class ControllerState extends State<Controller> {
               height: 2 * exitr,
               width: 2 * exitr,
               decoration: BoxDecoration(
-                gradient:
-                    RadialGradient(colors: [Colors.red[exitdark], Colors.black]),
+                gradient: RadialGradient(
+                    colors: [Colors.red[exitdark], Colors.black]),
                 border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
               ),
@@ -591,8 +606,8 @@ class ControllerState extends State<Controller> {
                   ? min(lsbdy / joyRange, 1)
                   : max(lsbdy / joyRange, -1);
             });
-            _send('AxisLx&' + axislx.toString());
-            _send('AxisLy&' + (-axisly).toString());
+            _send('AxisLx&' + slice(axislx).toString());
+            _send('AxisLy&' + slice((-axisly)).toString());
           },
           onPanEnd: (_) {
             setState(() {
@@ -646,8 +661,8 @@ class ControllerState extends State<Controller> {
                   ? min(rsbdy / joyRange, 1)
                   : max(rsbdy / joyRange, -1);
             });
-            _send('AxisRx&' + axisrx.toString());
-            _send('AxisRy&' + (-axisry).toString());
+            _send('AxisRx&' + slice(axisrx).toString());
+            _send('AxisRy&' + slice(-axisry).toString());
           },
           onPanEnd: (_) {
             setState(() {
@@ -790,14 +805,42 @@ class ControllerState extends State<Controller> {
         child: Container(
           child: status == 'connected'
               ? pingDisplay(sockStream)
-              : Text('Not Connected'),
+              : noConnection(context),
+        ),
+      ),
+      Positioned(
+        top: cnty - 0.75 * r,
+        left: cntx - 0.75 * r,
+        child: GestureDetector(
+          child: Container(
+            height: 1.5 * r,
+            width: 1.5 * r,
+            decoration: BoxDecoration(
+              color: toggle ? Colors.green : Colors.red,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+                child: Text(
+              toggle ? 'ON' : 'OFF',
+              style: TextStyle(color: Colors.white),
+            )),
+          ),
+          onPanStart: (_) {
+            setState(() {
+              toggle = !toggle;
+            });
+            if (toggle) {
+              _send('Toggle&1');
+            } else {
+              _send('Toggle&0');
+            }
+          },
         ),
       ),
     ]));
   }
 
   void _send(char) {
-    print("Sending " + char);
     if (sock == null)
       print("Could not send.");
     else

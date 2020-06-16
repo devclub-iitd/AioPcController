@@ -58,14 +58,14 @@ class _CustomLayoutState extends State<CustomLayout> {
             child: Center(
                 child: status == 'connected'
                     ? pingDisplay(sockStream)
-                    : Text('Not Connected')),
+                    : noConnection(context)),
           ),
           IconButton(
             onPressed: () {
               setState(() {
                 tiltcontrol = !tiltcontrol;
               });
-              if (!tiltcontrol) sock.write("tilt&0%");
+              if (!tiltcontrol) sock.write("tilt&toggle&0%");
               _scaffoldKey.currentState.showSnackBar(SnackBar(
                   content: Text('Tilting mode has been turned ' +
                       (tiltcontrol ? 'ON' : 'OFF')),
@@ -86,7 +86,7 @@ class _CustomLayoutState extends State<CustomLayout> {
   void dispose() {
     super.dispose();
     if (tiltcontrol) {
-      sock.write("tilt&0%");
+      sock.write("tilt&toggle&0%");
       tiltcontrol = false;
     }
   }

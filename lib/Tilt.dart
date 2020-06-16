@@ -13,12 +13,10 @@ void tilt() {
     if(gcurr>0)
     {
       gcurr = (asin(min(gcurr / 10, 1))/1.5707963267948966);
-      print("gcurr: "+gcurr.toString());
     }
     else
     {
       gcurr = -1*(asin(min((-1*gcurr) / 10, 1))/1.5707963267948966);
-      print("gcurr: "+gcurr.toString());
     }
   });
 }
@@ -30,10 +28,10 @@ void _send(char) {
 
 void tsend() {
   if (gcurr > 0.05) {
-    String s = (min(gcurr*2, 1)).toString();
+    String s = (min(gcurr*2, 1)).toStringAsFixed(2);
     sock.write("tilt&-&" + s + '%');
   } else if (gcurr < -0.05) {
-    String s = (min(gcurr*-2, 1)).toString();
+    String s = (min(gcurr*-2, 1)).toStringAsFixed(2);
     sock.write("tilt&+&" + s + '%');
   } else {
     sock.write("tilt&+&" + '0' + '%');
@@ -67,7 +65,7 @@ class _GyroState extends State<Gyro> {
       DeviceOrientation.portraitDown,
     ]);
     if (tiltcontrol) {
-      sock.write("tilt&0%");
+      sock.write("tilt&toggle&0%");
       tiltcontrol = false;
     }
     super.dispose();
@@ -127,14 +125,14 @@ void statusCheck() {
               child: Center(
                   child: status == 'connected'
                       ? pingDisplay(sockStream)
-                      : Text('Not Connected')),
+                      : noConnection(context),),
             ),
             IconButton(
               onPressed: () {
                 setState(() {
                   tiltcontrol = !tiltcontrol;
                 });
-                if (!tiltcontrol) sock.write("tilt&0%");
+                if (!tiltcontrol) sock.write("tilt&toggle&0%");
                 _scaffoldKey.currentState.showSnackBar(SnackBar(
                     content: Text('Tilting mode has been turned ' +
                         (tiltcontrol ? 'ON' : 'OFF')),
