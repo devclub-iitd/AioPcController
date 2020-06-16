@@ -68,7 +68,7 @@ class _WasdLayoutState extends State<WasdLayout> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("WASD"),
+        title: Text("Racing Keyboard"),
         actions: <Widget>[
           Container(
             child: Center(
