@@ -1,6 +1,7 @@
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from time import sleep
-import subprocess
+import subprocess,os
+from tkinter import messagebox
 from threading import Thread
 from qrcode import QRCode
 from os import _exit
@@ -15,11 +16,11 @@ if not xSupport:
 	from signal import signal, SIGTSTP, SIGINT
 	signal(SIGTSTP, SIGINT)		# Required to free the port otherwise cleanup routine is not called
 
-from PIL import ImageTk
+from PIL import ImageTk,Image
 import tkinter as tk
 root= tk.Tk()
-root.title("Pokestick")
-canvas1 = tk.Canvas(root, width = 600, height = 600)
+root.title("KeyKonnekt")
+canvas1 = tk.Canvas(root, width = 600, height = 500)
 
 canvas1.pack() 
 
@@ -41,6 +42,7 @@ else:
 button = '$'
 duty_ratio = 0
 serverIP = ''
+port = 4444
 
 class CustomException(Exception):
 	def __init__(self, value):
@@ -88,20 +90,9 @@ class myThread(Thread):
 
 thread1 = myThread(1, "Thread-1", 1)
 
-def main():
-
-	s = socket()      
-	thread1.start()
-
-	canvas1.delete("all")
-
+def socket_binding(s):
 	while True:
-		try:
-			canvas1.delete("all")
-
-			label1 = tk.Label(root, text= 'Socket successfully created.', fg='blue', font=('helvetica', 12, 'bold'))
-			canvas1.create_window(300, 50, window=label1)
-		
+		try:		
 			inp = entry1.get()
 			
 			if inp == '': 
@@ -111,9 +102,6 @@ def main():
 			
 			s.bind(('', port))
 
-			label2 = tk.Label(root, text= 'Socket bound to '+str(port), fg='blue', font=('helvetica', 12, 'bold'))
-			canvas1.create_window(300, 120, window=label2)
-
 			# print ("Socket bound to %s" %(port))
 			break
 		except OSError:
@@ -122,42 +110,33 @@ def main():
 			_exit(0)
 		except:
 			print ("Unexpected error while connecting to port")
-     
-	s.listen()
 
-	while True:
-		try:
-			# serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
-			serverIP = get_ip_address()+":"+str(port)
-			break
-		except gaierror: 
-			output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
-			serverIP = output+":"+str(port)
-			break
-		except Exception as e:
-			print(e)
-			ans = input('Are you connected to WiFi? (y/n): ')
-			if(ans in 'Nn'):
-				print('Better connect to the WiFi then (-_-")')
-				_exit(0)
+def connection(s, serverIP):
 
-	
 	qr = QRCode()
 	qr.add_data(serverIP)
-	
+
 	while True: 
+		canvas1.delete("all")
 
-		label3 = tk.Label(root, text= 'Connect to ip '+str(serverIP)+" Or Scan this", fg='red', font=('helvetica', 12, 'bold'))
-		canvas1.create_window(300, 180, window=label3)
+		logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+		panel = tk.Label(root, image = logo)
+		canvas1.create_window(540, 440, window=panel)
+		
+		label1 = tk.Label(root, text= 'Socket successfully created.', fg='grey', font=('Verdana', 12))
+		canvas1.create_window(300, 50, window=label1)
 
-		# print("Connect at IP = "+serverIP)
-		# print('Or scan this:')
-		# qr.make()
+		label2 = tk.Label(root, text= 'Socket bound to '+str(port), fg='grey', font=('helvetica', 12))
+		canvas1.create_window(300, 80, window=label2)
+
+		label3 = tk.Label(root, text= 'Connect to IP   '+str(serverIP)+"   Or Scan this", fg='black', font=('Verdana', 12))
+		canvas1.create_window(300, 150, window=label3)
+
 		img = qr.make_image()
 		img = ImageTk.PhotoImage(img)
 
 		panel = tk.Label(root, image = img)
-		canvas1.create_window(300, 400, window=panel)
+		canvas1.create_window(300, 330, window=panel)
 
 		# qr.print_ascii(invert=True)
 		# qr.print_ascii()
@@ -165,8 +144,20 @@ def main():
 		# print ("Socket is listening...")
 
 		c, addr = s.accept()
-		
-		print ('Got connection from', addr)
+
+		canvas1.delete("all")
+
+		logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+		panel = tk.Label(root, image = logo)
+		canvas1.create_window(540, 440, window=panel)
+
+		canvas1.create_oval(90, 40,510,460, fill="grey", outline="#DDD", width=1)
+
+		label4 = tk.Label(root, text= 'Got connection from'+ str(addr), bg='grey', fg='white', font=('Verdana', 13))
+		canvas1.create_window(300, 240, window=label4)
+
+		label5 = tk.Label(root, text= "  Connected  ", bg='green', fg='white', font=('Verdana', 14))
+		canvas1.create_window(300, 310, window=label5)
 
 		message = ''
 
@@ -226,7 +217,8 @@ def main():
 							raise ConnectionResetError
 
 			except ConnectionResetError:
-				print("Disconnected from client")
+				tk.messagebox.showinfo("Disconnected", "Disconnected from client :  "+str(serverIP))
+				print()
 				c.close()
 				print("Socket closed")
 
@@ -236,9 +228,9 @@ def main():
 					del xcontroller
 					xcontroller = None
 
-				ans = input("Do you want to connect again? (y/n): ")
-				if(ans in 'Nn'):
-					_exit(0)
+				# ans = input("Do you want to connect again? (y/n): ")
+				# if(ans in 'Nn'):
+				# 	_exit(0)
 				break
 
 			except CustomException as error:
@@ -250,8 +242,61 @@ def main():
 
 			finally:
 				message = ''
-		
 
+def main():
+
+	s = socket() 
+
+	thread1.start()
+
+	canvas1.delete("all")
+	
+	
+
+	while True:
+		try:		
+			inp = entry1.get()
+			
+			if inp == '': 
+				port = 4444
+			else:
+				port = int(inp)
+			
+			s.bind(('', port))
+
+			# print ("Socket bound to %s" %(port))
+			break
+		except OSError:
+
+			tk.messagebox.showinfo("Invalid Port", "Port " + str(port) + " is already in use. Please use the following command:")
+			print("lsof -n -i4TCP:" + str(port) +" | grep LISTEN")
+			_exit(0)
+		except:
+			print ("Unexpected error while connecting to port")
+
+
+	s.listen()
+
+	while True:
+		try:
+			# serverIP = socket.gethostbyname(socket.gethostname())+":"+str(port)
+			serverIP = get_ip_address()+":"+str(port)
+			break
+		except gaierror: 
+			output = subprocess.check_output("ipconfig getifaddr en0", shell=True).decode()[:-1]
+			serverIP = output+":"+str(port)
+			break
+		except Exception as e:
+			print(e)
+			ans = input('Are you connected to WiFi? (y/n): ')
+			if(ans in 'Nn'):
+				print('Better connect to the WiFi then (-_-")')
+				_exit(0)
+
+	connection_thread  = Thread(target=connection, args=(s, serverIP))
+	connection_thread.start()
+	# connection_thread.join()
+	
 def handleButton(type, msg):
 	if(type == 'down'):
 		# pyautogui.keyDown(msg)
@@ -347,16 +392,34 @@ def handleTrackpad(msg):
 		if(msg[2] == 'right'):
 			mouse.click(Button.right, int(msg[1]))
 
+def close_pokestick():
+	if tk.messagebox.askokcancel("Quit", "Do you want to quit?"):
+		root.destroy()
+		os._exit(0)
+
 if __name__=="__main__":
 	
-	label1 = tk.Label(root, text= 'Enter the port (leave blank for 4444): ', fg='green', font=('helvetica', 12, 'bold'))
-	canvas1.create_window(300, 80, window=label1)
 
-	button1 = tk.Button(text='Submit',command=main, bg='brown',fg='white')
-	canvas1.create_window(300, 380, window=button1)
+	# background = ImageTk.PhotoImage(Image.open("assets/launcher/background.png").resize((420, 420), Image.ANTIALIAS)) 
+	# panel1 = tk.Label(root, image = background)
+	# canvas1.create_window(300, 250, window=panel1)
 
-	entry1 = tk.Entry (root) 
-	canvas1.create_window(300, 180, window=entry1)
+	canvas1.create_oval(90, 40,510,460, fill="grey", outline="#DDD", width=1)
+
+	label1 = tk.Label(root, text= 'Enter the port (leave blank for 4444): ', bg='grey', fg='white', font=('Verdana', 13))
+	canvas1.create_window(300, 180, window=label1)
+
+	button1 = tk.Button(text='Submit',relief='flat', font=('Verdana', 14),command=main, bg='brown',fg='white')
+	canvas1.create_window(300, 350, window=button1)
+
+	entry1 = tk.Entry (root, font=('Comic Sans MS', 14)) 
+	canvas1.create_window(300, 250, window=entry1)
+
+	logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+	panel = tk.Label(root, image = logo)
+	canvas1.create_window(540, 440, window=panel)
+
+	root.protocol("WM_DELETE_WINDOW", close_pokestick)
 
 	root.mainloop()
 	# main()
