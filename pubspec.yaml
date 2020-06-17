@@ -25,16 +25,17 @@ dependencies:
     sdk: flutter
   sqflite: ^1.3.0
   flutter_slidable: "^0.5.4"
-
+  barcode_scan: any
+  sensors: 0.4.2+1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
-  sensors: 0.4.2+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.0"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,3 +78,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/ios_icon.png"
+  image_path_android: "assets/launcher/android_icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"

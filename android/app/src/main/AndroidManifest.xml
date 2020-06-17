@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="aio_pc_controller"
+        android:label="KeyKonnekt"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,34 +1,36 @@
-import 'dart:io';
-
+import 'Theme.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'Dialogs.dart';
+import 'dialogs/ButtonDelete.dart';
+import 'dialogs/LayoutSave.dart';
+import 'dialogs/ButtonChoice.dart';
 import 'ButtonIcons.dart';
 import 'DatabaseHelper.dart';
 import 'package:flutter/services.dart';
+import 'LoadCustom.dart';
 
 String globalLayoutName = '_untitled';
 List globalButtonONList = [];
+
 class Custom extends StatefulWidget {
   Custom();
   @override
-  CustomState createState(){
-    return new CustomState(globalLayoutName,globalButtonONList);
-  } 
+  CustomState createState() {
+    return new CustomState(globalLayoutName, globalButtonONList);
+  }
 }
 
 class CustomState extends State<Custom> {
-
   var layoutName = '_untitled';
   var buttonONList;
-  CustomState(this.layoutName,this.buttonONList);
+  CustomState(this.layoutName, this.buttonONList);
 
   List<CustomButton> buttonList = [];
-  
+
   var selected = 0;
   var minsz = 10.0, maxsz = 200.0;
-  void deleteButton(int id){
-    buttonList[id].state.setState((){
+  void deleteButton(int id) {
+    buttonList[id].state.setState(() {
       buttonList[id].x = -1000;
       buttonList[id].y = -1000;
       buttonList[id].sz = 1.0;
@@ -38,74 +40,86 @@ class CustomState extends State<Custom> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    for(int i=0;i<buttonONList.length;i++){
-      buttonList.add(new CustomButton(this,i,buttonONList[i]['type'],buttonONList[i]['x'],buttonONList[i]['y'],buttonONList[i]['sz']));
+    for (int i = 0; i < buttonONList.length; i++) {
+      buttonList.add(new CustomButton(this, i, buttonONList[i]['type'],
+          buttonONList[i]['x'], buttonONList[i]['y'], buttonONList[i]['sz']));
     }
     buttonONList = [];
-    return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          title: layoutName == '_untitled'? Text("Custom Layout"): Text(layoutName),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.save),
+
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+            key: scaffoldKey,
+            appBar: AppBar(
+              title: layoutName == '_untitled'
+                  ? Text("Custom Layout")
+                  : Text(layoutName),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: () {
+                    if (layoutName != '_untitled') {
+                      List<Map<String, dynamic>> buttonONList = [];
+                      for (int i = 0; i < buttonList.length; i++) {
+                        buttonONList.add(buttonList[i].toMap());
+                      }
+                      saveButtons(buttonONList, layoutName);
+                      scaffoldKey.currentState.showSnackBar(SnackBar(
+                        content: Text('Changes saved to "$layoutName"'),
+                        duration: Duration(seconds: 2),
+                      ));
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return LayoutSave(this);
+                        },
+                      );
+                      updateTables();
+                    }
+                  },
+                )
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
               onPressed: () {
-                if (layoutName != '_untitled') {
-                  List<Map<String,dynamic>> buttonONList = [];
-                  for(int i=0;i<buttonList.length;i++){
-                    buttonONList.add(buttonList[i].toMap());
-                  }
-                  saveButtons(buttonONList,layoutName);
-                  scaffoldKey.currentState.showSnackBar(SnackBar(
-                    content: Text('Changes saved to "$layoutName"'),
-                    duration: Duration(seconds: 2),
-                  ));
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return LayoutSave(this);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ButtonChoice(this);
+                  },
+                );
+              },
+            ),
+            body: Stack(children: [
+              Stack(children: buttonList),
+              Positioned(
+                  bottom: 0,
+                  child: Slider(
+                    value: getsz(),
+                    min: minsz,
+                    max: maxsz,
+                    divisions: 30,
+                    activeColor: currentThemeColors.sliderColor,
+                    inactiveColor: Colors.black,
+                    label: 'Set size',
+                    onChanged: (double newValue) {
+                      try {
+                        buttonList[selected].state.setState(() {
+                          buttonList[selected].sz = newValue;
+                        });
+                        setState(() {});
+                      } on Exception {}
                     },
-                  );
-                }
-              },
-            )
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return ButtonChoice(this);
-              },
-            );
-          },
-        ),
-        body: Stack(children: [
-          Stack(children: buttonList),
-          Positioned(
-              bottom: 0,
-              child: Slider(
-                value: getsz(),
-                min: minsz,
-                max: maxsz,
-                divisions: 30,
-                activeColor: Colors.red,
-                inactiveColor: Colors.black,
-                label: 'Set size',
-                onChanged: (double newValue) {
-                  try {
-                    buttonList[selected].state.setState(() {
-                      buttonList[selected].sz = newValue;
-                      
-                    });
-                    setState((){});
-                  } on Exception {}
-                },
-              ))
-        ]));
+                  ))
+            ])));
+  }
+
+  Future<bool> _onWillPop() async {
+    Navigator.pop(context);
+    loadCustomBuilder(context);
+    return false;
   }
 
   double getsz() {
@@ -134,7 +148,7 @@ class CustomButton extends StatefulWidget {
   CustomButtonState state;
 
   Map<String, dynamic> toMap() {
-    return {'type': type, 'x': x, 'y':y, 'sz':sz};
+    return {'type': type, 'x': x, 'y': y, 'sz': sz};
   }
 
   @override
@@ -142,12 +156,9 @@ class CustomButton extends StatefulWidget {
     this.state = new CustomButtonState();
     return this.state;
   }
-
 }
 
 class CustomButtonState extends State<CustomButton> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -159,7 +170,8 @@ class CustomButtonState extends State<CustomButton> {
             width: (widget.sz),
             decoration: BoxDecoration(
                 gradient: RadialGradient(
-                    focalRadius: widget.sz * 3, colors: [Colors.orange, Colors.red])),
+                    focalRadius: widget.sz * 3,
+                    colors: [Colors.orange, Colors.red])),
             padding: EdgeInsets.all(widget.sz / 3),
             child: ButtonIcon(this.widget.type, widget.sz),
           ),
@@ -187,13 +199,12 @@ class CustomButtonState extends State<CustomButton> {
   }
 }
 
-void customLoader(context, layoutName) async{
-  if(layoutName != '_untitled'){
+void customLoader(context, layoutName) async {
+  if (layoutName != '_untitled') {
     var buttonONList = await getLayoutData(layoutName);
     globalLayoutName = layoutName;
     globalButtonONList = buttonONList;
-  }
-  else{
+  } else {
     globalLayoutName = layoutName;
     globalButtonONList = [];
   }
