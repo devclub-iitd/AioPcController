@@ -25,7 +25,7 @@ class HomeScreenState extends State<HomeScreen> {
       bool open = true;
       var test;
       try {
-        sock.write('status&'+statusKey.toString()+'%');
+        sock.write('status&' + statusKey.toString() + '%');
         test = sock.address.host;
         test = sock.remotePort;
         if (open) status = 'connected';
@@ -42,10 +42,9 @@ class HomeScreenState extends State<HomeScreen> {
     print(status);
     return Scaffold(
       appBar: AppBar(
-        title: Text("AIO PC Controller"),
+        title: Text("KeyKonnekt"),
         bottom: PreferredSize(
-            child: Tabs('CONNECT'),
-            preferredSize: Size.fromHeight(48.0)),
+            child: Tabs('CONNECT'), preferredSize: Size.fromHeight(48.0)),
       ),
       body: SingleChildScrollView(
         child: status == 'connected'
@@ -73,7 +72,8 @@ class HomeScreenState extends State<HomeScreen> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24.0),
                         child: Text(snapshot.hasData
-                            ? ((String.fromCharCodes(snapshot.data) == 'pass'+statusKey.toString())
+                            ? ((String.fromCharCodes(snapshot.data) ==
+                                    'pass' + statusKey.toString())
                                 ? 'Server is responding well!'
                                 : 'Server is responding.. but there might be some error')
                             : 'Server is NOT responding :\'('),
