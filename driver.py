@@ -218,7 +218,6 @@ def connection(s, serverIP):
 
 			except ConnectionResetError:
 				tk.messagebox.showinfo("Disconnected", "Disconnected from client :  "+str(serverIP))
-				print()
 				c.close()
 				print("Socket closed")
 
@@ -268,8 +267,7 @@ def main():
 			break
 		except OSError:
 
-			tk.messagebox.showinfo("Invalid Port", "Port " + str(port) + " is already in use. Please use the following command:")
-			print("lsof -n -i4TCP:" + str(port) +" | grep LISTEN")
+			tk.messagebox.showinfo("Invalid Port", "Port " + str(port) + " is already in use. Please use the following command:\n lsof -n -i4TCP:" + str(port) +" | grep LISTEN")
 			_exit(0)
 		except:
 			print ("Unexpected error while connecting to port")
@@ -288,10 +286,10 @@ def main():
 			break
 		except Exception as e:
 			print(e)
-			ans = input('Are you connected to WiFi? (y/n): ')
-			if(ans in 'Nn'):
-				print('Better connect to the WiFi then (-_-")')
-				_exit(0)
+			res = tk.messagebox.askquestion('WiFi Connection', 'Are you connected to WiFi?') 
+			if res == 'no' : 
+				tk.messagebox.showinfo('WiFi Connection Needed', 'Better connect to the WiFi then (-_-")')
+				_exit(0) 
 
 	connection_thread  = Thread(target=connection, args=(s, serverIP))
 	connection_thread.start()
