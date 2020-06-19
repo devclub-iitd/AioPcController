@@ -71,6 +71,9 @@ class ButtonChoiceState extends State<ButtonChoice> {
                                     10.0,
                                     10.0,
                                     50.0));
+
+                                this.widget.parent.selected =
+                                    this.widget.parent.buttonList.length - 1;
                               });
                               Navigator.of(context).pop();
                             },
@@ -130,6 +133,9 @@ class ButtonChoiceState extends State<ButtonChoice> {
                                     10.0,
                                     10.0,
                                     50.0));
+
+                                this.widget.parent.selected =
+                                    this.widget.parent.buttonList.length - 1;
                               });
                               Navigator.of(context).pop();
                             },
@@ -189,6 +195,8 @@ class ButtonChoiceState extends State<ButtonChoice> {
                                           10.0,
                                           10.0,
                                           50.0));
+                                  this.widget.parent.selected =
+                                      this.widget.parent.buttonList.length - 1;
                                 });
                                 Navigator.of(context).pop();
                               }),
@@ -226,6 +234,9 @@ class ButtonChoiceState extends State<ButtonChoice> {
                                           10.0,
                                           10.0,
                                           50.0));
+
+                                  this.widget.parent.selected =
+                                      this.widget.parent.buttonList.length - 1;
                                 });
                                 Navigator.of(context).pop();
                               }),
