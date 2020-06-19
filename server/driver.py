@@ -13,9 +13,9 @@ import sys
 from platform import system as currSystem
 xSupport = True if currSystem() == 'Windows' else False
 
-if not xSupport:
-	from signal import signal, SIGTSTP, SIGINT
-	signal(SIGTSTP, SIGINT)		# Required to free the port otherwise cleanup routine is not called
+# if not xSupport:
+# 	from signal import signal, SIGTSTP, SIGINT
+# 	signal(SIGTSTP, SIGINT)		# Required to free the port otherwise cleanup routine is not called
 
 from PIL import ImageTk,Image
 import tkinter as tk

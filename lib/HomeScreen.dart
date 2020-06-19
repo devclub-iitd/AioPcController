@@ -17,6 +17,7 @@ class HomeScreenState extends State<HomeScreen> {
   final TextEditingController portController = TextEditingController();
   String status;
 
+  final GlobalKey<ScaffoldState> homeKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     if (sock == null) {
@@ -41,6 +42,7 @@ class HomeScreenState extends State<HomeScreen> {
     }
     print(status);
     return Scaffold(
+      key: homeKey,
       appBar: AppBar(
         title: Text("KeyKonnekt"),
         bottom: PreferredSize(
@@ -173,7 +175,10 @@ class HomeScreenState extends State<HomeScreen> {
       } on Exception catch (e) {
         print(e);
         sock = null;
-        Navigator.pushReplacementNamed(context, '/');
+        this.homeKey.currentState.showSnackBar(SnackBar(
+              content: Text('Error in connecting to Server. Please check IP address and Port number and try again.'),
+              duration: Duration(seconds: 2),
+            ));
       }
     }
   }
@@ -193,13 +198,22 @@ class HomeScreenState extends State<HomeScreen> {
             Navigator.pushReplacementNamed(context, '/layout_select');
           } on Exception catch (e) {
             print(e);
-            Navigator.pushReplacementNamed(context, '/');
+            this.homeKey.currentState.showSnackBar(SnackBar(
+              content: Text('Error in connecting to Server. Please try again.'),
+              duration: Duration(seconds: 2),
+            ));
           }
         } on FormatException {
-          Navigator.pushReplacementNamed(context, '/');
+          this.homeKey.currentState.showSnackBar(SnackBar(
+              content: Text('Please scan the correct QR code.'),
+              duration: Duration(seconds: 2),
+            ));
         }
       } else {
-        Navigator.pushReplacementNamed(context, '/');
+        this.homeKey.currentState.showSnackBar(SnackBar(
+              content: Text('Please scan the correct QR code.'),
+              duration: Duration(seconds: 2),
+            ));
       }
     }
   }
