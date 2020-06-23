@@ -182,13 +182,13 @@ class ControllerState extends State<Controller> {
     startx = w / 2 + w / 9 - startw / 2;
     starty = h / 3 - starth / 2;
 
-    joyRange = h / 10;
-    joyR = h / 12;
+    joyRange = h / 8;
+    joyR = h / 9;
 
-    lsby = 5 * h / 9 - joyR;
-    lsbx = 2 * w / 9 - joyR;
-    rsby = 6.8 * h / 9 - joyR;
-    rsbx = 5.5 * w / 9 - joyR;
+    lsby = 5.5 * h / 9 - joyR;
+    lsbx = 1.6 * w / 9 - joyR;
+    rsby = 7 * h / 9 - joyR;
+    rsbx = 6 * w / 9 - joyR;
 
     dpadx = 3.5 * w / 9;
     dpady = 7 * h / 9;
