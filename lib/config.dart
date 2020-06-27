@@ -36,36 +36,30 @@ StreamBuilder pingDisplay(stream) {
     stream: stream,
     builder: (context, snapshot) {
       pingClock.stop();
-      return Center(
-        child: snapshot.hasData
-            ? ((String.fromCharCodes(snapshot.data) ==
-                    'pass' + statusKey.toString())
-                ? Text(
-                    '${pingClock.elapsedMilliseconds}' + 'ms',
-                    style: TextStyle(
-                        color: pingClock.elapsedMilliseconds < 70
-                            ? Colors.green
-                            : (pingClock.elapsedMilliseconds < 140
-                                ? Colors.yellow
-                                : Colors.red)),
-                  )
-                : Text('..'))
-            : noConnection(context),
-      );
+      return snapshot.hasData
+          ? Center(
+              child: ((String.fromCharCodes(snapshot.data) ==
+                      'pass' + statusKey.toString())
+                  ? Text(
+                      '${pingClock.elapsedMilliseconds}' + 'ms',
+                      style: TextStyle(
+                          color: pingClock.elapsedMilliseconds < 70
+                              ? Colors.green
+                              : (pingClock.elapsedMilliseconds < 140
+                                  ? Colors.yellow
+                                  : Colors.red)),
+                    )
+                  : Text('..')))
+          : noConnection(context);
     },
   );
 }
 
 Widget noConnection(context) => new Container(
-    width: 40.0,
-    height: 25.0,
-
-    child: FlatButton(
-        child: Icon(Icons.wifi_lock, color: Colors.red),
+    child: IconButton(
+        icon: Icon(Icons.wifi_lock, color: Colors.red),
         color: Colors.transparent,
         onPressed: (() {
           Navigator.pop(context);
           Navigator.pushReplacementNamed(context, '/');
-        })
-    )
-);
+        })));

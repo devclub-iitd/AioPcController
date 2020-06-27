@@ -197,7 +197,7 @@ class ControllerState extends State<Controller> {
     dpadw = h / 12;
 
     pingx = w / 20;
-    pingy = h * 0.9;
+    pingy = h * 0.85;
 
     cntx = w / 2;
     cnty = 4 * h / 9;

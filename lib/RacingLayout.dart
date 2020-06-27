@@ -15,7 +15,7 @@ class RacingLayout extends StatefulWidget {
 }
 
 class RacingLayoutState extends State<RacingLayout> {
-  int wdark = 0, adark = 0, shiftdark = 0, sdark = 0, ddark = 0, spacedark = 0;
+  int exitdark = 400;
   double w,
       h,
       ax,
@@ -40,7 +40,12 @@ class RacingLayoutState extends State<RacingLayout> {
       shiftx,
       shifty,
       shiftw,
-      shifth;
+      shifth,
+      pingx,
+      pingy,
+      exitx,
+      exity,
+      exitr;
   String status;
   @override
   Widget build(BuildContext context) {
@@ -92,26 +97,33 @@ class RacingLayoutState extends State<RacingLayout> {
     sw = w * 0.97;
     sh = h * 0.17;
 
-    spacew = w * 0.175;
+    spacew = w * 0.18;
     spaceh = h * 0.17;
     spacex = ax + aw / 2 - spacew / 2;
     spacey = h * 0.125;
 
-    shiftw = w * 0.175;
+    shiftw = w * 0.18;
     shifth = h * 0.17;
     shiftx = ax - aw / 2 + shiftw / 2;
     shifty = h * 0.125;
 
+    pingx = w * 0.5;
+    pingy = h * 0.17;
+
+    exitx = w * 0.5;
+    exity = h * 0.72;
+    exitr = h / 30;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          RacingButton('A', ax, ay, aw, ah),
-          RacingButton('D', dx, dy, dw, dh),
-          RacingButton('S', sx, sy, sw, sh),
-          RacingButton('space', spacex, spacey, spacew, spaceh),
-          RacingButton('space', w - spacex, spacey, spacew, spaceh),
-          RacingButton('shift', shiftx, shifty, shiftw, shifth),
-          RacingButton('shift', w - shiftx, shifty, shiftw, shifth),
+          RacingButton('left', 'a', ax, ay, aw, ah),
+          RacingButton('right', 'd', dx, dy, dw, dh),
+          RacingButton('down', 's', sx, sy, sw, sh),
+          RacingButton('space', 'space', spacex, spacey, spacew, spaceh),
+          RacingButton('space', 'space', w - spacex, spacey, spacew, spaceh),
+          RacingButton('shift', 'shift', shiftx, shifty, shiftw, shifth),
+          RacingButton('shift', 'shift', w - shiftx, shifty, shiftw, shifth),
           Positioned(
             top: wy - wr,
             left: wx - wr,
@@ -129,6 +141,36 @@ class RacingLayoutState extends State<RacingLayout> {
                     color: Colors.white,
                     size: wr * 0.8,
                   ))),
+            ),
+          ),
+          Positioned(
+            top: pingy,
+            left: pingx,
+            child: Center(
+              child: Container(
+                child: status == 'connected'
+                    ? pingDisplay(sockStream)
+                    : noConnection(context),
+              ),
+            ),
+          ),
+          Positioned(
+            top: exity-exitr,
+            left: exitx-exitr,
+            child: GestureDetector(
+              child: Container(
+                  height: 2 * exitr,
+                  width: 2 * exitr,
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                        colors: [Colors.red[exitdark], Colors.black]),
+                    border: Border.all(color: Colors.black),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(child: Icon(Icons.cancel))),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ),
         ],
@@ -155,9 +197,9 @@ class RacingLayoutState extends State<RacingLayout> {
 }
 
 class RacingButton extends StatefulWidget {
-  final String type;
+  final String type, mapping;
   final double x, y, w, h;
-  RacingButton(this.type, this.x, this.y, this.w, this.h);
+  RacingButton(this.type, this.mapping, this.x, this.y, this.w, this.h);
   @override
   RacingButtonState createState() => new RacingButtonState();
 }
@@ -182,13 +224,13 @@ class RacingButtonState extends State<RacingButton> {
             setState(() {
               darkness = 1;
             });
-            _send('down&${this.widget.type.toLowerCase()}');
+            _send('down&${this.widget.mapping.toLowerCase()}');
           },
           onPanEnd: (_) {
             setState(() {
               darkness = 0;
             });
-            _send('up&${this.widget.type.toLowerCase()}');
+            _send('up&${this.widget.mapping.toLowerCase()}');
           },
         ));
   }
