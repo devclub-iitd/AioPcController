@@ -15,6 +15,7 @@ class RacingLayout extends StatefulWidget {
 }
 
 class RacingLayoutState extends State<RacingLayout> {
+  bool toggle = false;
   int exitdark = 400;
   double w,
       h,
@@ -41,7 +42,6 @@ class RacingLayoutState extends State<RacingLayout> {
       shifty,
       shiftw,
       shifth,
-      pingx,
       pingy,
       exitx,
       exity,
@@ -107,8 +107,7 @@ class RacingLayoutState extends State<RacingLayout> {
     shiftx = ax - aw / 2 + shiftw / 2;
     shifty = h * 0.125;
 
-    pingx = w * 0.5;
-    pingy = h * 0.17;
+    pingy = h * 0.1;
 
     exitx = w * 0.5;
     exity = h * 0.72;
@@ -132,7 +131,7 @@ class RacingLayoutState extends State<RacingLayout> {
                   height: 2 * wr,
                   width: 2 * wr,
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: toggle ? Colors.green : Colors.red,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -141,22 +140,30 @@ class RacingLayoutState extends State<RacingLayout> {
                     color: Colors.white,
                     size: wr * 0.8,
                   ))),
+              onPanStart: (_) {
+                setState(() {
+                  toggle = !toggle;
+                });
+                if (toggle) {
+                  _send('down&w');
+                } else {
+                  _send('up&w');
+                }
+              },
             ),
           ),
           Positioned(
-            top: pingy,
-            left: pingx,
-            child: Center(
-              child: Container(
-                child: status == 'connected'
-                    ? pingDisplay(sockStream)
-                    : noConnection(context),
-              ),
+            child: Container(
+              alignment: Alignment.topCenter,
+              margin: EdgeInsets.only(top: pingy),
+              child: status == 'connected'
+                  ? pingDisplay(sockStream)
+                  : noConnection(context),
             ),
           ),
           Positioned(
-            top: exity-exitr,
-            left: exitx-exitr,
+            top: exity - exitr,
+            left: exitx - exitr,
             child: GestureDetector(
               child: Container(
                   height: 2 * exitr,
@@ -192,6 +199,9 @@ class RacingLayoutState extends State<RacingLayout> {
       DeviceOrientation.landscapeRight,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    if(toggle){
+      _send('up&w');
+    }
     super.dispose();
   }
 }

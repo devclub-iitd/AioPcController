@@ -37,8 +37,7 @@ StreamBuilder pingDisplay(stream) {
     builder: (context, snapshot) {
       pingClock.stop();
       return snapshot.hasData
-          ? Center(
-              child: ((String.fromCharCodes(snapshot.data) ==
+          ?  ((String.fromCharCodes(snapshot.data) ==
                       'pass' + statusKey.toString())
                   ? Text(
                       '${pingClock.elapsedMilliseconds}' + 'ms',
@@ -49,7 +48,7 @@ StreamBuilder pingDisplay(stream) {
                                   ? Colors.yellow
                                   : Colors.red)),
                     )
-                  : Text('..')))
+                  : Text('...'))
           : noConnection(context);
     },
   );

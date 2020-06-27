@@ -75,6 +75,33 @@ class LayoutSelect extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Icon(
+                      Icons.directions_car,
+                      color: Colors.white,
+                      size: 70.0,
+                    ),
+                    Text(
+                      'Racing Keyboard 1',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/racing_layout');
+              },
+            ),
+            GestureDetector(
+              child: Container(
+                color: currentThemeColors.gridButtonColor,
+                margin: const EdgeInsets.all(2.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
                       Icons.rotate_left,
                       color: Colors.white,
                       size: 70.0,
