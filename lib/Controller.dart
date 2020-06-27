@@ -23,6 +23,7 @@ class ControllerState extends State<Controller> {
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
     SystemChrome.setEnabledSystemUIOverlays([]);
   }
