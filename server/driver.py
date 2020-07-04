@@ -193,7 +193,7 @@ def connection(s, serverIP):
 								raise CustomException('Incorrect Tilt Message - [0]')
 
 							if msg[1] == 'toggle':
-								if msg[1] == '0':
+								if msg[2] == '0':
 									global button
 									button = '$'
 							elif msg[1] == '+':
