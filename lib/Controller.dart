@@ -1,6 +1,7 @@
 import 'package:aio_pc_controller/Custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'config.dart';
 import 'dart:math';
 import 'dart:io';
@@ -37,66 +38,21 @@ class ControllerState extends State<Controller> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    
+
     toggle = false;
     _send('Toggle&0');
     super.dispose();
   }
 
   var w, h;
-  double toph,
-      rtx,
-      rty,
-      rbx,
-      rby,
-      ltx,
-      lty,
-      lbx,
-      lby,
-      ax,
-      ay,
-      r,
-      xx,
-      xy,
-      yx,
-      yy,
-      bx,
-      by,
-      exitx,
-      exity,
-      exitr,
-      pingx,
-      pingy,
-      cntx,
-      cnty;
-    
-  int rtdark = 400,
-      rbdark = 400,
-      lbdark = 400,
-      ltdark = 400,
-      adark = 400,
-      xdark = 400,
-      ydark = 400,
-      bdark = 400,
-      exitdark = 400;
+  double toph, rtx, rty, rbx, rby, ltx, lty, lbx, lby, ax, ay, r, xx, xy, yx, yy, bx, by, exitx, exity, exitr, pingx, pingy, cntx, cnty;
 
-  double backx, backy, backh, backw, startx, starty, starth, startw;
-  int backdark = 400, startdark = 400;
+  int rtdark = 400, rbdark = 400, lbdark = 400, ltdark = 400, adark = 400, xdark = 400, ydark = 400, bdark = 400, exitdark = 400;
 
-  double lsbdx = 0,
-      lsbdy = 0,
-      rsbdx = 0,
-      rsbdy = 0,
-      joyRange,
-      joyR,
-      axislx = 0,
-      axisly = 0,
-      axisrx = 0,
-      axisry = 0,
-      lsbx,
-      lsby,
-      rsbx,
-      rsby;
+  double backx, backy, backsz, startx, starty, startsz;
+  int backdark = 700, startdark = 700;
+
+  double lsbdx = 0, lsbdy = 0, rsbdx = 0, rsbdy = 0, joyRange, joyR, axislx = 0, axisly = 0, axisrx = 0, axisry = 0, lsbx, lsby, rsbx, rsby;
 
   bool toggle = false;
 
@@ -173,15 +129,13 @@ class ControllerState extends State<Controller> {
     exity = h * 0.9;
     exitr = h / 30;
 
-    backh = h / 10;
-    backw = w / 10;
-    backx = w / 2 - w / 9 - backw / 2;
-    backy = h / 3 - backh / 2;
+    backsz = h / 10;
+    backx = w / 2 - w / 9 - backsz / 2;
+    backy = h / 3 - backsz / 2;
 
-    starth = h / 10;
-    startw = w / 10;
-    startx = w / 2 + w / 9 - startw / 2;
-    starty = h / 3 - starth / 2;
+    startsz = h / 10;
+    startx = w / 2 + w / 9 - startsz / 2;
+    starty = h / 3 - startsz / 2;
 
     joyRange = h / 8;
     joyR = h / 9;
@@ -211,16 +165,13 @@ class ControllerState extends State<Controller> {
             height: toph,
             width: w / 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
-              border:
-                  Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
+              gradient: LinearGradient(colors: [Colors.indigo[400], Colors.indigo[rtdark + 300]]),
+              border: Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
             ),
             child: Center(
                 child: Text(
               "RT",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             )),
           ),
           onPanStart: (_) {
@@ -245,15 +196,13 @@ class ControllerState extends State<Controller> {
             height: toph,
             width: w / 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
+              gradient: LinearGradient(colors: [Colors.indigo[400], Colors.indigo[rbdark + 300]]),
               border: Border(bottom: BorderSide(color: Colors.blue[900])),
             ),
             child: Center(
                 child: Text(
               "RB",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             )),
           ),
           onPanStart: (_) {
@@ -278,16 +227,13 @@ class ControllerState extends State<Controller> {
             height: toph,
             width: w / 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.indigo[ltdark + 300], Colors.indigo[400]]),
-              border:
-                  Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
+              gradient: LinearGradient(colors: [Colors.indigo[ltdark + 300], Colors.indigo[400]]),
+              border: Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
             ),
             child: Center(
                 child: Text(
               "LT",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             )),
           ),
           onPanStart: (_) {
@@ -312,15 +258,13 @@ class ControllerState extends State<Controller> {
             height: toph,
             width: w / 2,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.indigo[lbdark + 300], Colors.indigo[400]]),
+              gradient: LinearGradient(colors: [Colors.indigo[lbdark + 300], Colors.indigo[400]]),
               border: Border(bottom: BorderSide(color: Colors.blue[900])),
             ),
             child: Center(
                 child: Text(
               "LB",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             )),
           ),
           onPanStart: (_) {
@@ -345,8 +289,7 @@ class ControllerState extends State<Controller> {
             height: 2 * r,
             width: 2 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.green[adark], Colors.green[adark + 300]]),
+              gradient: RadialGradient(colors: [Colors.green[adark], Colors.green[adark + 300]]),
               border: Border.all(color: Colors.green[900]),
               shape: BoxShape.circle,
             ),
@@ -374,8 +317,7 @@ class ControllerState extends State<Controller> {
             height: 2 * r,
             width: 2 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.blue[xdark], Colors.blue[xdark + 300]]),
+              gradient: RadialGradient(colors: [Colors.blue[xdark], Colors.blue[xdark + 300]]),
               border: Border.all(color: Colors.blue[900]),
               shape: BoxShape.circle,
             ),
@@ -403,8 +345,7 @@ class ControllerState extends State<Controller> {
             height: 2 * r,
             width: 2 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.yellow[ydark], Colors.yellow[ydark + 300]]),
+              gradient: RadialGradient(colors: [Colors.yellow[ydark], Colors.yellow[ydark + 300]]),
               border: Border.all(color: Colors.yellow[900]),
               shape: BoxShape.circle,
             ),
@@ -432,8 +373,7 @@ class ControllerState extends State<Controller> {
             height: 2 * r,
             width: 2 * r,
             decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [Colors.red[bdark], Colors.red[bdark + 300]]),
+              gradient: RadialGradient(colors: [Colors.red[bdark], Colors.red[bdark + 300]]),
               border: Border.all(color: Colors.red[900]),
               shape: BoxShape.circle,
             ),
@@ -461,8 +401,7 @@ class ControllerState extends State<Controller> {
               height: 2 * exitr,
               width: 2 * exitr,
               decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.red[exitdark], Colors.black]),
+                gradient: RadialGradient(colors: [Colors.red[exitdark], Colors.black]),
                 border: Border.all(color: Colors.black),
                 shape: BoxShape.circle,
               ),
@@ -477,19 +416,12 @@ class ControllerState extends State<Controller> {
         left: backx,
         child: GestureDetector(
           child: Container(
-              height: backh,
-              width: backw,
-              decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                      colors: [Colors.grey[backdark], Colors.grey]),
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0),
-                    bottomLeft: Radius.circular(16.0),
-                    bottomRight: Radius.circular(16.0),
-                  )),
-              child: Center(child: Icon(Icons.content_copy))),
+              child: Center(
+                  child: Icon(
+            MaterialCommunityIcons.xbox_controller_view,
+            color: Colors.grey[backdark],
+            size: backsz,
+          ))),
           onPanStart: (_) {
             _send('down&BtnBack');
             setState(() {
@@ -509,19 +441,12 @@ class ControllerState extends State<Controller> {
         left: startx,
         child: GestureDetector(
           child: Container(
-              height: backh,
-              width: backw,
-              decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                      colors: [Colors.grey[startdark], Colors.grey]),
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0),
-                    bottomLeft: Radius.circular(16.0),
-                    bottomRight: Radius.circular(16.0),
-                  )),
-              child: Center(child: Icon(Icons.dehaze))),
+              child: Center(
+                  child: Icon(
+            MaterialCommunityIcons.xbox_controller_menu,
+            color: Colors.grey[startdark],
+            size: startsz,
+          ))),
           onPanStart: (_) {
             _send('down&BtnStart');
             setState(() {
@@ -588,8 +513,7 @@ class ControllerState extends State<Controller> {
               height: 2 * joyR,
               width: 2 * joyR,
               decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.grey[400], Colors.grey[500]]),
+                gradient: RadialGradient(colors: [Colors.grey[400], Colors.grey[500]]),
                 border: Border.all(color: Colors.grey[400]),
                 shape: BoxShape.circle,
               ),
@@ -600,12 +524,8 @@ class ControllerState extends State<Controller> {
             setState(() {
               lsbdx += tapInfo.delta.dx;
               lsbdy += tapInfo.delta.dy;
-              axislx = (lsbdx > 0)
-                  ? min(lsbdx / joyRange, 1)
-                  : max(lsbdx / joyRange, -1);
-              axisly = (lsbdy > 0)
-                  ? min(lsbdy / joyRange, 1)
-                  : max(lsbdy / joyRange, -1);
+              axislx = (lsbdx > 0) ? min(lsbdx / joyRange, 1) : max(lsbdx / joyRange, -1);
+              axisly = (lsbdy > 0) ? min(lsbdy / joyRange, 1) : max(lsbdy / joyRange, -1);
             });
             _send('AxisLx&' + slice(axislx).toString());
             _send('AxisLy&' + slice((-axisly)).toString());
@@ -643,8 +563,7 @@ class ControllerState extends State<Controller> {
               height: 2 * joyR,
               width: 2 * joyR,
               decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Colors.grey[400], Colors.grey[500]]),
+                gradient: RadialGradient(colors: [Colors.grey[400], Colors.grey[500]]),
                 border: Border.all(color: Colors.grey[400]),
                 shape: BoxShape.circle,
               ),
@@ -655,12 +574,8 @@ class ControllerState extends State<Controller> {
             setState(() {
               rsbdx += tapInfo.delta.dx;
               rsbdy += tapInfo.delta.dy;
-              axisrx = (rsbdx > 0)
-                  ? min(rsbdx / joyRange, 1)
-                  : max(rsbdx / joyRange, -1);
-              axisry = (rsbdy > 0)
-                  ? min(rsbdy / joyRange, 1)
-                  : max(rsbdy / joyRange, -1);
+              axisrx = (rsbdx > 0) ? min(rsbdx / joyRange, 1) : max(rsbdx / joyRange, -1);
+              axisry = (rsbdy > 0) ? min(rsbdy / joyRange, 1) : max(rsbdy / joyRange, -1);
             });
             _send('AxisRx&' + slice(axisrx).toString());
             _send('AxisRy&' + slice(-axisry).toString());
@@ -682,14 +597,8 @@ class ControllerState extends State<Controller> {
             height: dpadh,
             width: dpadw,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.grey[updark + 100], Colors.grey[updark]]),
-              border: Border(
-                  left: BorderSide(color: Colors.black, width: 0.5),
-                  right: BorderSide(color: Colors.black, width: 0.5),
-                  top: BorderSide(color: Colors.black, width: 0.5)),
+              gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.grey[updark + 100], Colors.grey[updark]]),
+              border: Border(left: BorderSide(color: Colors.black, width: 0.5), right: BorderSide(color: Colors.black, width: 0.5), top: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -714,14 +623,8 @@ class ControllerState extends State<Controller> {
             height: dpadh,
             width: dpadw,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.grey[downdark], Colors.grey[downdark + 100]]),
-              border: Border(
-                  left: BorderSide(color: Colors.black, width: 0.5),
-                  right: BorderSide(color: Colors.black, width: 0.5),
-                  bottom: BorderSide(color: Colors.black, width: 0.5)),
+              gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.grey[downdark], Colors.grey[downdark + 100]]),
+              border: Border(left: BorderSide(color: Colors.black, width: 0.5), right: BorderSide(color: Colors.black, width: 0.5), bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -746,12 +649,8 @@ class ControllerState extends State<Controller> {
             height: dpadw,
             width: dpadh,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.grey[leftdark + 100], Colors.grey[leftdark]]),
-              border: Border(
-                  left: BorderSide(color: Colors.black, width: 0.5),
-                  top: BorderSide(color: Colors.black, width: 0.5),
-                  bottom: BorderSide(color: Colors.black, width: 0.5)),
+              gradient: LinearGradient(colors: [Colors.grey[leftdark + 100], Colors.grey[leftdark]]),
+              border: Border(left: BorderSide(color: Colors.black, width: 0.5), top: BorderSide(color: Colors.black, width: 0.5), bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -776,14 +675,8 @@ class ControllerState extends State<Controller> {
             height: dpadw,
             width: dpadh,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.grey[rightdark],
-                Colors.grey[rightdark + 100]
-              ]),
-              border: Border(
-                  right: BorderSide(color: Colors.black, width: 0.5),
-                  top: BorderSide(color: Colors.black, width: 0.5),
-                  bottom: BorderSide(color: Colors.black, width: 0.5)),
+              gradient: LinearGradient(colors: [Colors.grey[rightdark], Colors.grey[rightdark + 100]]),
+              border: Border(right: BorderSide(color: Colors.black, width: 0.5), top: BorderSide(color: Colors.black, width: 0.5), bottom: BorderSide(color: Colors.black, width: 0.5)),
             ),
           ),
           onPanStart: (_) {
@@ -804,9 +697,7 @@ class ControllerState extends State<Controller> {
         top: pingy,
         left: pingx,
         child: Container(
-          child: status == 'connected'
-              ? pingDisplay(sockStream)
-              : noConnection(context),
+          child: status == 'connected' ? pingDisplay(sockStream) : noConnection(context),
         ),
       ),
       Positioned(
