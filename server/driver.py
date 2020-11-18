@@ -1,10 +1,11 @@
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from time import sleep
-import subprocess,os
+import subprocess
 from tkinter import messagebox
 from threading import Thread
 from qrcode import QRCode
-from os import _exit
+from os import _exit, path
+import sys
 
 # import pyautogui
 # pyautogui.PAUSE = 0.01
@@ -12,9 +13,9 @@ from os import _exit
 from platform import system as currSystem
 xSupport = True if currSystem() == 'Windows' else False
 
-if not xSupport:
-	from signal import signal, SIGTSTP, SIGINT
-	signal(SIGTSTP, SIGINT)		# Required to free the port otherwise cleanup routine is not called
+# if not xSupport:
+# 	from signal import signal, SIGTSTP, SIGINT
+# 	signal(SIGTSTP, SIGINT)		# Required to free the port otherwise cleanup routine is not called
 
 from PIL import ImageTk,Image
 import tkinter as tk
@@ -119,7 +120,7 @@ def connection(s, serverIP):
 	while True: 
 		canvas1.delete("all")
 
-		logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+		logo = ImageTk.PhotoImage(Image.open(resource_path("logo.png")).resize((120, 120), Image.ANTIALIAS)) 
 		panel = tk.Label(root, image = logo)
 		canvas1.create_window(540, 440, window=panel)
 		
@@ -147,7 +148,7 @@ def connection(s, serverIP):
 
 		canvas1.delete("all")
 
-		logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+		logo = ImageTk.PhotoImage(Image.open(resource_path("logo.png")).resize((120, 120), Image.ANTIALIAS)) 
 		panel = tk.Label(root, image = logo)
 		canvas1.create_window(540, 440, window=panel)
 
@@ -192,7 +193,7 @@ def connection(s, serverIP):
 								raise CustomException('Incorrect Tilt Message - [0]')
 
 							if msg[1] == 'toggle':
-								if msg[1] == '0':
+								if msg[2] == '0':
 									global button
 									button = '$'
 							elif msg[1] == '+':
@@ -393,7 +394,17 @@ def handleTrackpad(msg):
 def close_pokestick():
 	if tk.messagebox.askokcancel("Quit", "Do you want to quit?"):
 		root.destroy()
-		os._exit(0)
+		_exit(0)
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = path.abspath(".")
+
+    return path.join(base_path, relative_path)
 
 if __name__=="__main__":
 	
@@ -413,7 +424,7 @@ if __name__=="__main__":
 	entry1 = tk.Entry (root, font=('Comic Sans MS', 14)) 
 	canvas1.create_window(300, 250, window=entry1)
 
-	logo = ImageTk.PhotoImage(Image.open("assets/launcher/android_icon.png").resize((120, 120), Image.ANTIALIAS)) 
+	logo = ImageTk.PhotoImage(Image.open(resource_path("logo.png")).resize((120, 120), Image.ANTIALIAS)) 
 	panel = tk.Label(root, image = logo)
 	canvas1.create_window(540, 440, window=panel)
 

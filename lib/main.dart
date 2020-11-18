@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'LayoutSelect.dart';
 import 'HomeScreen.dart';
 import 'WasdLayout.dart';
+import 'RacingLayout.dart';
 import 'Tilt.dart';
 import 'Custom.dart';
 import 'LoadCustom.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         '/layout_select': (context) => LayoutSelect(),
         '/wasd_layout': (context) => WasdLayout(),
+        '/racing_layout': (context) => RacingLayout(),
         '/gyro': (context) => Gyro(),
         '/custom': (context) => Custom(),
         '/loadcustom': (context) => LoadCustom(),
